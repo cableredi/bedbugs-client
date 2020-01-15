@@ -1,0 +1,49 @@
+%form-shared {
+  text-align: center;
+  margin: 0 auto;
+
+  .form__fields {
+    border: 1px solid black;
+    padding: 10px;
+  }
+
+  .form__button-group {
+    margin-top: 20px;
+  }
+
+  .form__button {
+    margin-right: 10px;
+  }
+
+  .form__hint {
+    font-style: italic;
+    font-size: .8rem;
+  }
+
+  .form__error,
+  .form__required {
+    font-style: italic;
+    font-size: .8rem;
+    color: red;
+  }
+  
+}
+
+%buttons-shared {
+  .button {
+    margin: 20px auto;
+    background-color: $background;
+    width: 200px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+  
+  .button:hover,
+  .button:focus {
+    background-color: $buttonHoverColor;
+    color: $textColor;
+    box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+  }
+}

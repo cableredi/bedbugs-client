@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: $background;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  color: $textColor;
+}
+
+a:hover,
+a:active {
+  color: $textHoverColor;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.App {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.section-page {
+  text-align: center;
+}
+
+@media (max-width: 550px) {
+	.section-page {
+		margin-top: 50px;
+	}
+}
+
+@media (min-width: 551px) {
+	.section-page {
+		margin-top: 75px;
+	}
+}
+
+@media (min-width: 860px) {
+	.section-page {
+		margin-top: 110px;
+	}
+}
