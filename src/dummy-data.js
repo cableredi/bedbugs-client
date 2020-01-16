@@ -59,7 +59,7 @@ export default {
       "actual_result": "Sad Face",
       "developer": "Frodo",
       "developer_notes": "working on it",
-      "last-updated": "2015-03-27T12:00:00-06:30"
+      "last_updated": "2015-03-27T12:00:00-06:30"
     },
     {
       "bug_id": 2,
@@ -77,7 +77,7 @@ export default {
       "actual_result": "Arrow shot through the mountain",
       "developer": "Samwise",
       "developer_notes": "working on it",
-      "last-updated": "2015-04-27T12:00:00-06:30"
+      "last_updated": "2015-04-27T12:00:00-06:30"
     },
     {
       "bug_id": 3,
@@ -95,7 +95,7 @@ export default {
       "actual_result": "Not Found error",
       "developer": "Samwise",
       "developer_notes": "maybe smeagal took it",
-      "last-updated": "2015-05-27T12:00:00-06:30"
+      "last_updated": "2015-05-27T12:00:00-06:30"
     },
   ],
   "steps": [

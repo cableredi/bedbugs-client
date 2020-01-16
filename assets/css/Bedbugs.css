@@ -14,31 +14,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.AddApplication__form, .registration-form, .login-form, .bug-form {
+.AddApplication__form, .AddBug__form, .registration-form, .login-form, .bug-form {
   text-align: center;
   margin: 0 auto;
 }
 
-.AddApplication__form .form__fields, .registration-form .form__fields, .login-form .form__fields, .bug-form .form__fields {
+.AddApplication__form .form__fields, .AddBug__form .form__fields, .registration-form .form__fields, .login-form .form__fields, .bug-form .form__fields {
   border: 1px solid black;
   padding: 10px;
 }
 
-.AddApplication__form .form__button-group, .registration-form .form__button-group, .login-form .form__button-group, .bug-form .form__button-group {
+.AddApplication__form .form__button-group, .AddBug__form .form__button-group, .registration-form .form__button-group, .login-form .form__button-group, .bug-form .form__button-group {
   margin-top: 20px;
 }
 
-.AddApplication__form .form__button, .registration-form .form__button, .login-form .form__button, .bug-form .form__button {
+.AddApplication__form .form__button, .AddBug__form .form__button, .registration-form .form__button, .login-form .form__button, .bug-form .form__button {
   margin-right: 10px;
 }
 
-.AddApplication__form .form__hint, .registration-form .form__hint, .login-form .form__hint, .bug-form .form__hint {
+.AddApplication__form .form__hint, .AddBug__form .form__hint, .registration-form .form__hint, .login-form .form__hint, .bug-form .form__hint {
   font-style: italic;
   font-size: .8rem;
 }
 
-.AddApplication__form .form__error, .registration-form .form__error, .login-form .form__error, .bug-form .form__error,
+.AddApplication__form .form__error, .AddBug__form .form__error, .registration-form .form__error, .login-form .form__error, .bug-form .form__error,
 .AddApplication__form .form__required,
+.AddBug__form .form__required,
 .registration-form .form__required,
 .login-form .form__required,
 .bug-form .form__required {

@@ -12,6 +12,8 @@ import ApplicationsList from '../Applications/ApplicationsList/ApplicationsList'
 import AddApplication from '../Applications/AddApplication/AddApplication';
 import UpdateApplication from '../Applications/UpdateApplication/UpdateApplication';
 import BugsList from '../Bugs/BugsList/BugsList';
+import AddBug from '../Bugs/AddBug/AddBug';
+import UpdateBug from '../Bugs/UpdateBug/UpdateBug';
 //import RegistrationForm from '../RegistrationForm/RegistrationForm';
 //import LoginForm from '../LoginForm/LoginForm';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
@@ -47,8 +49,14 @@ function getBedbugsSteps() {
 }
 
 function getNewApplicationId(applications) {
-  //console.log('application', applications)
   return Math.max.apply(Math, applications.map(function (appl) { return appl.application_id + 1 }))
+}
+
+function getNewBugId(bugs) {
+  return Math.max.apply(Math, bugs.map(function (bug) { return bug.bug_id + 1 }))
+}
+function getNewStepsId(steps) {
+  return Math.max.apply(Math, steps.map(function (step) { return step.steps_id + 1 }))
 }
 
 export default class App extends Component {
@@ -81,6 +89,18 @@ export default class App extends Component {
   addApplication = application => {
     this.setState({
       applications: [...this.state.applications, application]
+    })
+  }
+
+  addBug = bug => {
+    this.setState({
+      bugs: [...this.state.bugs, bug]
+    })
+  }
+
+  addSteps = step => {
+    this.setState({
+      steps: [...this.state.steps, step]
     })
   }
 
@@ -118,13 +138,23 @@ export default class App extends Component {
     })
   }
 
+  updateBug = updatedBug => {
+    this.setState({
+      bugs: this.state.bugs.map(bug =>
+        (bug.bug_id !== updatedBug.bug_id) ? bug : updatedBug
+      )
+    })
+  }
+
   render() {
     const contextValue = {
       applications: this.state.applications,
       addApplication: this.addApplication,
       updateApplication: this.updateApplication,
       bugs: this.state.bugs,
-      steps: this.state.steps,
+      addBug: this.addBug,
+      addSteps: this.addSteps,
+      updateBug: this.updateBug,
     };
     console.log('kim', this.state);
 
@@ -180,7 +210,7 @@ export default class App extends Component {
               exact path='/updateapplication/:application_id'
               component={(routeProps) =>
                 <UpdateApplication
-                  application={this.state.applications.find( appl => appl.application_id === Number(routeProps.match.params.application_id))}
+                  application={this.state.applications.find(appl => appl.application_id === Number(routeProps.match.params.application_id))}
                   {...routeProps}
                 />
               }
@@ -191,6 +221,29 @@ export default class App extends Component {
               render={(routeProps) =>
                 <BugsList
                   bugs={this.state.bugs}
+                  {...routeProps}
+                />
+              }
+            />
+
+            <Route
+              exact path='/addbug'
+              component={(routeProps) =>
+                <AddBug
+                  NewBugId={getNewBugId(this.state.bugs)}
+                  NewStepsId={getNewStepsId(this.state.steps)}
+                  applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
+                  {...routeProps}
+                />
+              }
+            />
+
+            <Route
+              exact path='/updatebug/:bug_id'
+              component={(routeProps) =>
+                <UpdateBug
+                  bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
+                  applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
                   {...routeProps}
                 />
               }

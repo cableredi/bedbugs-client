@@ -7,17 +7,23 @@ export default function BugsList(props) {
   const { bugs } = props;
   console.log('bugs', bugs)
 
+  const bugItems = bugs.map( (bug) =>
+    <li key={bug.bug_id}>
+      <BugsSummary bugs={bug} />
+    </li>
+  );
+
   return (
     <section className='section-page'>
       <h1>Bugs Summary</h1>
       <div className="applications">
         <ul>
-          <BugsSummary bugs={bugs} />
+          {bugItems}
         </ul>
         <div className="button">
           <AddButton
             tag={Link}
-            to='../addBug'
+            to='../addbug'
             type='button'
           >
             Add Bug
