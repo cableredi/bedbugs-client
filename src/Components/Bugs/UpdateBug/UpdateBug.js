@@ -24,7 +24,9 @@ export default class UpdateBug extends Component {
     actual_result: '',
     developer: '',
     developer_notes: '',
-    last_updated: ''
+    last_updated: '',
+    values: [{ steps_id: null, bug_id: null, steps_number: 0, step: '' }],
+    newStepsId: null,
   }
 
   handleChangeBugName = e => {
@@ -82,11 +84,9 @@ export default class UpdateBug extends Component {
   handleChangeLastUpdated = e => {
     this.setState({ last_updated: e.target.value })
   }
-  
+
   componentDidMount() {
-    console.log('state', this.state);
-    console.log('props', this.props);
-    this.setState({ 
+    this.setState({
       bug_id: this.props.bug.bug_id,
       bug_name: this.props.bug.bug_name,
       application_id: this.props.bug.application_id,
@@ -102,11 +102,13 @@ export default class UpdateBug extends Component {
       developer: this.props.bug.developer,
       developer_notes: this.props.bug.developer_notes,
       last_updated: this.props.bug.last_updated,
+      values: this.props.steps,
+      newStepsId: this.props.NewStepsId,
     })
   }
 
   handleSubmit = e => {
-    e.preventDefault();    
+    e.preventDefault();
     const {
       bug_id,
       bug_name,
@@ -125,7 +127,7 @@ export default class UpdateBug extends Component {
       last_updated,
     } = this.state;
 
-    const newBug= {
+    const updatedBug = {
       bug_id,
       bug_name,
       application_id,
@@ -143,8 +145,18 @@ export default class UpdateBug extends Component {
       last_updated,
     };
 
-    this.resetFields(newBug);
-    this.context.updateBug(newBug);
+    //get steps from form
+    const bugSteps = this.state.values.map((step, i) =>
+      ({ "steps_id": step.steps_id, "bug_id": updatedBug.bug_id, "steps_number": i + 1, "step": step.step })
+    )
+
+    this.setState({ error: null });
+
+    // place holder to update database
+
+    this.resetFields(updatedBug);
+    this.context.updateBug(updatedBug);
+    this.context.updateSteps(bugSteps);
     this.props.history.push('/bugs');
   };
 
@@ -172,16 +184,41 @@ export default class UpdateBug extends Component {
     this.props.history.push('/bugs')
   };
 
-  render() {
-  console.log('update Bug state', this.props.bug)
+  handleStepChange = (stepsId, e) => {
+    let values = [...this.state.values];
+    let stepIndex = values.findIndex( (step, i) => step.steps_id === stepsId )
+    values[stepIndex].step = e.target.value;
+    this.setState({ values });
+  }
 
-  const applicationOptions = this.props.applications.map((application, i) =>
-      <option value={application.application_id} key={i}>
+  addStepClick() {
+    const stepNumber = Math.max.apply(Math, this.state.values.map(function (num) { return num.steps_number}));
+    this.setState(prevState => ({
+      values: [...prevState.values, { 
+        steps_id: this.state.newStepsId, 
+        bug_id: this.state.bug_id, 
+        steps_number: stepNumber + 1,
+        step: '' }]
+    }))
+  };
+
+  removeStepClick(i) {
+    let values = [...this.state.values];
+    values.splice(i, 1);
+    this.setState({ values });
+  };
+
+  render() {
+    const applicationOptions = this.props.applications.map((application, i) =>
+      <option
+        value={application.application_id}
+        key={i}
+      >
         {application.application_name}
       </option>
     );
-  
-    return(
+
+    return (
       <section className='section-page'>
         <h2>Update Bug</h2>
         <form
@@ -219,6 +256,7 @@ export default class UpdateBug extends Component {
               className='formSelect'
               aria-label="Select an Application"
               aria-required="true"
+              value={this.state.application_id}
               onChange={this.handleChangeBugName}
             >
               <option value=''>Application... </option>
@@ -255,6 +293,7 @@ export default class UpdateBug extends Component {
               className='formSelect'
               aria-label="Select a Priority"
               aria-required="true"
+              value={this.state.priority}
               onChange={this.handleChangePriority}
             >
               <option value="">Priority... </option>
@@ -276,6 +315,7 @@ export default class UpdateBug extends Component {
               className='formSelect'
               aria-label="Select a Status"
               aria-required="true"
+              value={this.state.status}
               onChange={this.handleChangeStatus}
             >
               <option value="">Status... </option>
@@ -375,11 +415,28 @@ export default class UpdateBug extends Component {
           </div>
 
           <div>
-            <label htmlFor="steps">
-              Steps To Reproduce
-              {' '}
-            </label>
-
+            <div>Steps To Reproduce</div>
+            {this.state.values.map((el, i) => (
+              <div key={i}>
+                <label htmlFor="steps">Step #{el.steps_number} </label>
+                <input
+                  type="text"
+                  name="steps"
+                  value={el.step || ''}
+                  onChange={e => this.handleStepChange(el.steps_id, e)}
+                />
+                <input
+                  type="button"
+                  value="Remove"
+                  onClick={() => this.removeStepClick(i)}
+                />
+              </div>
+            ))}
+            <input
+              type="button"
+              value="Add New Step"
+              onClick={() => this.addStepClick()}
+            />
           </div>
 
           <div>
@@ -426,7 +483,7 @@ export default class UpdateBug extends Component {
               onChange={this.handleChangeLastUpdated}
               readOnly
             />
-          </div> 
+          </div>
 
           <div className="form__button-group">
             <button type="button" onClick={this.handleClickCancel}>

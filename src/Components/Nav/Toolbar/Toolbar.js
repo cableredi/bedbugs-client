@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import DrawerToggleButton from '../SideDrawer/DrawerToggleButton';
 
@@ -12,7 +12,7 @@ const toolbar = props => (
       </div>
 
       <div className="toolbar__logo">
-        <a href="/">
+        <NavLink to = '/'>
           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
             x="0px" y="0px" width="100%" height="100%" viewBox="0 0 220 73" 
             enableBackground="new 0 0 220 73">
@@ -196,7 +196,7 @@ const toolbar = props => (
                 c-0.002,1.21,0.961,2.04,2.889,2.49c1.407,0.344,2.557,0.698,3.446,1.063C143.852,29.12,144.297,29.362,144.297,29.482z"/>
             </g>
           </svg>
-        </a>
+        </NavLink>
       </div>
 
       <div className="spacer" />
@@ -204,14 +204,14 @@ const toolbar = props => (
       <div className="toolbar__navigation-items">
         <ul>
           <li>
-            <Link to = '/applications'>
+            <NavLink to = '/applications'>
               Applications
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to = '/bugs'>
+            <NavLink to = '/bugs'>
               Bugs
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </div>

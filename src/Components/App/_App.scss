@@ -37,20 +37,14 @@ ul {
   text-align: center;
 }
 
-@media (max-width: 550px) {
-	.section-page {
-		margin-top: 50px;
-	}
-}
-
-@media (min-width: 551px) {
+@media (max-width: 400px) {
 	.section-page {
 		margin-top: 75px;
 	}
 }
 
-@media (min-width: 860px) {
+@media (min-width: 401px) {
 	.section-page {
-		margin-top: 110px;
+		margin-top: 120px;
 	}
 }

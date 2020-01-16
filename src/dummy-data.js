@@ -54,7 +54,6 @@ export default {
       "notes": "Was messing around and got the wrong face",
       "reported_by": "Gimli",
       "reported_on": "2015-03-25T12:00:00-06:30",
-      "steps_id": 1,
       "expected_result": "Smiley face",
       "actual_result": "Sad Face",
       "developer": "Frodo",
@@ -72,7 +71,6 @@ export default {
       "notes": "Shot the arrow but something weird happened",
       "reported_by": "Gimli",
       "reported_on": "2015-04-25T12:00:00-06:30",
-      "steps_id": 2,
       "expected_result": "Arrow shot over the mountain",
       "actual_result": "Arrow shot through the mountain",
       "developer": "Samwise",
@@ -90,7 +88,6 @@ export default {
       "notes": "just crashed",
       "reported_by": "Frodo",
       "reported_on": "2015-05-25T12:00:00-06:30",
-      "steps_id": 3,
       "expected_result": "Page to displayn",
       "actual_result": "Not Found error",
       "developer": "Samwise",
@@ -102,36 +99,43 @@ export default {
     {
       "steps_id": 1,
       "bug_id": 1,
+      "steps_number": 1,
       "step": "This is step 1"
     },
     {
       "steps_id": 2,
       "bug_id": 1,
+      "steps_number": 2,
       "step": "This is step 2"
     },
     {
       "steps_id": 3,
       "bug_id": 2,
+      "steps_number": 1,
       "step": "This is step 1"
     },
     {
       "steps_id": 4,
       "bug_id": 2,
+      "steps_number": 2,
       "step": "This is step 2"
     },
     {
       "steps_id": 5,
       "bug_id": 2,
+      "steps_number": 3,
       "step": "This is step 3"
     },
     {
       "steps_id": 6,
       "bug_id": 2,
+      "steps_number": 4,
       "step": "This is step 4"
     },
     {
       "steps_id": 7,
       "bug_id": 3,
+      "steps_number": 1,
       "step": "This is step 1"
     },
   ],

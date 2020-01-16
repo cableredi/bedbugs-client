@@ -1,16 +1,20 @@
 @import './variables';
 @import './../index';
 @import '../shared';
+
 @import './Components/App/App';
+
 @import './Components/Nav/Toolbar/Toolbar';
 @import './Components/Nav/SideDrawer/SideDrawer';
 @import './Components/Nav/Backdrop/Backdrop';
 @import './Components/Nav/SideDrawer/DrawerToggleButton';
 @import './Components/Landing/Landing';
+
 @import './Components/Applications/Applications';
 @import './Components/Applications/AddApplication/AddApplication';
+
 @import './Components/Bugs/Bugs';
 @import './Components/Bugs/AddBug/AddBug';
+
 @import './Components/RegistrationForm/RegistrationForm';
 @import './Components/LoginForm/LoginForm';
-@import './Components/Bugs/BugForm/BugForm';

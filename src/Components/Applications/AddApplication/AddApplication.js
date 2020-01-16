@@ -26,8 +26,6 @@ export default class AddApplication extends Component {
       database_test
     } = e.target;
 
-  console.log('application_id', application_id);
-
     //put fields in object
     const application = {
       application_id: parseInt(application_id.value),
@@ -82,8 +80,7 @@ export default class AddApplication extends Component {
 
           <div>
             <label htmlFor="application_name">
-              Application Name
-              {' '}
+              Application Name:
               <Required />
             </label>
             <input
@@ -97,8 +94,7 @@ export default class AddApplication extends Component {
 
           <div>
             <label htmlFor="application_url">
-              Application URL
-              {' '}
+              Application URL:
               <Required />
             </label>
             <input
@@ -112,7 +108,7 @@ export default class AddApplication extends Component {
 
           <div>
             <label htmlFor="repository_prod">
-              Production Repository
+              Production Repository:
             </label>
             <input
               type="text"
@@ -124,7 +120,7 @@ export default class AddApplication extends Component {
 
           <div>
             <label htmlFor="repository_test">
-              Test Repository
+              Test Repository:
             </label>
             <input
               type="text"
@@ -136,7 +132,7 @@ export default class AddApplication extends Component {
 
           <div>
             <label htmlFor="database_prod">
-              Production Database
+              Production Database:
             </label>
             <input
               type="text"
@@ -148,7 +144,7 @@ export default class AddApplication extends Component {
 
           <div>
             <label htmlFor="database_test">
-              Test Database
+              Test Database:
             </label>
             <input
               type="text"

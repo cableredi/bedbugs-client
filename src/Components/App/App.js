@@ -14,39 +14,7 @@ import UpdateApplication from '../Applications/UpdateApplication/UpdateApplicati
 import BugsList from '../Bugs/BugsList/BugsList';
 import AddBug from '../Bugs/AddBug/AddBug';
 import UpdateBug from '../Bugs/UpdateBug/UpdateBug';
-//import RegistrationForm from '../RegistrationForm/RegistrationForm';
-//import LoginForm from '../LoginForm/LoginForm';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-
-function getBedbugsApplications() {
-  return Promise.resolve({
-    ok: true,
-    status: 200,
-    json() {
-      return BEDBUGS.applications;
-    }
-  });
-}
-
-function getBedbugsBugs() {
-  return Promise.resolve({
-    ok: true,
-    status: 200,
-    json() {
-      return BEDBUGS.bugs;
-    }
-  });
-}
-
-function getBedbugsSteps() {
-  return Promise.resolve({
-    ok: true,
-    status: 200,
-    json() {
-      return BEDBUGS.steps;
-    }
-  });
-}
 
 function getNewApplicationId(applications) {
   return Math.max.apply(Math, applications.map(function (appl) { return appl.application_id + 1 }))
@@ -60,12 +28,15 @@ function getNewStepsId(steps) {
 }
 
 export default class App extends Component {
-  state = {
-    error: null,
-    sideDrawerOpen: false,
-    applications: [],
-    bugs: [],
-    steps: [],
+  constructor(props) {
+    super(props)
+    this.state = {
+      error: null,
+      sideDrawerOpen: false,
+      applications: BEDBUGS.applications,
+      bugs: BEDBUGS.bugs,
+      steps: BEDBUGS.steps,
+    }
   }
 
   setApplications = applications => {
@@ -98,10 +69,12 @@ export default class App extends Component {
     })
   }
 
-  addSteps = step => {
-    this.setState({
-      steps: [...this.state.steps, step]
-    })
+  addSteps = newSteps => {
+    newSteps.map(step =>
+      this.setState(prevState => ({
+        steps: [...prevState.steps, step]
+      }))
+    )
   }
 
   drawerToggleClickHandler = () => {
@@ -110,6 +83,7 @@ export default class App extends Component {
     })
   }
 
+  /*
   componentDidMount() {
     getBedbugsApplications()
       .then(res => res.json())
@@ -129,6 +103,7 @@ export default class App extends Component {
         this.setSteps(data)
       })
   }
+  */
 
   updateApplication = updatedApplication => {
     this.setState({
@@ -146,6 +121,12 @@ export default class App extends Component {
     })
   }
 
+  updateSteps = updatedStep => {
+    this.setState({
+      steps: updatedStep
+    })
+  }
+
   render() {
     const contextValue = {
       applications: this.state.applications,
@@ -153,10 +134,10 @@ export default class App extends Component {
       updateApplication: this.updateApplication,
       bugs: this.state.bugs,
       addBug: this.addBug,
-      addSteps: this.addSteps,
       updateBug: this.updateBug,
+      addSteps: this.addSteps,
+      updateSteps: this.updateSteps,
     };
-    console.log('kim', this.state);
 
     let backdrop;
 
@@ -244,6 +225,8 @@ export default class App extends Component {
                 <UpdateBug
                   bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
                   applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
+                  steps={this.state.steps.filter(step => step.bug_id === Number(routeProps.match.params.bug_id))}
+                  NewStepsId={getNewStepsId(this.state.steps)}
                   {...routeProps}
                 />
               }

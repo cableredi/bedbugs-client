@@ -44,8 +44,6 @@ export default class UpdateApplication extends Component {
   }
   
   componentDidMount() {
-    console.log('state', this.state);
-    console.log('props', this.props);
     this.setState({ 
       application_id: this.props.application.application_id,
       application_name: this.props.application.application_name,
@@ -102,8 +100,6 @@ export default class UpdateApplication extends Component {
   };
 
   render() {
-  console.log('update App state', this.props.application)
-  
     return(
       <section className='section-page'>
         <h2>Update Application</h2>

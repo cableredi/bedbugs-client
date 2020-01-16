@@ -1,8 +1,25 @@
+.applications {
+  @extend %buttons-shared;
+}
+
+.applications ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.applications li {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  background: $backgroundItems;
+  box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
 .applications-list__name {
   font-size: 1.2rem;
   font-weight: 600;
-}
-
-.applications {
-  @extend %buttons-shared;
 }

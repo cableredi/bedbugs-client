@@ -9,6 +9,7 @@ const BedbugsContext = React.createContext({
   updateBug: () => {},
   steps: [],
   addSteps: () => {},
+  updateSteps: () => {},
 });
 
 export default BedbugsContext;

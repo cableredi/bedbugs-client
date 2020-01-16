@@ -14,38 +14,102 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.AddApplication__form, .AddBug__form, .registration-form, .login-form, .bug-form {
+.AddApplication__form, .AddBug__form, .registration-form, .login-form {
   text-align: center;
   margin: 0 auto;
 }
 
-.AddApplication__form .form__fields, .AddBug__form .form__fields, .registration-form .form__fields, .login-form .form__fields, .bug-form .form__fields {
+.AddApplication__form input, .AddBug__form input, .registration-form input, .login-form input {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.AddApplication__form label, .AddBug__form label, .registration-form label, .login-form label {
+  display: inline-block;
+  text-align: right;
+  width: 200px;
+  margin-right: 0.5em;
+}
+
+.AddApplication__form select, .AddBug__form select, .registration-form select, .login-form select {
+  display: inline-block;
+  color: #444;
+  line-height: 1.1;
+  padding: .6em 1.4em .5em .8em;
+  width: 200px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0 0 10px 0;
+  border: 1px solid #aaa;
+  -webkit-box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+  border-radius: .5em;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e5e5e5));
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
+  background-repeat: no-repeat, repeat;
+  background-position: right .7em top 50%, 0 0;
+  background-size: .65em auto, 100%;
+}
+
+.AddApplication__form select::-ms-expand, .AddBug__form select::-ms-expand, .registration-form select::-ms-expand, .login-form select::-ms-expand {
+  display: none;
+}
+
+.AddApplication__form select:hover, .AddBug__form select:hover, .registration-form select:hover, .login-form select:hover {
+  border-color: #888;
+}
+
+.AddApplication__form select:focus, .AddBug__form select:focus, .registration-form select:focus, .login-form select:focus {
+  border-color: #aaa;
+  -webkit-box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
+          box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
+  color: #222;
+  outline: none;
+}
+
+.AddApplication__form select option, .AddBug__form select option, .registration-form select option, .login-form select option {
+  font-weight: normal;
+}
+
+.AddApplication__form .form__fields, .AddBug__form .form__fields, .registration-form .form__fields, .login-form .form__fields {
   border: 1px solid black;
   padding: 10px;
 }
 
-.AddApplication__form .form__button-group, .AddBug__form .form__button-group, .registration-form .form__button-group, .login-form .form__button-group, .bug-form .form__button-group {
+.AddApplication__form .form__button-group, .AddBug__form .form__button-group, .registration-form .form__button-group, .login-form .form__button-group {
   margin-top: 20px;
 }
 
-.AddApplication__form .form__button, .AddBug__form .form__button, .registration-form .form__button, .login-form .form__button, .bug-form .form__button {
+.AddApplication__form .form__button, .AddBug__form .form__button, .registration-form .form__button, .login-form .form__button {
   margin-right: 10px;
 }
 
-.AddApplication__form .form__hint, .AddBug__form .form__hint, .registration-form .form__hint, .login-form .form__hint, .bug-form .form__hint {
+.AddApplication__form .form__hint, .AddBug__form .form__hint, .registration-form .form__hint, .login-form .form__hint {
   font-style: italic;
   font-size: .8rem;
 }
 
-.AddApplication__form .form__error, .AddBug__form .form__error, .registration-form .form__error, .login-form .form__error, .bug-form .form__error,
+.AddApplication__form .form__error, .AddBug__form .form__error, .registration-form .form__error, .login-form .form__error,
 .AddApplication__form .form__required,
 .AddBug__form .form__required,
 .registration-form .form__required,
-.login-form .form__required,
-.bug-form .form__required {
+.login-form .form__required {
   font-style: italic;
   font-size: .8rem;
   color: red;
+}
+
+
+.AddApplication__form .form__required,
+.AddBug__form .form__required,
+.registration-form .form__required,
+.login-form .form__required {
+  vertical-align: super;
 }
 
 .applications .button {
@@ -107,21 +171,15 @@ ul {
   text-align: center;
 }
 
-@media (max-width: 550px) {
-  .section-page {
-    margin-top: 50px;
-  }
-}
-
-@media (min-width: 551px) {
+@media (max-width: 400px) {
   .section-page {
     margin-top: 75px;
   }
 }
 
-@media (min-width: 860px) {
+@media (min-width: 401px) {
   .section-page {
-    margin-top: 110px;
+    margin-top: 120px;
   }
 }
 
@@ -130,7 +188,7 @@ ul {
   position: fixed;
   top: 0;
   left: 0;
-  background: #cccccc;
+  background: silver;
   padding: .5rem;
   margin-bottom: 20px;
 }
@@ -300,6 +358,32 @@ ul {
   width: 25px;
   height: 2px;
   background: white;
+}
+
+.applications ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.applications li {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  background: lightgray;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
 .applications-list__name {

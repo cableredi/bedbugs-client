@@ -5,7 +5,6 @@ import BugsSummary from '../BugsSummary/BugsSummary';
 
 export default function BugsList(props) {
   const { bugs } = props;
-  console.log('bugs', bugs)
 
   const bugItems = bugs.map( (bug) =>
     <li key={bug.bug_id}>

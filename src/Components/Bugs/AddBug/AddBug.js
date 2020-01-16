@@ -10,6 +10,7 @@ export default class AddBug extends Component {
 
   state = {
     error: null,
+    values: [{ steps_id: null, value: null }],
   }
 
   handleSubmit = e => {
@@ -32,13 +33,11 @@ export default class AddBug extends Component {
       developer
     } = e.target;
 
-    //get steps form fields
-
     //put fields in object
     const bug = {
       bug_id: parseInt(bug_id.value),
       bug_name: bug_name.value,
-      application_id: application_id.value,
+      application_id: parseInt(application_id.value),
       ticket_number: ticket_number.value,
       priority: priority.value,
       status: status.value,
@@ -53,11 +52,10 @@ export default class AddBug extends Component {
       last_updated: '',
     };
 
-    //const steps = {
-    //  steps_id: parseInt(steps_id.value),
-    //  bug_id: parseInt(bug_id.value),
-    //  step: steps.value
-    //}
+    //get steps from form
+    const bugSteps = this.state.values.map((step, i) =>
+      ({ "steps_id": step.steps_id, "bug_id": bug.bug_id, "steps_number": i + 1, "step": step.value })
+    )
 
     this.setState({ error: null });
 
@@ -80,6 +78,7 @@ export default class AddBug extends Component {
 
     //update state
     this.context.addBug(bug);
+    this.context.addSteps(bugSteps)
 
     //go back to applications
     this.props.history.push('/bugs');
@@ -89,11 +88,29 @@ export default class AddBug extends Component {
     this.props.history.push('/bugs')
   };
 
+  handleStepChange = (index, e, stepId) => {
+    let values = [...this.state.values];
+    values[index].value = e.target.value;
+    values[index].steps_id = stepId + index;
+    this.setState({ values });
+  }
+
+  addStepClick() {
+    this.setState(prevState => ({
+      values: [...prevState.values, { value: null }]
+    }))
+  };
+
+  removeStepClick(i) {
+    let values = [...this.state.values];
+    values.splice(i, 1);
+    this.setState({ values });
+  };
+
   render() {
     const { error } = this.state;
     const newBugId = this.props.NewBugId;
     const newStepsId = this.props.NewStepsId;
-
 
     const applicationOptions = this.props.applications.map((application, i) =>
       <option value={application.application_id} key={i}>
@@ -117,8 +134,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="bug_name">
-              Bug Name
-              {' '}
+              Bug Name:
               <Required />
             </label>
             <input
@@ -132,8 +148,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="application_id">
-              Application
-              {' '}
+              Application:
               <Required />
             </label>
             <select
@@ -150,8 +165,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="ticket_number">
-              Ticket Number
-              {' '}
+              Ticket Number:
               <Required />
             </label>
             <input
@@ -165,8 +179,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="priority">
-              Priority
-              {' '}
+              Priority:
               <Required />
             </label>
             <select
@@ -185,8 +198,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="status">
-              Status
-              {' '}
+              Status:
               <Required />
             </label>
             <select
@@ -205,8 +217,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="environment">
-              Environment
-              {' '}
+              Environment:
             </label>
             <input
               type="text"
@@ -218,8 +229,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="notes">
-              Notes
-              {' '}
+              Notes:
             </label>
             <input
               type="text"
@@ -231,8 +241,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="reported_by">
-              Reported By
-              {' '}
+              Reported By:
             </label>
             <input
               type="text"
@@ -244,8 +253,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="reported_on">
-              Reported On
-              {' '}
+              Reported On:
             </label>
             <input
               type="text"
@@ -258,8 +266,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="expected_result">
-              Expected Result
-              {' '}
+              Expected Result:
             </label>
             <input
               type="text"
@@ -271,8 +278,7 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="actual_result">
-              Actual Result
-              {' '}
+              Actual Result:
             </label>
             <input
               type="text"
@@ -284,16 +290,35 @@ export default class AddBug extends Component {
 
           <div>
             <label htmlFor="steps">
-              Steps To Reproduce
-              {' '}
+              Steps To Reproduce:
             </label>
-
+            <input
+              type="button"
+              value="Add New Step"
+              onClick={() => this.addStepClick()}
+            />
+            {this.state.values.map((el, i) => (
+              <div key={i}>
+                <label htmlFor="steps">Step #{i + 1} </label>
+                <input
+                  type="text"
+                  name="steps"
+                  value={el.value || ''}
+                  onChange={e => this.handleStepChange(i, e, newStepsId)}
+                />
+                {' '}
+                <input
+                  type="button"
+                  value="Remove"
+                  onClick={() => this.removeStepClick(i)}
+                />
+              </div>
+            ))}
           </div>
 
           <div>
             <label htmlFor="developer">
-              Developer
-              {' '}
+              Developer:
             </label>
             <input
               type="text"
