@@ -10,7 +10,7 @@ export default function Landing() {
 
       <section>
         <h3>
-          What bedbugs can do for you?
+          What can bedbugs do for you?
         </h3>
         <div>
           <p>Have you ever been new to a project and dont know where to start?</p>

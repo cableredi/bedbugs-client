@@ -1,8 +1,8 @@
-.AddApplication__form {
+.UpdateApplication__form {
   @extend %form-shared;
 }
 
-.AddApplication__form {
+.UpdateApplication__form {
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
@@ -44,6 +44,6 @@
   box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
 }
 
-.AddApplication__form input[type=text] {
+.UpdateApplication__form input[type=text] {
   width: 370px;
 }

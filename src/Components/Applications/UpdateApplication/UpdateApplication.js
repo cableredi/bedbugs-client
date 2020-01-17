@@ -103,115 +103,120 @@ export default class UpdateApplication extends Component {
     return(
       <section className='section-page'>
         <h1>Update Application</h1>
+        
         <form
           className="AddApplication__form"
           onSubmit={this.handleSubmit}
         >
-          <input type="hidden" name="application_id" value={this.state.application_id} />
+           <ul className="flex-outer">
+            <li>
+              <input type="hidden" name="application_id" value={this.state.application_id} />
 
-          <div className='form__error' role='alert'>
-            {this.state.error && <p>{this.state.error.message}</p>}
-          </div>
+              <div className='form__error' role='alert'>
+                {this.state.error && <p>{this.state.error.message}</p>}
+              </div>
+            </li>
 
-          <div>
-            <label htmlFor="application_name">
-              Application Name
+            <li>
+              <label htmlFor="application_name">
+                Application Name
+                {' '}
+                <Required />
+              </label>
+              <input
+                type="text"
+                name="application_name"
+                id="application_name"
+                placeholder="Application Name"
+                value={this.state.application_name}
+                onChange={this.handleChangeApplicationName}
+                required
+              />
+            </li>
+
+            <li>
+              <label htmlFor="application_url">
+                Application URL
+                {' '}
+                <Required />
+              </label>
+              <input
+                type="text"
+                name="application_url"
+                id="application_url"
+                placeholder="Application URL"
+                value={this.state.application_url}
+                onChange={this.handleChangeApplicationUrl}
+                required
+              />
+            </li>
+
+            <li>
+              <label htmlFor="repository_prod">
+                Production Repository
+              </label>
+              <input
+                type="text"
+                name="repository_prod"
+                id="repository_prod"
+                placeholder="Production Repository"
+                value={this.state.repository_prod}
+                onChange={this.handleChangeRepositoryProd}
+              />
+            </li>
+
+            <li>
+              <label htmlFor="repository_test">
+                Test Repository
+              </label>
+              <input
+                type="text"
+                name="repository_test"
+                id="repository_test"
+                placeholder="Test Repository"
+                value={this.state.repository_test}
+                onChange={this.handleChangeRepositoryTest}
+              />
+            </li>
+
+            <li>
+              <label htmlFor="database_prod">
+                Production Database
+              </label>
+              <input
+                type="text"
+                name="database_prod"
+                id="database_prod"
+                placeholder="Production Database"
+                value={this.state.database_prod}
+                onChange={this.handleChangeDatabaseProd}
+              />
+            </li>
+
+            <li>
+              <label htmlFor="database_test">
+                Test Database
+              </label>
+              <input
+                type="text"
+                name="database_test"
+                id="database_test"
+                placeholder="Test Database"
+                value={this.state.database_test}
+                onChange={this.handleChangeDatabaseTest}
+              />
+            </li>
+
+            <li className="form__button-group">
+              <button type="button" onClick={this.handleClickCancel}>
+                Cancel
+              </button>
               {' '}
-              <Required />
-            </label>
-            <input
-              type="text"
-              name="application_name"
-              id="application_name"
-              placeholder="Application Name"
-              value={this.state.application_name}
-              onChange={this.handleChangeApplicationName}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="application_url">
-              Application URL
-              {' '}
-              <Required />
-            </label>
-            <input
-              type="text"
-              name="application_url"
-              id="application_url"
-              placeholder="Application URL"
-              value={this.state.application_url}
-              onChange={this.handleChangeApplicationUrl}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="repository_prod">
-              Production Repository
-            </label>
-            <input
-              type="text"
-              name="repository_prod"
-              id="repository_prod"
-              placeholder="Production Repository"
-              value={this.state.repository_prod}
-              onChange={this.handleChangeRepositoryProd}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="repository_test">
-              Test Repository
-            </label>
-            <input
-              type="text"
-              name="repository_test"
-              id="repository_test"
-              placeholder="Test Repository"
-              value={this.state.repository_test}
-              onChange={this.handleChangeRepositoryTest}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="database_prod">
-              Production Database
-            </label>
-            <input
-              type="text"
-              name="database_prod"
-              id="database_prod"
-              placeholder="Production Database"
-              value={this.state.database_prod}
-              onChange={this.handleChangeDatabaseProd}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="database_test">
-              Test Database
-            </label>
-            <input
-              type="text"
-              name="database_test"
-              id="database_test"
-              placeholder="Test Database"
-              value={this.state.database_test}
-              onChange={this.handleChangeDatabaseTest}
-            />
-          </div>
-
-          <div className="form__button-group">
-            <button type="button" onClick={this.handleClickCancel}>
-              Cancel
-            </button>
-            {' '}
-            <button type="submit">
-              Save
-            </button>
-          </div>
+              <button type="submit">
+                Save
+              </button>
+            </li>
+          </ul>
         </form>
       </section>
     )

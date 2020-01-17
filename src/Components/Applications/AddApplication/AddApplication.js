@@ -72,97 +72,101 @@ export default class AddApplication extends Component {
           className="AddApplication__form"
           onSubmit={this.handleSubmit}
         >
-          <input type="hidden" name="application_id" value={newApplicationId} />
+          <ul className="flex-outer">
+            <li>
+              <input type="hidden" name="application_id" value={newApplicationId} />
 
-          <div className='form__error' role='alert'>
-            {error && <p>{error.message}</p>}
-          </div>
+              <div className='form__error' role='alert'>
+                {error && <p>{error.message}</p>}
+              </div>
+            </li>
 
-          <div>
-            <label htmlFor="application_name">
-              Application Name:
-              <Required />
-            </label>
-            <input
-              type="text"
-              name="application_name"
-              id="application_name"
-              placeholder="Application Name"
-              required
-            />
-          </div>
+            <li>
+              <label htmlFor="application_name">
+                Application Name:
+                <Required />
+              </label>
+              <input
+                type="text"
+                name="application_name"
+                id="application_name"
+                placeholder="Application Name"
+                required
+              />
+            </li>
 
-          <div>
-            <label htmlFor="application_url">
-              Application URL:
-              <Required />
-            </label>
-            <input
-              type="text"
-              name="application_url"
-              id="application_url"
-              placeholder="Application URL"
-              required
-            />
-          </div>
+            <li>
+              <label htmlFor="application_url">
+                Application URL:
+                <Required />
+              </label>
+              <input
+                type="text"
+                name="application_url"
+                id="application_url"
+                placeholder="Application URL"
+                required
+              />
+            </li>
 
-          <div>
-            <label htmlFor="repository_prod">
-              Production Repository:
-            </label>
-            <input
-              type="text"
-              name="repository_prod"
-              id="repository_prod"
-              placeholder="Production Repository"
-            />
-          </div>
+            <li>
+              <label htmlFor="repository_prod">
+                Production Repository:
+              </label>
+              <input
+                type="text"
+                name="repository_prod"
+                id="repository_prod"
+                placeholder="Production Repository"
+              />
+            </li>
 
-          <div>
-            <label htmlFor="repository_test">
-              Test Repository:
-            </label>
-            <input
-              type="text"
-              name="repository_test"
-              id="repository_test"
-              placeholder="Test Repository"
-            />
-          </div>
+            <li>
+              <label htmlFor="repository_test">
+                Test Repository:
+              </label>
+              <input
+                type="text"
+                name="repository_test"
+                id="repository_test"
+                placeholder="Test Repository"
+              />
+            </li>
 
-          <div>
-            <label htmlFor="database_prod">
-              Production Database:
-            </label>
-            <input
-              type="text"
-              name="database_prod"
-              id="database_prod"
-              placeholder="Production Database"
-            />
-          </div>
+            <li>
+              <label htmlFor="database_prod">
+                Production Database:
+              </label>
+              <input
+                type="text"
+                name="database_prod"
+                id="database_prod"
+                placeholder="Production Database"
+              />
+            </li>
 
-          <div>
-            <label htmlFor="database_test">
-              Test Database:
-            </label>
-            <input
-              type="text"
-              name="database_test"
-              id="database_test"
-              placeholder="Production Database"
-            />
-          </div>
+            <li>
+              <label htmlFor="database_test">
+                Test Database:
+              </label>
+              <input
+                type="text"
+                name="database_test"
+                id="database_test"
+                placeholder="Production Database"
+              />
+            </li>
 
-          <div className="form__button-group">
-            <button type="button" onClick={this.handleClickCancel}>
-              Cancel
-            </button>
-            {' '}
-            <button type="submit">
-              Save
-            </button>
-          </div>
+            <li className="form__button-group">
+              <button type="button" onClick={this.handleClickCancel}>
+                Cancel
+              </button>
+              {' '}
+              <button type="submit">
+                Save
+              </button>
+            </li>
+          </ul>
         </form>
       </section>
     )

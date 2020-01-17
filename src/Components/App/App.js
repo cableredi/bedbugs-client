@@ -157,7 +157,7 @@ export default class App extends Component {
             </>
           }
         />
-        <div class="sectionSpacer"></div>
+        <div className="sectionSpacer"></div>
 
         <BedbugsContext.Provider value={contextValue}>
           <Switch>
