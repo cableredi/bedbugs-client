@@ -18,10 +18,9 @@ export default function Landing() {
             on?</p>
           <p>Or maybe you just like writing down and being able to keep track of your bugs</p>
         </div>
-        <p>
-          If so, bedbugs is for you!!!  Check it out as our new developer, Nugget, to see what bedbugs is all about. 
-        </p>
-        <button>Login to bedbugs as Nugget</button>
+        <h4>
+          If so, bedbugs is for you!!!
+        </h4>
       </section>
     </section>
   )

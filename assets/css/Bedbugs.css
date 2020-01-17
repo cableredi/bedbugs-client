@@ -14,24 +14,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.AddApplication__form, .AddBug__form, .registration-form, .login-form {
+.AddApplication__form, .AddBug__form, .UpdateBug__form, .registration-form, .login-form {
   text-align: center;
   margin: 0 auto;
 }
 
-.AddApplication__form input, .AddBug__form input, .registration-form input, .login-form input {
+.AddApplication__form input, .AddBug__form input, .UpdateBug__form input, .registration-form input, .login-form input {
   font-size: 16px;
-  margin-bottom: 10px;
 }
 
-.AddApplication__form label, .AddBug__form label, .registration-form label, .login-form label {
+.AddApplication__form label, .AddBug__form label, .UpdateBug__form label, .registration-form label, .login-form label {
   display: inline-block;
   text-align: right;
-  width: 200px;
   margin-right: 0.5em;
+  vertical-align: center;
 }
 
-.AddApplication__form select, .AddBug__form select, .registration-form select, .login-form select {
+.AddApplication__form select, .AddBug__form select, .UpdateBug__form select, .registration-form select, .login-form select {
   display: inline-block;
   color: #444;
   line-height: 1.1;
@@ -39,7 +38,6 @@ code {
   width: 200px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  margin: 0 0 10px 0;
   border: 1px solid #aaa;
   -webkit-box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
           box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
@@ -55,15 +53,15 @@ code {
   background-size: .65em auto, 100%;
 }
 
-.AddApplication__form select::-ms-expand, .AddBug__form select::-ms-expand, .registration-form select::-ms-expand, .login-form select::-ms-expand {
+.AddApplication__form select::-ms-expand, .AddBug__form select::-ms-expand, .UpdateBug__form select::-ms-expand, .registration-form select::-ms-expand, .login-form select::-ms-expand {
   display: none;
 }
 
-.AddApplication__form select:hover, .AddBug__form select:hover, .registration-form select:hover, .login-form select:hover {
+.AddApplication__form select:hover, .AddBug__form select:hover, .UpdateBug__form select:hover, .registration-form select:hover, .login-form select:hover {
   border-color: #888;
 }
 
-.AddApplication__form select:focus, .AddBug__form select:focus, .registration-form select:focus, .login-form select:focus {
+.AddApplication__form select:focus, .AddBug__form select:focus, .UpdateBug__form select:focus, .registration-form select:focus, .login-form select:focus {
   border-color: #aaa;
   -webkit-box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
           box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
@@ -72,31 +70,36 @@ code {
   outline: none;
 }
 
-.AddApplication__form select option, .AddBug__form select option, .registration-form select option, .login-form select option {
+.AddApplication__form select option, .AddBug__form select option, .UpdateBug__form select option, .registration-form select option, .login-form select option {
   font-weight: normal;
 }
 
-.AddApplication__form .form__fields, .AddBug__form .form__fields, .registration-form .form__fields, .login-form .form__fields {
+.AddApplication__form .form__form, .AddBug__form .form__form, .UpdateBug__form .form__form, .registration-form .form__form, .login-form .form__form {
+  border: 1px solid black;
+}
+
+.AddApplication__form .form__fields, .AddBug__form .form__fields, .UpdateBug__form .form__fields, .registration-form .form__fields, .login-form .form__fields {
   border: 1px solid black;
   padding: 10px;
 }
 
-.AddApplication__form .form__button-group, .AddBug__form .form__button-group, .registration-form .form__button-group, .login-form .form__button-group {
+.AddApplication__form .form__button-group, .AddBug__form .form__button-group, .UpdateBug__form .form__button-group, .registration-form .form__button-group, .login-form .form__button-group {
   margin-top: 20px;
 }
 
-.AddApplication__form .form__button, .AddBug__form .form__button, .registration-form .form__button, .login-form .form__button {
+.AddApplication__form .form__button, .AddBug__form .form__button, .UpdateBug__form .form__button, .registration-form .form__button, .login-form .form__button {
   margin-right: 10px;
 }
 
-.AddApplication__form .form__hint, .AddBug__form .form__hint, .registration-form .form__hint, .login-form .form__hint {
+.AddApplication__form .form__hint, .AddBug__form .form__hint, .UpdateBug__form .form__hint, .registration-form .form__hint, .login-form .form__hint {
   font-style: italic;
   font-size: .8rem;
 }
 
-.AddApplication__form .form__error, .AddBug__form .form__error, .registration-form .form__error, .login-form .form__error,
+.AddApplication__form .form__error, .AddBug__form .form__error, .UpdateBug__form .form__error, .registration-form .form__error, .login-form .form__error,
 .AddApplication__form .form__required,
 .AddBug__form .form__required,
+.UpdateBug__form .form__required,
 .registration-form .form__required,
 .login-form .form__required {
   font-style: italic;
@@ -107,12 +110,13 @@ code {
 
 .AddApplication__form .form__required,
 .AddBug__form .form__required,
+.UpdateBug__form .form__required,
 .registration-form .form__required,
 .login-form .form__required {
   vertical-align: super;
 }
 
-.applications .button {
+.applications .button, .bugs .button {
   margin: 20px auto;
   background-color: #F2F2F2;
   width: 200px;
@@ -123,8 +127,9 @@ code {
   text-align: center;
 }
 
-.applications .button:hover,
-.applications .button:focus {
+.applications .button:hover, .bugs .button:hover,
+.applications .button:focus,
+.bugs .button:focus {
   background-color: #CCD1D1;
   color: black;
   -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
@@ -169,17 +174,20 @@ ul {
 
 .section-page {
   text-align: center;
+  width: 100%;
 }
 
 @media (max-width: 400px) {
-  .section-page {
-    margin-top: 75px;
+  .sectionSpacer {
+    width: 100%;
+    height: 75px;
   }
 }
 
 @media (min-width: 401px) {
-  .section-page {
-    margin-top: 120px;
+  .sectionSpacer {
+    width: 100%;
+    height: 120px;
   }
 }
 
@@ -244,13 +252,13 @@ ul {
   padding: 0 0.5rem;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 360px) {
   .toolbar__navigation-items {
     display: none;
   }
 }
 
-@media (min-width: 321px) {
+@media (min-width: 361px) {
   .toolbar__toggle-button {
     display: none;
   }
@@ -389,6 +397,215 @@ ul {
 .applications-list__name {
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+.AddApplication__form {
+  border: 1px solid black;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  width: 500px;
+  background-color: lightgray;
+}
+
+label {
+  width: 200px;
+}
+
+.bugs ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.bugs li {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  width: 300px;
+  background: lightgray;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.bugs-list__name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.flex-outer li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px 0;
+}
+
+.flex-outer > li > label {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 120px;
+          flex: 1 0 120px;
+  max-width: 220px;
+}
+
+.flex-outer li button {
+  margin: 10px 10px;
+  background-color: #F2F2F2;
+  width: 200px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.flex-outer .form__button-group {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.flex-outer li button:hover,
+.flex-outer li button:focus {
+  background-color: #CCD1D1;
+  color: black;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+input[type=text] {
+  width: 370px;
+}
+
+.AddBug__form {
+  border: 1px solid black;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  width: 800px;
+  background-color: lightgray;
+}
+
+.AddBug__form-steps {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.AddBug__form-textarea label {
+  vertical-align: top;
+}
+
+.AddBug__form-textarea textarea {
+  width: 300px;
+  height: 100px;
+  padding: 12px 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+}
+
+.flex-outer li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px 0;
+}
+
+.flex-outer > li > label {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 120px;
+          flex: 1 0 120px;
+  max-width: 220px;
+}
+
+.flex-outer li button {
+  margin: 10px 10px;
+  background-color: #F2F2F2;
+  width: 200px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.flex-outer .form__button-group {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.flex-outer li button:hover,
+.flex-outer li button:focus {
+  background-color: #CCD1D1;
+  color: black;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+input[type=text] {
+  width: 370px;
+}
+
+.UpdateBug__form {
+  border: 1px solid black;
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  width: 800px;
+  background-color: lightgray;
+}
+
+.UpdateBug__form-steps {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.UpdateBug__form-textarea label {
+  vertical-align: top;
+}
+
+.UpdateBug__form-textarea textarea {
+  width: 300px;
+  height: 100px;
+  padding: 12px 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
 }
 
 .registration-form {

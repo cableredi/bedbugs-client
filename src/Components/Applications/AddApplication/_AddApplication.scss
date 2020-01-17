@@ -1,3 +1,16 @@
 .AddApplication__form {
   @extend %form-shared;
 }
+
+.AddApplication__form {
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  width: 500px;
+  background-color: $backgroundItems;
+}
+
+label {
+  width: 200px;
+}

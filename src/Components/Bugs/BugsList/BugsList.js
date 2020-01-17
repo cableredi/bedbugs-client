@@ -15,7 +15,7 @@ export default function BugsList(props) {
   return (
     <section className='section-page'>
       <h1>Bugs Summary</h1>
-      <div className="applications">
+      <div className="bugs">
         <ul>
           {bugItems}
         </ul>

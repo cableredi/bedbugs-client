@@ -67,7 +67,7 @@ export default class AddApplication extends Component {
 
     return(
       <section className='section-page'>
-        <h2>Add Application</h2>
+        <h1>Add Application</h1>
         <form
           className="AddApplication__form"
           onSubmit={this.handleSubmit}

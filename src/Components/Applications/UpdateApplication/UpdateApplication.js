@@ -102,7 +102,7 @@ export default class UpdateApplication extends Component {
   render() {
     return(
       <section className='section-page'>
-        <h2>Update Application</h2>
+        <h1>Update Application</h1>
         <form
           className="AddApplication__form"
           onSubmit={this.handleSubmit}

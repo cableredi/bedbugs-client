@@ -120,223 +120,221 @@ export default class AddBug extends Component {
 
     return (
       <section className='section-page'>
-        <h2>Add Bug</h2>
+        <h1>Add Bug</h1>
         <form
           className="AddBug__form"
           onSubmit={this.handleSubmit}
         >
-          <input type="hidden" name="bug_id" value={newBugId} />
-          <input type="hidden" name="steps_id" value={newStepsId} />
+          <ul className="flex-outer">
+            <li>
+              <input type="hidden" name="bug_id" value={newBugId} />
+              <input type="hidden" name="steps_id" value={newStepsId} />
 
-          <div className='form__error' role='alert'>
-            {error && <p>{error.message}</p>}
-          </div>
-
-          <div>
-            <label htmlFor="bug_name">
-              Bug Name:
-              <Required />
-            </label>
-            <input
-              type="text"
-              name="bug_name"
-              id="bug_name"
-              placeholder="Bug Name"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="application_id">
-              Application:
-              <Required />
-            </label>
-            <select
-              id='application_id'
-              name='application_id'
-              className='formSelect'
-              aria-label="Select an Application"
-              aria-required="true"
-            >
-              <option value=''>Application... </option>
-              {applicationOptions}
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="ticket_number">
-              Ticket Number:
-              <Required />
-            </label>
-            <input
-              type="text"
-              name="ticket_number"
-              id="ticket_number"
-              placeholder="Ticket Number"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="priority">
-              Priority:
-              <Required />
-            </label>
-            <select
-              id='priority'
-              name='priority'
-              className='formSelect'
-              aria-label="Select a Priority"
-              aria-required="true"
-            >
-              <option value="">Priority... </option>
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="status">
-              Status:
-              <Required />
-            </label>
-            <select
-              id='status'
-              name='status'
-              className='formSelect'
-              aria-label="Select a Status"
-              aria-required="true"
-            >
-              <option value="">Status... </option>
-              <option value="Open">Open</option>
-              <option value="In-Progress">In-Progress</option>
-              <option value="Closed">Closed</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="environment">
-              Environment:
-            </label>
-            <input
-              type="text"
-              name="environment"
-              id="environment"
-              placeholder="Environment"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="notes">
-              Notes:
-            </label>
-            <input
-              type="text"
-              name="notes"
-              id="notes"
-              placeholder="Notes"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="reported_by">
-              Reported By:
-            </label>
-            <input
-              type="text"
-              name="reported_by"
-              id="reported_by"
-              placeholder="Reported By"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="reported_on">
-              Reported On:
-            </label>
-            <input
-              type="text"
-              name="reported_on"
-              id="reported_on"
-              value={new Date()}
-              readOnly
-            />
-          </div>
-
-          <div>
-            <label htmlFor="expected_result">
-              Expected Result:
-            </label>
-            <input
-              type="text"
-              name="expected_result"
-              id="expected_result"
-              placeholder="Expected Result"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="actual_result">
-              Actual Result:
-            </label>
-            <input
-              type="text"
-              name="actual_result"
-              id="actual_result"
-              placeholder="Actual Result"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="steps">
-              Steps To Reproduce:
-            </label>
-            <input
-              type="button"
-              value="Add New Step"
-              onClick={() => this.addStepClick()}
-            />
-            {this.state.values.map((el, i) => (
-              <div key={i}>
-                <label htmlFor="steps">Step #{i + 1} </label>
-                <input
-                  type="text"
-                  name="steps"
-                  value={el.value || ''}
-                  onChange={e => this.handleStepChange(i, e, newStepsId)}
-                />
-                {' '}
-                <input
-                  type="button"
-                  value="Remove"
-                  onClick={() => this.removeStepClick(i)}
-                />
+              <div className='form__error' role='alert'>
+                {error && <p>{error.message}</p>}
               </div>
-            ))}
-          </div>
+            </li>
 
-          <div>
-            <label htmlFor="developer">
-              Developer:
-            </label>
-            <input
-              type="text"
-              name="developer"
-              id="developer"
-              placeholder="Developer"
-            />
-          </div>
+            <li>
+              <label htmlFor="bug_name">
+                Bug Name:
+                <Required />
+              </label>
+              <input
+                type="text"
+                name="bug_name"
+                id="bug_name"
+                placeholder="Bug Name"
+                required
+              />
+            </li>
 
-          <div className="form__button-group">
-            <button type="button" onClick={this.handleClickCancel}>
-              Cancel
+            <li>
+              <label htmlFor="application_id">
+                Application:
+                <Required />
+              </label>
+              <select
+                id='application_id'
+                name='application_id'
+                className='formSelect'
+                aria-label="Select an Application"
+                aria-required="true"
+              >
+                <option value=''>Application... </option>
+                {applicationOptions}
+              </select>
+            </li>
+
+            <li>
+              <label htmlFor="ticket_number">
+                Ticket Number:
+                <Required />
+              </label>
+              <input
+                type="text"
+                name="ticket_number"
+                id="ticket_number"
+                placeholder="Ticket Number"
+                required
+              />
+            </li>
+
+            <li>
+              <label htmlFor="priority">
+                Priority:
+                <Required />
+              </label>
+              <select
+                id='priority'
+                name='priority'
+                className='formSelect'
+                aria-label="Select a Priority"
+                aria-required="true"
+              >
+                <option value="">Priority... </option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+            </li>
+
+            <li>
+              <label htmlFor="status">
+                Status:
+                <Required />
+              </label>
+              <select
+                id='status'
+                name='status'
+                className='formSelect'
+                aria-label="Select a Status"
+                aria-required="true"
+              >
+                <option value="">Status... </option>
+                <option value="Open">Open</option>
+                <option value="In-Progress">In-Progress</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </li>
+
+            <li>
+              <label htmlFor="environment">
+                Environment:
+              </label>
+              <input
+                type="text"
+                name="environment"
+                id="environment"
+                placeholder="Environment"
+              />
+            </li>
+
+            <li className="AddBug__form-textarea">
+              <label htmlFor="notes">
+                Notes:
+              </label>
+              <textarea
+                name="notes"
+                id="notes"
+              />
+            </li>
+
+            <li>
+              <label htmlFor="reported_by">
+                Reported By:
+              </label>
+              <input
+                type="text"
+                name="reported_by"
+                id="reported_by"
+                placeholder="Reported By"
+              />
+            </li>
+
+            <li>
+              <label htmlFor="reported_on">
+                Reported On:
+              </label>
+              <input
+                type="text"
+                name="reported_on"
+                id="reported_on"
+                value={new Date().toLocaleDateString()}
+                readOnly
+              />
+            </li>
+
+            <li className="AddBug__form-textarea">
+              <label htmlFor="expected_result">
+                Expected Result:
+              </label>
+              <textarea
+                name="expected_result"
+                id="expected_result"
+              />
+            </li>
+
+            <li className="AddBug__form-textarea">
+              <label htmlFor="actual_result">
+                Actual Result:
+              </label>
+              <textarea
+                name="actual_result"
+                id="actual_result"
+              />
+            </li>
+
+            <li className="AddBug__form-steps">
+              <label htmlFor="steps">
+                Steps To Reproduce:
+              </label>
+              <button
+                type="button"
+                onClick={() => this.addStepClick()}
+              >
+                Add New Step
+              </button>
+              {this.state.values.map((el, i) => (
+                <div key={i}>
+                  <label htmlFor="steps">Step #{i + 1} </label>
+                  <input
+                    type="text"
+                    name="steps"
+                    value={el.value || ''}
+                    onChange={e => this.handleStepChange(i, e, newStepsId)}
+                  />
+                  {' '}
+                  <input
+                    type="button"
+                    value="X"
+                    onClick={() => this.removeStepClick(i)}
+                  />
+                </div>
+              ))}
+            </li>
+
+            <li>
+              <label htmlFor="developer">
+                Developer Assigned:
+              </label>
+              <input
+                type="text"
+                name="developer"
+                id="developer"
+                placeholder="Developer"
+              />
+            </li>
+
+            <li className="form__button-group">
+              <button type="button" onClick={this.handleClickCancel}>
+                Cancel
+              </button>
+              <button type="submit">
+                Save
             </button>
-            {' '}
-            <button type="submit">
-              Save
-            </button>
-          </div>
+            </li>
+          </ul>
         </form>
       </section>
     )
