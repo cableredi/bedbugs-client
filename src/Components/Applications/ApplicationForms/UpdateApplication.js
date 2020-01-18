@@ -74,7 +74,6 @@ export default class UpdateApplication extends Component {
   }
 
   updateRepositoryProd(repository_prod) {
-    console.log('update: ', repository_prod)
     this.setState({
       repository_prod: {
         value: repository_prod,

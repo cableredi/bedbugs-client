@@ -61,7 +61,6 @@ export default class AddApplication extends Component {
   }
 
   updateRepositoryProd(repository_prod) {
-  console.log('update', repository_prod)
     this.setState({
       repository_prod: {
         value: repository_prod,
@@ -103,7 +102,7 @@ export default class AddApplication extends Component {
 
     //put fields in object
     const application = {
-      application_id: parseInt(this.props.NewApplicationId),
+      application_id: this.props.NewApplicationId,
       application_name: this.state.application_name.value,
       application_url: this.state.application_url.value,
       repository_prod: this.state.repository_prod.value,
@@ -282,9 +281,9 @@ export default class AddApplication extends Component {
 }
 
 AddApplication.defaultProps = {
-  NewApplicationId: '',
+  NewApplicationId: 0,
 }
 
 AddApplication.propTypes = {
-  newApplicationId: PropTypes.number.isRequired
+  NewApplicationId: PropTypes.number.isRequired
 }

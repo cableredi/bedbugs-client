@@ -17,7 +17,7 @@ import UpdateBug from '../Bugs/BugForms/UpdateBug';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function getNewApplicationId(applications) {
-  return Math.max.apply(Math, applications.map(function (appl) { return appl.application_id + 1 }))
+  return Math.max.apply(Math, applications.map(function (appl) { return parseInt(appl.application_id + 1) }))
 }
 
 function getNewBugId(bugs) {

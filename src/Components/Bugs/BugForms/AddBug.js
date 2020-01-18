@@ -78,7 +78,7 @@ export default class AddBug extends Component {
   updateApplicationId(application_id) {
     this.setState({
       application_id: {
-        value: application_id,
+        value: parseInt(application_id),
         touched: true
       }
     })
@@ -246,7 +246,7 @@ export default class AddBug extends Component {
   }
 
   validateApplication() {
-    const applicationId = this.state.application_id.value.trim();
+    const applicationId = this.state.application_id.value;
 
     if (applicationId.length === 0) {
       return { error: true, message: 'Application is Required' }
