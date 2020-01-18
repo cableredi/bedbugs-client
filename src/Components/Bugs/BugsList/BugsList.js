@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AddButton from '../../AddButton/AddButton';
 import BugsSummary from '../BugsSummary/BugsSummary';
+import PropTypes from 'prop-types';
 
 export default function BugsList(props) {
   const { bugs } = props;
@@ -31,4 +32,12 @@ export default function BugsList(props) {
       </div>
     </section>
   )
+}
+
+BugsList.defaultProps = {
+  bugs: [],
+}
+
+BugsList.propTypes = {
+  bugs: PropTypes.array.isRequired,
 }

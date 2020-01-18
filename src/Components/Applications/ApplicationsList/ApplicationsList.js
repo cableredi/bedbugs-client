@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AddButton from '../../AddButton/AddButton';
 import ApplicationsSummary from '../ApplicationsSummary/ApplicationsSummary';
+import PropTypes from 'prop-types';
 
 export default function ApplicationsList(props) {
   const { applications, bugs } = props;
@@ -31,4 +32,14 @@ export default function ApplicationsList(props) {
       </div>
     </section>
   )
+}
+
+ApplicationsList.defaultProps = {
+  applications: [],
+  bugs: [],
+}
+
+ApplicationsList.propTypes = {
+  applications: PropTypes.array.isRequired,
+  bugs: PropTypes.array.isRequired
 }

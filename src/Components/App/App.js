@@ -12,8 +12,8 @@ import ApplicationsList from '../Applications/ApplicationsList/ApplicationsList'
 import AddApplication from '../Applications/ApplicationForms/AddApplication';
 import UpdateApplication from '../Applications/ApplicationForms/UpdateApplication';
 import BugsList from '../Bugs/BugsList/BugsList';
-import AddBug from '../Bugs/AddBug/AddBug';
-import UpdateBug from '../Bugs/UpdateBug/UpdateBug';
+import AddBug from '../Bugs/BugForms/AddBug';
+import UpdateBug from '../Bugs/BugForms/UpdateBug';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function getNewApplicationId(applications) {
@@ -21,7 +21,7 @@ function getNewApplicationId(applications) {
 }
 
 function getNewBugId(bugs) {
-  return Math.max.apply(Math, bugs.map(function (bug) { return bug.bug_id + 1 }))
+  return Math.max.apply(Math, bugs.map(function (bug) { return parseInt(bug.bug_id + 1) }))
 }
 function getNewStepsId(steps) {
   return Math.max.apply(Math, steps.map(function (step) { return step.steps_id + 1 }))

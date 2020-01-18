@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BedbugsContext from '../../../BedbugsContext';
-import ValidateError from './ValidateError';
+import ValidateError from '../../ValidateError/ValidateError';
+import PropTypes from 'prop-types';
 const { isWebUri } = require('valid-url');
 
 const Required = () => (
@@ -60,6 +61,7 @@ export default class AddApplication extends Component {
   }
 
   updateRepositoryProd(repository_prod) {
+  console.log('update', repository_prod)
     this.setState({
       repository_prod: {
         value: repository_prod,
@@ -277,4 +279,12 @@ export default class AddApplication extends Component {
       </section>
     )
   }
+}
+
+AddApplication.defaultProps = {
+  NewApplicationId: '',
+}
+
+AddApplication.propTypes = {
+  newApplicationId: PropTypes.number.isRequired
 }

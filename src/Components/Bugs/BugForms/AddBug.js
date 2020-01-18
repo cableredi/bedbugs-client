@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import BedbugsContext from '../../../BedbugsContext';
+import ValidateError from '../../ValidateError/ValidateError';
+import PropTypes from 'prop-types';
 
 const Required = () => (
   <span className='form__required'>*</span>
@@ -8,48 +10,186 @@ const Required = () => (
 export default class AddBug extends Component {
   static contextType = BedbugsContext;
 
-  state = {
-    error: null,
-    values: [{ steps_id: null, value: null }],
+  constructor(props) {
+    super(props);
+    this.state = {
+      values: [{ steps_id: null, value: null }],
+      bug_name: {
+        value: '',
+        touched: false
+      },
+      application_id: {
+        value: '',
+        touched: false
+      },
+      ticket_number: {
+        value: '',
+        touched: false
+      },
+      priority: {
+        value: '',
+        touched: false
+      },
+      status: {
+        value: '',
+        touched: false
+      },
+      environment: {
+        value: '',
+        touched: false
+      },
+      notes: {
+        value: '',
+        touched: false
+      },
+      reported_by: {
+        value: '',
+        touched: false
+      },
+      reported_on: {
+        value: '',
+        touched: false
+      },
+      expected_result: {
+        value: '',
+        touched: false
+      },
+      actual_result: {
+        value: '',
+        touched: false
+      },
+      developer: {
+        value: '',
+        touched: false
+      },
+    }
+  }
+
+  /* Update Form State */
+  updateBugName(bug_name) {
+    this.setState({
+      bug_name: {
+        value: bug_name,
+        touched: true
+      }
+    })
+  }
+
+  updateApplicationId(application_id) {
+    this.setState({
+      application_id: {
+        value: application_id,
+        touched: true
+      }
+    })
+  }
+
+  updateTicketNumber(ticket_number) {
+    this.setState({
+      ticket_number: {
+        value: ticket_number,
+        touched: true
+      }
+    })
+  }
+
+  updatePriority(priority) {
+    this.setState({
+      priority: {
+        value: priority,
+        touched: true
+      }
+    })
+  }
+
+  updateStatus(status) {
+    this.setState({
+      status: {
+        value: status,
+        touched: true
+      }
+    })
+  }
+  
+  updateEnvironment(environment) {
+    this.setState({
+      environment: {
+        value: environment,
+        touched: true
+      }
+    })
+  }
+
+  updateNotes(notes) {
+    this.setState({
+      notes: {
+        value: notes,
+        touched: true
+      }
+    })
+  }
+
+  updateReportedby(reported_by) {
+    this.setState({
+      reported_by: {
+        value: reported_by,
+        touched: true
+      }
+    })
+  }
+  updateReportedOn(reported_on) {
+    this.setState({
+      reported_on: {
+        value: reported_on,
+        touched: true
+      }
+    })
+  }
+  updateExpectedResult(expected_result) {
+    this.setState({
+      expected_result: {
+        value: expected_result,
+        touched: true
+      }
+    })
+  }
+  updateActualResult(actual_result) {
+    this.setState({
+      actual_result: {
+        value: actual_result,
+        touched: true
+      }
+    })
+  }
+  updateDeveloper(developer) {
+    this.setState({
+      developer: {
+        value: developer,
+        touched: true
+      }
+    })
   }
 
   handleSubmit = e => {
     e.preventDefault();
 
-    //Get form fields
-    const {
-      bug_id,
-      bug_name,
-      application_id,
-      ticket_number,
-      priority,
-      status,
-      environment,
-      notes,
-      reported_by,
-      reported_on,
-      expected_result,
-      actual_result,
-      developer
-    } = e.target;
-
     //put fields in object
     const bug = {
-      bug_id: parseInt(bug_id.value),
-      bug_name: bug_name.value,
-      application_id: parseInt(application_id.value),
-      ticket_number: ticket_number.value,
-      priority: priority.value,
-      status: status.value,
-      environment: environment.value,
-      notes: notes.value,
-      reported_by: reported_by.value,
-      reported_on: reported_on.value,
-      expected_result: expected_result.value,
-      actual_result: actual_result.value,
-      developer: developer.value,
+      bug_id: this.props.NewBugId,
+      bug_name: this.state.bug_name.value,
+      application_id: this.state.application_id.value,
+      ticket_number: this.state.ticket_number.value,
+      priority: this.state.priority.value,
+      status: this.state.status.value,
+      environment: this.state.environment.value,
+      notes: this.state.notes.value,
+      reported_by: this.state.reported_by.value,
+      reported_on: new Date(),
+      expected_result: this.state.expected_result.value,
+      actual_result: this.state.actual_result.value,
+      developer: this.state.developer.value,
       developer_notes: '',
-      last_updated: '',
+      last_updated: new Date(),
     };
 
     //get steps from form
@@ -57,24 +197,7 @@ export default class AddBug extends Component {
       ({ "steps_id": step.steps_id, "bug_id": bug.bug_id, "steps_number": i + 1, "step": step.value })
     )
 
-    this.setState({ error: null });
-
     // place holder to update database
-
-    //reset fields
-    bug_id.value = undefined;
-    bug_name.value = '';
-    application_id.value = undefined;
-    ticket_number.value = '';
-    priority.value = '';
-    status.value = '';
-    environment.value = '';
-    notes.value = '';
-    reported_by.value = '';
-    reported_on.value = new Date();
-    expected_result.value = '';
-    actual_result.value = '';
-    developer.value = '';
 
     //update state
     this.context.addBug(bug);
@@ -107,8 +230,75 @@ export default class AddBug extends Component {
     this.setState({ values });
   };
 
+  validateBugName() {
+    const bugName = this.state.bug_name.value.trim();
+
+    if (bugName.length === 0) {
+      return { error: true, message: 'Bug Name is Required' }
+    } else if (bugName.length < 3) {
+      return { error: true, message: 'Bug Name must be at least 3 characters long' };
+    }
+
+    return { error: false, message: '' }
+  }
+
+  validateApplication() {
+    const applicationId = this.state.application_id.value.trim();
+
+    if (applicationId.length === 0) {
+      return { error: true, message: 'Application is Required' }
+    }
+
+    return { error: false, message: '' }
+  }
+
+  validateTicketNumber() {
+    const ticketNumber = this.state.ticket_number.value.trim();
+
+    if (ticketNumber.length === 0) {
+      return { error: true, message: 'Ticket Number is Required' }
+    }
+
+    return { error: false, message: '' }
+  }
+
+  validatePriority() {
+    const priority = this.state.priority.value.trim();
+    if (priority.length === 0) {
+      return { error: true, message: 'Priority is Required' }
+    }
+
+    return { error: false, message: '' }
+  }
+
+  validateStatus() {
+    const status = this.state.status.value.trim();
+
+    if (status.length === 0) {
+      return { error: true, message: 'Status is Required' }
+    }
+
+    return { error: false, message: '' }
+  }
+
   render() {
-    const { error } = this.state;
+    let bugButtonDisabled = true;
+
+    const BugNameError = this.validateBugName();
+    const ApplicationError = this.validateApplication();
+    const TicketNumberError = this.validateTicketNumber();
+    const PriorityError = this.validatePriority();
+    const StatusError = this.validateStatus();
+
+    if (!BugNameError.error || 
+      !ApplicationError.error|| 
+      !TicketNumberError.error|| 
+      !PriorityError.error|| 
+      !StatusError.error) 
+    {
+      bugButtonDisabled = false;
+    }
+
     const newBugId = this.props.NewBugId;
     const newStepsId = this.props.NewStepsId;
 
@@ -129,10 +319,6 @@ export default class AddBug extends Component {
             <li>
               <input type="hidden" name="bug_id" value={newBugId} />
               <input type="hidden" name="steps_id" value={newStepsId} />
-
-              <div className='form__error' role='alert'>
-                {error && <p>{error.message}</p>}
-              </div>
             </li>
 
             <li>
@@ -145,8 +331,10 @@ export default class AddBug extends Component {
                 name="bug_name"
                 id="bug_name"
                 placeholder="Bug Name"
+                onChange={e => this.updateBugName(e.target.value)}
                 required
               />
+              {this.state.bug_name.touched && <ValidateError message={BugNameError.message} />}
             </li>
 
             <li>
@@ -160,10 +348,12 @@ export default class AddBug extends Component {
                 className='formSelect'
                 aria-label="Select an Application"
                 aria-required="true"
+                onChange={e => this.updateApplicationId(e.target.value)}
               >
                 <option value=''>Application... </option>
                 {applicationOptions}
               </select>
+              {this.state.application_id.touched && <ValidateError message={ApplicationError.message} />}
             </li>
 
             <li>
@@ -176,8 +366,10 @@ export default class AddBug extends Component {
                 name="ticket_number"
                 id="ticket_number"
                 placeholder="Ticket Number"
+                onChange={e => this.updateTicketNumber(e.target.value)}
                 required
               />
+              {this.state.ticket_number.touched && <ValidateError message={TicketNumberError.message} />}
             </li>
 
             <li>
@@ -191,12 +383,14 @@ export default class AddBug extends Component {
                 className='formSelect'
                 aria-label="Select a Priority"
                 aria-required="true"
+                onChange={e => this.updatePriority(e.target.value)}
               >
                 <option value="">Priority... </option>
                 <option value="High">High</option>
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
               </select>
+              {this.state.priority.touched && <ValidateError message={PriorityError.message} />}
             </li>
 
             <li>
@@ -210,12 +404,14 @@ export default class AddBug extends Component {
                 className='formSelect'
                 aria-label="Select a Status"
                 aria-required="true"
+                onChange={e => this.updateStatus(e.target.value)}
               >
                 <option value="">Status... </option>
                 <option value="Open">Open</option>
                 <option value="In-Progress">In-Progress</option>
                 <option value="Closed">Closed</option>
               </select>
+              {this.state.status.touched && <ValidateError message={StatusError.message} />}
             </li>
 
             <li>
@@ -330,13 +526,28 @@ export default class AddBug extends Component {
               <button type="button" onClick={this.handleClickCancel}>
                 Cancel
               </button>
-              <button type="submit">
+              <button
+                type="submit"
+                disabled={bugButtonDisabled}
+              >
                 Save
-            </button>
+              </button>
             </li>
           </ul>
         </form>
       </section>
     )
   }
+}
+
+AddBug.defaultProps = {
+  NewBugId: '',
+  NewStepsId: '',
+  applications: [],
+}
+
+AddBug.propTypes = {
+  NewBugId: PropTypes.number.isRequired,
+  NewStepsId: PropTypes.number.isRequired,
+  applications: PropTypes.array.isRequired
 }

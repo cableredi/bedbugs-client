@@ -49,6 +49,11 @@
   box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
 }
 
+.flex-outer li div {
+  display: block;
+  margin-left: 230px;
+}
+
 .UpdateApplication__form input[type=text] {
   width: 370px;
 }

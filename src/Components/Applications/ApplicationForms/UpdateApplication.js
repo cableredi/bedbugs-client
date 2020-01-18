@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import BedbugsContext from '../../../BedbugsContext';
-import ValidateError from './ValidateError';
+import ValidateError from '../../ValidateError/ValidateError';
+import PropTypes from 'prop-types';
+
 const { isWebUri } = require('valid-url');
 
 const Required = () => (
@@ -72,6 +74,7 @@ export default class UpdateApplication extends Component {
   }
 
   updateRepositoryProd(repository_prod) {
+    console.log('update: ', repository_prod)
     this.setState({
       repository_prod: {
         value: repository_prod,
@@ -108,23 +111,22 @@ export default class UpdateApplication extends Component {
   }
 
   componentDidMount() {
-  this.setState({
-    application_id: { value:this.props.application.application_id },
-    application_url: { value:this.props.application.application_url},
-    application_name: { value:this.props.application.application_name},
-    repository_prod: { value:this.props.application.repository_prod},
-    repository_test: { value:this.props.application.repository_test},
-    database_prod: { value:this.props.application.database_prod},
-    database_test: { value:this.props.application.database_test},
-  })
+    this.setState({
+      application_id: { value: this.props.application.application_id },
+      application_url: { value: this.props.application.application_url },
+      application_name: { value: this.props.application.application_name },
+      repository_prod: { value: this.props.application.repository_prod },
+      repository_test: { value: this.props.application.repository_test },
+      database_prod: { value: this.props.application.database_prod },
+      database_test: { value: this.props.application.database_test },
+    })
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    const application_id = this.state.application_id;
 
     const newApplication = {
-      application_id: application_id,
+      application_id: this.state.application_id.value,
       application_name: this.state.application_name.value,
       application_url: this.state.application_url.value,
       repository_prod: this.state.repository_prod.value,
@@ -133,8 +135,8 @@ export default class UpdateApplication extends Component {
       database_test: this.state.database_test.value,
     };
 
-    this.resetFields(newApplication);
     this.context.updateApplication(newApplication);
+    this.resetFields(newApplication);
     this.props.history.push('/applications');
   };
 
@@ -187,7 +189,6 @@ export default class UpdateApplication extends Component {
     if (!ApplicationNameError.error || !ApplicationURLError.error) {
       applicationButtonDisabled = false;
     }
-    console.log('state', this.state)
 
     return (
       <section className='section-page'>
@@ -311,4 +312,12 @@ export default class UpdateApplication extends Component {
       </section>
     )
   }
+}
+
+UpdateApplication.defaultProps = {
+  application: {},
+}
+
+UpdateApplication.propTypes = {
+  application: PropTypes.object.isRequired,
 }
