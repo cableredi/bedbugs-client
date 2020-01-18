@@ -34,7 +34,7 @@ export default function BugsSummary(props) {
         <span className="bold">Reported Date: </span> <Moment format="MM/DD/YYYY">{bugs.reported_on}</Moment>
       </div>
       <div>
-        <span className="bold">Assigned To: </span> {bugs.developer}
+        <span className="bold">Developer Assigned To: </span> {bugs.developer}
       </div>
     </>
   )

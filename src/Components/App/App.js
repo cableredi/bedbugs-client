@@ -114,7 +114,6 @@ export default class App extends Component {
   }
 
   updateBug = updatedBug => {
-    console.log('app updateBug', updatedBug)
     this.setState({
       bugs: this.state.bugs.map(bug =>
         (bug.bug_id !== updatedBug.bug_id) ? bug : updatedBug

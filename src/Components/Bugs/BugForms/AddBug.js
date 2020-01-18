@@ -188,7 +188,6 @@ export default class AddBug extends Component {
       expected_result: this.state.expected_result.value,
       actual_result: this.state.actual_result.value,
       developer: this.state.developer.value,
-      developer_notes: '',
       last_updated: new Date(),
     };
 
@@ -426,6 +425,7 @@ export default class AddBug extends Component {
                 name="environment"
                 id="environment"
                 placeholder="Environment"
+                onChange={e => this.updateEnvironment(e.target.value)}
               />
             </li>
 
@@ -436,6 +436,7 @@ export default class AddBug extends Component {
               <textarea
                 name="notes"
                 id="notes"
+                onChange={e => this.updateNotes(e.target.value)}
               />
             </li>
 
@@ -448,6 +449,7 @@ export default class AddBug extends Component {
                 name="reported_by"
                 id="reported_by"
                 placeholder="Reported By"
+                onChange={e => this.updateReportedby(e.target.value)}
               />
             </li>
 
@@ -471,6 +473,7 @@ export default class AddBug extends Component {
               <textarea
                 name="expected_result"
                 id="expected_result"
+                onChange={e => this.updateExpectedResult(e.target.value)}
               />
             </li>
 
@@ -481,6 +484,7 @@ export default class AddBug extends Component {
               <textarea
                 name="actual_result"
                 id="actual_result"
+                onChange={e => this.updateActualResult(e.target.value)}
               />
             </li>
 
@@ -515,13 +519,14 @@ export default class AddBug extends Component {
 
             <li>
               <label htmlFor="developer">
-                Developer Assigned:
+                Developer Assigned To:
               </label>
               <input
                 type="text"
                 name="developer"
                 id="developer"
                 placeholder="Developer"
+                onChange={e => this.updateDeveloper(e.target.value)}
               />
             </li>
 
