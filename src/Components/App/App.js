@@ -9,8 +9,8 @@ import SideDrawer from '../Nav/SideDrawer/SideDrawer'
 import Backdrop from '../Nav/Backdrop/Backdrop';
 import Landing from '../Landing/Landing';
 import ApplicationsList from '../Applications/ApplicationsList/ApplicationsList';
-import AddApplication from '../Applications/AddApplication/AddApplication';
-import UpdateApplication from '../Applications/UpdateApplication/UpdateApplication';
+import AddApplication from '../Applications/ApplicationForms/AddApplication';
+import UpdateApplication from '../Applications/ApplicationForms/UpdateApplication';
 import BugsList from '../Bugs/BugsList/BugsList';
 import AddBug from '../Bugs/AddBug/AddBug';
 import UpdateBug from '../Bugs/UpdateBug/UpdateBug';

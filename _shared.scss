@@ -77,7 +77,8 @@
   }
 
   .form__error,
-  .form__required {
+  .form__required,
+  .form__input-error {
     font-style: italic;
     font-size: .8rem;
     color: red;

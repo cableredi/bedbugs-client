@@ -33,6 +33,11 @@
   text-align: center;
 }
 
+.flex-outer li div {
+  display: block;
+  margin-left: 230px;
+}
+
 .flex-outer .form__button-group {
   justify-content: center;
 }
