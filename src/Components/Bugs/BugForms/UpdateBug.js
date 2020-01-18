@@ -24,20 +24,17 @@ export default class UpdateBug extends Component {
         touched: false
       },
       application_id: {
-        value: '',
-        touched: false
+        value: ''
       },
       ticket_number: {
         value: '',
         touched: false
       },
       priority: {
-        value: '',
-        touched: false
+        value: ''
       },
       status: {
-        value: '',
-        touched: false
+        value: ''
       },
       environment: {
         value: '',
@@ -91,8 +88,7 @@ export default class UpdateBug extends Component {
   updateApplicationId(application_id) {
     this.setState({
       application_id: {
-        value: application_id,
-        touched: true
+        value: parseInt(application_id),
       }
     })
   }
@@ -110,7 +106,6 @@ export default class UpdateBug extends Component {
     this.setState({
       priority: {
         value: priority,
-        touched: true
       }
     })
   }
@@ -119,7 +114,6 @@ export default class UpdateBug extends Component {
     this.setState({
       status: {
         value: status,
-        touched: true
       }
     })
   }
@@ -227,21 +221,21 @@ export default class UpdateBug extends Component {
     e.preventDefault();
 
     const updatedBug = {
-      bug_id: this.state.bug_id,
-      bug_name: this.state.bug_name,
-      application_id: this.state.application_id,
-      ticket_number: this.state.ticket_number,
-      priority: this.state.priority,
-      status: this.state.status,
-      environment: this.state.environment,
-      notes: this.state.notes,
-      reported_by: this.state.reported_by,
-      reported_on: this.state.reported_on,
-      expected_result: this.state.expected_result,
-      actual_result: this.state.actual_result,
-      developer: this.state.developer,
-      developer_notes: this.state.developer_notes,
-      last_updated: this.state.last_updated,
+      bug_id: this.state.bug_id.value,
+      bug_name: this.state.bug_name.value,
+      application_id: this.state.application_id.value,
+      ticket_number: this.state.ticket_number.value,
+      priority: this.state.priority.value,
+      status: this.state.status.value,
+      environment: this.state.environment.value,
+      notes: this.state.notes.value,
+      reported_by: this.state.reported_by.value,
+      reported_on: this.state.reported_on.value,
+      expected_result: this.state.expected_result.value,
+      actual_result: this.state.actual_result.value,
+      developer: this.state.developer.value,
+      developer_notes: this.state.developer_notes.value,
+      last_updated: this.state.last_updated.value,
     };
 
     //get steps from state
@@ -323,7 +317,7 @@ export default class UpdateBug extends Component {
   }
 
   validateApplication() {
-    const applicationId = this.state.application_id.value;
+    const applicationId = this.state.application_id;
 
     if (applicationId.length === 0) {
       return { error: true, message: 'Application is Required' }
@@ -364,7 +358,6 @@ export default class UpdateBug extends Component {
   }
 
   render() {
-
     let bugButtonDisabled = true;
 
     const BugNameError = this.validateBugName();
@@ -381,7 +374,7 @@ export default class UpdateBug extends Component {
       bugButtonDisabled = false;
     }
 
-    const applicationOptions = this.props.applications.map((application, i) =>
+    const applicationOptions = this.props.applications.map((application, i) => 
       <option
         value={application.application_id}
         key={i}
@@ -467,7 +460,7 @@ export default class UpdateBug extends Component {
                 className='formSelect'
                 aria-label="Select a Priority"
                 aria-required="true"
-                value={this.state.priority}
+                value={this.state.priority.value}
                 onChange={e => this.updatePriority(e.target.value)}
               >
                 <option value="">Priority... </option>
@@ -489,7 +482,7 @@ export default class UpdateBug extends Component {
                 className='formSelect'
                 aria-label="Select a Status"
                 aria-required="true"
-                value={this.state.status}
+                value={this.state.status.value}
                 onChange={e => this.updateStatus(e.target.value)}
               >
                 <option value="">Status... </option>
