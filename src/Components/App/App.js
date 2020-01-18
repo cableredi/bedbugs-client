@@ -167,72 +167,72 @@ export default class App extends Component {
               component={Landing}
             />
 
-            <Route
-              exact path='/applications'
-              render={(routeProps) =>
-                <ApplicationsList
-                  applications={this.state.applications}
-                  bugs={this.state.bugs}
-                  {...routeProps}
-                />
-              }
-            />
+              <Route
+                exact path='/applications'
+                render={(routeProps) =>
+                  <ApplicationsList
+                    applications={this.state.applications}
+                    bugs={this.state.bugs}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            <Route
-              exact path='/addapplication'
-              component={(routeProps) =>
-                <AddApplication
-                  NewApplicationId={getNewApplicationId(this.state.applications)}
-                  {...routeProps}
-                />
-              }
-            />
+              <Route
+                exact path='/addapplication'
+                component={(routeProps) =>
+                  <AddApplication
+                    NewApplicationId={getNewApplicationId(this.state.applications)}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            <Route
-              exact path='/updateapplication/:application_id'
-              component={(routeProps) =>
-                <UpdateApplication
-                  application={this.state.applications.find(appl => appl.application_id === Number(routeProps.match.params.application_id))}
-                  {...routeProps}
-                />
-              }
-            />
+              <Route
+                exact path='/updateapplication/:application_id'
+                component={(routeProps) =>
+                  <UpdateApplication
+                    application={this.state.applications.find(appl => appl.application_id === Number(routeProps.match.params.application_id))}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            <Route
-              exact path='/bugs'
-              render={(routeProps) =>
-                <BugsList
-                  bugs={this.state.bugs}
-                  {...routeProps}
-                />
-              }
-            />
+              <Route
+                exact path='/bugs'
+                render={(routeProps) =>
+                  <BugsList
+                    bugs={this.state.bugs}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            <Route
-              exact path='/addbug'
-              component={(routeProps) =>
-                <AddBug
-                  NewBugId={getNewBugId(this.state.bugs)}
-                  NewStepsId={getNewStepsId(this.state.steps)}
-                  applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
-                  {...routeProps}
-                />
-              }
-            />
+              <Route
+                exact path='/addbug'
+                component={(routeProps) =>
+                  <AddBug
+                    NewBugId={getNewBugId(this.state.bugs)}
+                    NewStepsId={getNewStepsId(this.state.steps)}
+                    applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            <Route
-              exact path='/updatebug/:bug_id'
-              component={(routeProps) =>
-                <UpdateBug
-                  bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
-                  applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
-                  steps={this.state.steps.filter(step => step.bug_id === Number(routeProps.match.params.bug_id))}
-                  NewStepsId={getNewStepsId(this.state.steps)}
-                  {...routeProps}
-                />
-              }
-            />
-
+              <Route
+                exact path='/updatebug/:bug_id'
+                component={(routeProps) =>
+                  <UpdateBug
+                    bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
+                    applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
+                    steps={this.state.steps.filter(step => step.bug_id === Number(routeProps.match.params.bug_id))}
+                    NewStepsId={getNewStepsId(this.state.steps)}
+                    {...routeProps}
+                  />
+                }
+              />
+            
             <Route
               component={NotFoundPage}
             />

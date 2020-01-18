@@ -192,10 +192,13 @@ export default class AddBug extends Component {
       last_updated: new Date(),
     };
 
-    //get steps from form
-    const bugSteps = this.state.values.map((step, i) =>
-      ({ "steps_id": step.steps_id, "bug_id": bug.bug_id, "steps_number": i + 1, "step": step.value })
-    )
+    //get steps from state
+    const bugSteps = this.state.values.map((step, i) => ({ 
+      "steps_id": step.steps_id, 
+      "bug_id": bug.bug_id, 
+      "steps_number": i + 1, 
+      "step": step.value 
+    }))
 
     // place holder to update database
 
