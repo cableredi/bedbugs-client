@@ -110,7 +110,7 @@ export default class AddBug extends Component {
       }
     })
   }
-  
+
   updateEnvironment(environment) {
     this.setState({
       environment: {
@@ -192,11 +192,11 @@ export default class AddBug extends Component {
     };
 
     //get steps from state
-    const bugSteps = this.state.values.map((step, i) => ({ 
-      "steps_id": step.steps_id, 
-      "bug_id": bug.bug_id, 
-      "steps_number": i + 1, 
-      "step": step.value 
+    const bugSteps = this.state.values.map((step, i) => ({
+      "steps_id": step.steps_id,
+      "bug_id": bug.bug_id,
+      "steps_number": i + 1,
+      "step": step.value
     }))
 
     // place holder to update database
@@ -247,7 +247,7 @@ export default class AddBug extends Component {
   validateApplication() {
     const applicationId = this.state.application_id.value;
 
-    if (applicationId.length === 0) {
+    if (!applicationId) {
       return { error: true, message: 'Application is Required' }
     }
 
@@ -266,6 +266,7 @@ export default class AddBug extends Component {
 
   validatePriority() {
     const priority = this.state.priority.value.trim();
+
     if (priority.length === 0) {
       return { error: true, message: 'Priority is Required' }
     }
@@ -292,12 +293,12 @@ export default class AddBug extends Component {
     const PriorityError = this.validatePriority();
     const StatusError = this.validateStatus();
 
-    if (!BugNameError.error || 
-      !ApplicationError.error|| 
-      !TicketNumberError.error|| 
-      !PriorityError.error|| 
-      !StatusError.error) 
-    {
+    if (!BugNameError.error &&
+      !ApplicationError.error &&
+      !TicketNumberError.error &&
+      !PriorityError.error &&
+      !StatusError.error) {
+      console.log('got here')
       bugButtonDisabled = false;
     }
 
@@ -313,11 +314,15 @@ export default class AddBug extends Component {
     return (
       <section className='section-page'>
         <h1>Add Bug</h1>
+
         <form
           className="AddBug__form"
           onSubmit={this.handleSubmit}
         >
           <ul className="flex-outer">
+            <li className='form__input-error' role='alert'>
+              <div>* Required Fields</div>
+            </li>
             <li>
               <input type="hidden" name="bug_id" value={newBugId} />
               <input type="hidden" name="steps_id" value={newStepsId} />

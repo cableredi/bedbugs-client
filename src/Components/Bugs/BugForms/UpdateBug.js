@@ -89,6 +89,7 @@ export default class UpdateBug extends Component {
     this.setState({
       application_id: {
         value: parseInt(application_id),
+        touched: true
       }
     })
   }
@@ -106,6 +107,7 @@ export default class UpdateBug extends Component {
     this.setState({
       priority: {
         value: priority,
+        touched: true
       }
     })
   }
@@ -114,6 +116,7 @@ export default class UpdateBug extends Component {
     this.setState({
       status: {
         value: status,
+        touched: true
       }
     })
   }
@@ -317,9 +320,9 @@ export default class UpdateBug extends Component {
   }
 
   validateApplication() {
-    const applicationId = this.state.application_id;
+    const applicationId = this.state.application_id.value;
 
-    if (applicationId.length === 0) {
+    if (!applicationId) {
       return { error: true, message: 'Application is Required' }
     }
 
@@ -366,11 +369,12 @@ export default class UpdateBug extends Component {
     const PriorityError = this.validatePriority();
     const StatusError = this.validateStatus();
 
-    if (!BugNameError.error ||
-      !ApplicationError.error ||
-      !TicketNumberError.error ||
-      !PriorityError.error ||
-      !StatusError.error) {
+    if (!BugNameError.error &&
+      !ApplicationError.error &&
+      !TicketNumberError.error &&
+      !PriorityError.error &&
+      !StatusError.error) 
+    {
       bugButtonDisabled = false;
     }
 
@@ -391,6 +395,9 @@ export default class UpdateBug extends Component {
           onSubmit={this.handleSubmit}
         >
           <ul className="flex-outer">
+            <li className='form__input-error' role='alert'>
+              <div>* Required Fields</div>
+            </li>
             <li>
               <input type="hidden" name="bug_id" value={this.state.bug_id} />
             </li>
@@ -405,7 +412,7 @@ export default class UpdateBug extends Component {
                 name="bug_name"
                 id="bug_name"
                 placeholder="Bug Name"
-                value={this.state.bug_name.value}
+                value={this.state.bug_name.value || ''}
                 onChange={e => this.updateBugName(e.target.value)}
                 required
               />
@@ -423,7 +430,7 @@ export default class UpdateBug extends Component {
                 className='formSelect'
                 aria-label="Select an Application"
                 aria-required="true"
-                value={this.state.application_id.value}
+                value={this.state.application_id.value || ''}
                 onChange={e => this.updateApplicationId(e.target.value)}
               >
                 <option value=''>Application... </option>
@@ -442,7 +449,7 @@ export default class UpdateBug extends Component {
                 name="ticket_number"
                 id="ticket_number"
                 placeholder="Ticket Number"
-                value={this.state.ticket_number.value}
+                value={this.state.ticket_number.value || ''}
                 onChange={e => this.updateTicketNumber(e.target.value)}
                 required
               />
@@ -460,7 +467,7 @@ export default class UpdateBug extends Component {
                 className='formSelect'
                 aria-label="Select a Priority"
                 aria-required="true"
-                value={this.state.priority.value}
+                value={this.state.priority.value || ''}
                 onChange={e => this.updatePriority(e.target.value)}
               >
                 <option value="">Priority... </option>
@@ -482,7 +489,7 @@ export default class UpdateBug extends Component {
                 className='formSelect'
                 aria-label="Select a Status"
                 aria-required="true"
-                value={this.state.status.value}
+                value={this.state.status.value || ''}
                 onChange={e => this.updateStatus(e.target.value)}
               >
                 <option value="">Status... </option>
@@ -501,7 +508,7 @@ export default class UpdateBug extends Component {
                 name="environment"
                 id="environment"
                 placeholder="Environment"
-                value={this.state.environment.value}
+                value={this.state.environment.value || ''}
                 onChange={e => this.updateEnvironment(e.target.value)}
               />
             </li>
@@ -513,7 +520,7 @@ export default class UpdateBug extends Component {
               <textarea
                 name="notes"
                 id="notes"
-                value={this.state.notes.value}
+                value={this.state.notes.value || ''}
                 onChange={e => this.updateNotes(e.target.value)}
               />
             </li>
@@ -527,7 +534,7 @@ export default class UpdateBug extends Component {
                 name="reported_by"
                 id="reported_by"
                 placeholder="Reported By"
-                value={this.state.reported_by.value}
+                value={this.state.reported_by.value || ''}
                 onChange={e => this.updateReportedby(e.target.value)}
               />
             </li>
@@ -540,7 +547,7 @@ export default class UpdateBug extends Component {
                 type="text"
                 name="reported_on"
                 id="reported_on"
-                value={new Date(this.state.reported_on.value).toLocaleDateString()}
+                value={new Date(this.state.reported_on.value).toLocaleDateString() || ''}
                 onChange={e => this.updateReportedOn(e.target.value)}
               />
             </li>
@@ -552,7 +559,7 @@ export default class UpdateBug extends Component {
               <textarea
                 name="expected_result"
                 id="expected_result"
-                value={this.state.expected_result.value}
+                value={this.state.expected_result.value || ''}
                 onChange={e => this.updateExpectedResult(e.target.value)}
               />
             </li>
@@ -564,7 +571,7 @@ export default class UpdateBug extends Component {
               <textarea
                 name="actual_result"
                 id="actual_result"
-                value={this.state.actual_result.value}
+                value={this.state.actual_result.value || ''}
                 onChange={e => this.updateActualResult(e.target.value)}
               />
             </li>
@@ -607,7 +614,7 @@ export default class UpdateBug extends Component {
                 name="developer"
                 id="developer"
                 placeholder="Developer"
-                value={this.state.developer.value}
+                value={this.state.developer.value || ''}
                 onChange={e => this.updateDeveloper(e.target.value)}
               />
             </li>
@@ -619,7 +626,7 @@ export default class UpdateBug extends Component {
               <textarea
                 name="developer_notes"
                 id="developer_notes"
-                value={this.state.developer_notes.value}
+                value={this.state.developer_notes.value || ''}
                 onChange={e => this.updateDeveloperNotes(e.target.value)}
               />
             </li>
