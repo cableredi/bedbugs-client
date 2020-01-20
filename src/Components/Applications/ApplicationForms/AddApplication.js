@@ -154,7 +154,7 @@ export default class AddApplication extends Component {
     const ApplicationNameError = this.validateApplicationName();
     const ApplicationURLError = this.validateApplicationURL();
 
-    if (!ApplicationNameError.error || !ApplicationURLError.error) {
+    if (!ApplicationNameError.error && !ApplicationURLError.error) {
       applicationButtonDisabled = false;
     }
 
