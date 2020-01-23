@@ -15,25 +15,35 @@ export default function ApplicationsSummary(props) {
         to={`/updateapplication/${applications.application_id}`}
         isActive={isActive.bind(this, `application/${applications.application_id}`)}
       >
-        {applications.application_name}
+        {applications.application_name}:
       </NavLink>
       <div className="applications-list__counts">
-        Open bugs: {
+
+        <span className="bold">Open bugs: </span> 
+        <span className="applications-list__counts-number">
+        {
           getBugs
             .reduce((sum, { status }) => status === 'Open' ? sum + 1 : sum, 0)
         }
+        </span>
       </div>
       <div className="applications-list__counts">
-        In-Progress bugs: {
+        <span className="bold">In-Progress bugs: </span>
+        <span className="applications-list__counts-number">
+        {
           getBugs
             .reduce((sum, { status }) => status === 'In-Progress' ? sum + 1 : sum, 0)
         }
+        </span>
       </div>
       <div className="applications-list__counts">
-        Closed bugs: {
+        <span className="bold">Closed bugs: </span>
+        <span className="applications-list__counts-number">
+        {
           getBugs
             .reduce((sum, { status }) => status === 'Closed' ? sum + 1 : sum, 0)
         }
+        </span>
       </div>
     </>
   )

@@ -223,6 +223,8 @@ export default class AddBug extends Component {
       return { error: true, message: 'Bug Name is Required' }
     } else if (bugName.length < 3) {
       return { error: true, message: 'Bug Name must be at least 3 characters long' };
+    } else if (this.context.bugs.find( bug => bug.bug_name.toLowerCase() === bugName.toLowerCase())) {
+      return { error: true, message: 'Bug Name already exists for this Application'}
     }
 
     return { error: false, message: '' }
@@ -243,6 +245,10 @@ export default class AddBug extends Component {
 
     if (ticketNumber.length === 0) {
       return { error: true, message: 'Ticket Number is Required' }
+    } else if (ticketNumber.length < 3) {
+      return { error: true, message: 'Ticket Number must be at least 3 characters long' };
+    } else if (this.context.bugs.find( bug => bug.ticket_number.toLowerCase() === ticketNumber.toLowerCase())) {
+      return { error: true, message: 'Ticket Number already exists for this Bug'}
     }
 
     return { error: false, message: '' }
@@ -479,8 +485,8 @@ export default class AddBug extends Component {
                 Steps to Reproduce:
               </label>
               <textarea
-                name="notes"
-                id="notes"
+                name="steps"
+                id="steps"
                 value={this.state.steps.value || ''}
                 onChange={e => this.updateSteps(e.target.value)}
               />

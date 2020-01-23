@@ -8,33 +8,27 @@ export default function BugsSummary(props) {
 
   return (
     <>
-      <NavLink
-        className={'bugs-list__name'}
-        to={`/updatebug/${bugs.bug_id}`}
-        isActive={isActive.bind(this, `bug/${bugs.bug_id}`)}
-      >
-        {bugs.bug_name}
-      </NavLink>
-      <div>
-        <span className="bold">Ticket # </span> {bugs.ticket_number}
+      <div className="bugs-list__details">
+        <NavLink
+          className={'bugs-list__name'}
+          to={`/updatebug/${bugs.bug_id}`}
+          isActive={isActive.bind(this, `bug/${bugs.bug_id}`)}
+        >
+          {bugs.bug_name}
+        </NavLink>
       </div>
-      <div>
-        <span className="bold">Application: </span> {bugs.application_id}
-      </div>
-      <div>
-        <span className="bold">Priority: </span> {bugs.priority}
-      </div>
-      <div>
-        <span className="bold">Status: </span> {bugs.status}
-      </div>
-      <div>
-        <span className="bold">Reported By: </span> {bugs.reported_by}
-      </div>
-      <div>
-        <span className="bold">Reported Date: </span> <Moment format="MM/DD/YYYY">{bugs.reported_on}</Moment>
-      </div>
-      <div>
-        <span className="bold">Developer Assigned To: </span> {bugs.developer}
+      <div className="bugs-list__details">
+        <div className="bugs-list__details-row">
+          <div className="bold">Ticket # </div> {bugs.ticket_number}
+          <div className="bold">Application: </div> {bugs.application_id}
+          <div className="bold">Priority: </div> {bugs.priority}
+          <div className="bold">Status: </div> {bugs.status}
+        </div>
+        <div className="bugs-list__details-row">
+          <div className="bold">Reported By: </div> {bugs.reported_by}
+          <div className="bold">Reported Date: </div> <Moment format="MM/DD/YYYY">{bugs.reported_on}</Moment>
+          <div className="bold">Developer Assigned To: </div> {bugs.developer}
+        </div>
       </div>
     </>
   )

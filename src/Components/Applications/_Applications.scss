@@ -4,22 +4,42 @@
 
 .applications ul {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 .applications li {
   border: 1px solid black;
   border-radius: 5px;
   margin: 10px;
-  padding: 10px;
-  width: 200px;
+  padding: 10px 40px;
+  max-width: 800px;
   background: $backgroundItems;
   box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.applications-list__items {
+  border: 1px solid black;
 }
 
 .applications-list__name {
   font-size: 1.2rem;
   font-weight: 600;
+  margin-right: 20px;
+  color: $accentColor;
+}
+
+.applications-list__counts {
+  display: inline-block;
+  margin: 0 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.applications-list__counts-number {
+  color: $accentColor;
 }
