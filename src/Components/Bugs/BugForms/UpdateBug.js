@@ -12,9 +12,12 @@ export default class UpdateBug extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      values: [{ steps_id: '', bug_id: '', steps_number: '', step: '' }],
-      newStepsId: '',
+    this.state = {      
+      deleteError: {
+        value: false,
+        message: ''
+      },
+
       bug_id: {
         value: '',
         touched: false
@@ -57,6 +60,10 @@ export default class UpdateBug extends Component {
         touched: false
       },
       actual_result: {
+        value: '',
+        touched: false
+      },
+      steps: {
         value: '',
         touched: false
       },
@@ -171,6 +178,14 @@ export default class UpdateBug extends Component {
       }
     })
   }
+  updateSteps(steps) {
+    this.setState({
+      steps: {
+        value: steps,
+        touched: true
+      }
+    })
+  }
   updateDeveloper(developer) {
     this.setState({
       developer: {
@@ -198,6 +213,13 @@ export default class UpdateBug extends Component {
     })
   }
 
+  /* handle form Delete Button */
+  handleDelete = () => {
+    this.context.deleteBug(this.state.bug_id.value);
+    this.props.history.push('/bugs')
+  }
+
+  /* Initialize state with props */
   componentDidMount() {
     this.setState({
       bug_id: { value: this.props.bug.bug_id },
@@ -212,14 +234,15 @@ export default class UpdateBug extends Component {
       reported_on: { value: this.props.bug.reported_on },
       expected_result: { value: this.props.bug.expected_result },
       actual_result: { value: this.props.bug.actual_result },
+      steps: { value: this.props.bug.steps},
       developer: { value: this.props.bug.developer },
       developer_notes: { value: this.props.bug.developer_notes },
       last_updated: { value: this.props.bug.last_updated },
       values: this.props.steps,
-      newStepsId: this.props.NewStepsId,
     })
   }
 
+  /* handle submit */
   handleSubmit = e => {
     e.preventDefault();
 
@@ -236,27 +259,20 @@ export default class UpdateBug extends Component {
       reported_on: this.state.reported_on.value,
       expected_result: this.state.expected_result.value,
       actual_result: this.state.actual_result.value,
+      steps: this.state.steps.value,
       developer: this.state.developer.value,
       developer_notes: this.state.developer_notes.value,
       last_updated: this.state.last_updated.value,
     };
 
-    //get steps from state
-    const bugSteps = this.state.values.map((step, i) => ({ 
-      "steps_id": step.steps_id, 
-      "bug_id": step.bug_id, 
-      "steps_number": step.steps_number, 
-      "step": step.step })
-    )
-
     // place holder to update database
 
     this.resetFields(updatedBug);
     this.context.updateBug(updatedBug);
-    this.context.updateSteps(bugSteps);
     this.props.history.push('/bugs');
   };
 
+  /* Reset form fields */
   resetFields = (newFields) => {
     this.setState({
       bug_id: newFields.bug_id || '',
@@ -271,42 +287,19 @@ export default class UpdateBug extends Component {
       reported_on: newFields.reported_on || '',
       expected_result: newFields.expected_result || '',
       actual_result: newFields.actual_result || '',
+      steps: newFields.steps || '',
       developer: newFields.developer || '',
       developer_notes: newFields.developer_notes || '',
       last_updated: newFields.last_updated || '',
     })
   };
 
+  /* handle form cancel button */
   handleClickCancel = () => {
     this.props.history.push('/bugs')
   };
 
-  handleStepChange = (stepsId, e) => {
-    let values = [...this.state.values];
-    let stepIndex = values.findIndex((step) => step.steps_id === stepsId)
-    values[stepIndex].step = e.target.value;
-    this.setState({ values });
-  }
-
-  addStepClick() {
-    const stepNumber = Math.max.apply(Math, this.state.values.map(function (num) { return num.steps_number }));
-    
-    this.setState(prevState => ({
-      values: [...prevState.values, {
-        steps_id: this.state.newStepsId++,
-        bug_id: this.state.bug_id.value,
-        steps_number: stepNumber + 1,
-        step: ''
-      }]
-    }))
-  };
-
-  removeStepClick(i) {
-    let values = [...this.state.values];
-    values.splice(i, 1);
-    this.setState({ values });
-  };
-
+  /* Form validation */
   validateBugName() {
     const bugName = this.state.bug_name.value.trim();
 
@@ -360,6 +353,7 @@ export default class UpdateBug extends Component {
     return { error: false, message: '' }
   }
 
+  /* Render page */
   render() {
     let bugButtonDisabled = true;
 
@@ -400,6 +394,7 @@ export default class UpdateBug extends Component {
             </li>
             <li>
               <input type="hidden" name="bug_id" value={this.state.bug_id} />
+              { this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} /> }
             </li>
 
             <li>
@@ -576,33 +571,16 @@ export default class UpdateBug extends Component {
               />
             </li>
 
-            <li className="AddBug__form-steps">
+            <li className="UpdateBug__form-textarea">
               <label htmlFor="steps">
-                Steps To Reproduce:
+                Steps to Reproduce:
               </label>
-              <button
-                type="button"
-                onClick={() => this.addStepClick()}
-              >
-                Add New Step
-              </button>
-              {this.state.values.map((el, i) => (
-                <div key={i}>
-                  <label htmlFor="steps">Step #{i + 1} </label>
-                  <input
-                    type="text"
-                    name="steps"
-                    value={el.step || ''}
-                    onChange={e => this.handleStepChange(el.steps_id, e)}
-                  />
-                  {' '}
-                  <input
-                    type="button"
-                    value="X"
-                    onClick={() => this.removeStepClick(i)}
-                  />
-                </div>
-              ))}
+              <textarea
+                name="notes"
+                id="notes"
+                value={this.state.steps.value || ''}
+                onChange={e => this.updateSteps(e.target.value)}
+              />
             </li>
 
             <li>
@@ -656,6 +634,12 @@ export default class UpdateBug extends Component {
                 disabled={bugButtonDisabled}
               >
                 Save
+              </button>
+              {' '}
+              <button
+                onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.handleDelete(e) } }
+              >
+                Delete
               </button>
             </li>
           </ul>

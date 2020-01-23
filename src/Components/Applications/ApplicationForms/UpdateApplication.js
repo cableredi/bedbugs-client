@@ -15,6 +15,11 @@ export default class UpdateApplication extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      deleteError: {
+        value: false,
+        message: ''
+      },
+      
       application_id: {
         value: '',
         touched: false
@@ -109,6 +114,7 @@ export default class UpdateApplication extends Component {
     })
   }
 
+  /* update Database */
   componentDidMount() {
     this.setState({
       application_id: { value: this.props.application.application_id },
@@ -121,6 +127,7 @@ export default class UpdateApplication extends Component {
     })
   }
 
+  /* Handle Submit */
   handleSubmit = e => {
     e.preventDefault();
 
@@ -139,6 +146,7 @@ export default class UpdateApplication extends Component {
     this.props.history.push('/applications');
   };
 
+  /* Reset form fields */
   resetFields = (newFields) => {
     this.setState({
       application_id: newFields.application_id || '',
@@ -151,10 +159,29 @@ export default class UpdateApplication extends Component {
     })
   };
 
+  /* handle form Cancel button */
   handleClickCancel = () => {
     this.props.history.push('/applications')
   };
 
+  /* handle form Delete Button */
+  handleDelete = () => {
+    const openBugs = this.props.bugs.find(bug => bug.status === 'Open' || bug.status === 'In-Progress');
+    if (openBugs) {
+      this.setState({
+        deleteError: {
+          value: true,
+          message: 'Unable to delete, there are active Bugs'
+        }
+      })
+      return
+    }
+
+    this.context.deleteApplication(this.state.application_id.value);
+    this.props.history.push('/applications')
+  }
+
+  /* Validate form required fields */
   validateApplicationName() {
     const applicationName = this.state.application_name.value.trim();
 
@@ -179,6 +206,7 @@ export default class UpdateApplication extends Component {
     return { error: false, message: '' }
   }
 
+  /* render */
   render() {
     let applicationButtonDisabled = true;
 
@@ -200,6 +228,7 @@ export default class UpdateApplication extends Component {
           <ul className="flex-outer">
             <li>
               <input type="hidden" name="application_id" value={this.state.application_id.value} />
+              { this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} /> }
             </li>
 
             <li>
@@ -295,7 +324,10 @@ export default class UpdateApplication extends Component {
             </li>
 
             <li className="form__button-group">
-              <button type="button" onClick={this.handleClickCancel}>
+              <button 
+                type="button" 
+                onClick={this.handleClickCancel}
+              >
                 Cancel
               </button>
               {' '}
@@ -304,6 +336,13 @@ export default class UpdateApplication extends Component {
                 disabled={applicationButtonDisabled}
               >
                 Save
+              </button>
+              {' '}
+              <button
+                type="button"
+                onClick={this.handleDelete}
+              >
+                Delete
               </button>
             </li>
           </ul>

@@ -13,7 +13,6 @@ export default class AddBug extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: [{ steps_id: null, value: null }],
       bug_name: {
         value: '',
         touched: false
@@ -55,6 +54,10 @@ export default class AddBug extends Component {
         touched: false
       },
       actual_result: {
+        value: '',
+        touched: false
+      },
+      steps: {
         value: '',
         touched: false
       },
@@ -161,6 +164,14 @@ export default class AddBug extends Component {
       }
     })
   }
+  updateSteps(steps) {
+    this.setState({
+      steps: {
+        value: steps,
+        touched: true
+      }
+    })
+  }
   updateDeveloper(developer) {
     this.setState({
       developer: {
@@ -187,23 +198,15 @@ export default class AddBug extends Component {
       reported_on: new Date(),
       expected_result: this.state.expected_result.value,
       actual_result: this.state.actual_result.value,
+      steps: this.state.steps.value,
       developer: this.state.developer.value,
       last_updated: new Date(),
     };
-
-    //get steps from state
-    const bugSteps = this.state.values.map((step, i) => ({
-      "steps_id": step.steps_id,
-      "bug_id": bug.bug_id,
-      "steps_number": i + 1,
-      "step": step.value
-    }))
 
     // place holder to update database
 
     //update state
     this.context.addBug(bug);
-    this.context.addSteps(bugSteps)
 
     //go back to applications
     this.props.history.push('/bugs');
@@ -211,25 +214,6 @@ export default class AddBug extends Component {
 
   handleClickCancel = () => {
     this.props.history.push('/bugs')
-  };
-
-  handleStepChange = (index, e, stepId) => {
-    let values = [...this.state.values];
-    values[index].value = e.target.value;
-    values[index].steps_id = stepId + index;
-    this.setState({ values });
-  }
-
-  addStepClick() {
-    this.setState(prevState => ({
-      values: [...prevState.values, { value: null }]
-    }))
-  };
-
-  removeStepClick(i) {
-    let values = [...this.state.values];
-    values.splice(i, 1);
-    this.setState({ values });
   };
 
   validateBugName() {
@@ -298,12 +282,10 @@ export default class AddBug extends Component {
       !TicketNumberError.error &&
       !PriorityError.error &&
       !StatusError.error) {
-      console.log('got here')
       bugButtonDisabled = false;
     }
 
     const newBugId = this.props.NewBugId;
-    const newStepsId = this.props.NewStepsId;
 
     const applicationOptions = this.props.applications.map((application, i) =>
       <option value={application.application_id} key={i}>
@@ -325,7 +307,6 @@ export default class AddBug extends Component {
             </li>
             <li>
               <input type="hidden" name="bug_id" value={newBugId} />
-              <input type="hidden" name="steps_id" value={newStepsId} />
             </li>
 
             <li>
@@ -493,33 +474,16 @@ export default class AddBug extends Component {
               />
             </li>
 
-            <li className="AddBug__form-steps">
+            <li className="UpdateBug__form-textarea">
               <label htmlFor="steps">
-                Steps To Reproduce:
+                Steps to Reproduce:
               </label>
-              <button
-                type="button"
-                onClick={() => this.addStepClick()}
-              >
-                Add New Step
-              </button>
-              {this.state.values.map((el, i) => (
-                <div key={i}>
-                  <label htmlFor="steps">Step #{i + 1} </label>
-                  <input
-                    type="text"
-                    name="steps"
-                    value={el.value || ''}
-                    onChange={e => this.handleStepChange(i, e, newStepsId)}
-                  />
-                  {' '}
-                  <input
-                    type="button"
-                    value="X"
-                    onClick={() => this.removeStepClick(i)}
-                  />
-                </div>
-              ))}
+              <textarea
+                name="notes"
+                id="notes"
+                value={this.state.steps.value || ''}
+                onChange={e => this.updateSteps(e.target.value)}
+              />
             </li>
 
             <li>
@@ -555,12 +519,10 @@ export default class AddBug extends Component {
 
 AddBug.defaultProps = {
   NewBugId: '',
-  NewStepsId: '',
   applications: [],
 }
 
 AddBug.propTypes = {
   NewBugId: PropTypes.number.isRequired,
-  NewStepsId: PropTypes.number.isRequired,
   applications: PropTypes.array.isRequired
 }

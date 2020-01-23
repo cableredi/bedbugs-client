@@ -23,9 +23,6 @@ function getNewApplicationId(applications) {
 function getNewBugId(bugs) {
   return Math.max.apply(Math, bugs.map(function (bug) { return parseInt(bug.bug_id + 1) }))
 }
-function getNewStepsId(steps) {
-  return Math.max.apply(Math, steps.map(function (step) { return step.steps_id + 1 }))
-}
 
 export default class App extends Component {
   constructor(props) {
@@ -35,7 +32,6 @@ export default class App extends Component {
       sideDrawerOpen: false,
       applications: BEDBUGS.applications,
       bugs: BEDBUGS.bugs,
-      steps: BEDBUGS.steps,
     }
   }
 
@@ -51,12 +47,6 @@ export default class App extends Component {
     })
   }
 
-  setSteps = steps => {
-    this.setState({
-      steps,
-    })
-  }
-
   addApplication = application => {
     this.setState({
       applications: [...this.state.applications, application]
@@ -67,14 +57,6 @@ export default class App extends Component {
     this.setState({
       bugs: [...this.state.bugs, bug]
     })
-  }
-
-  addSteps = newSteps => {
-    newSteps.map(step =>
-      this.setState(prevState => ({
-        steps: [...prevState.steps, step]
-      }))
-    )
   }
 
   drawerToggleClickHandler = () => {
@@ -97,11 +79,6 @@ export default class App extends Component {
         this.setBugs(data)
       })
 
-    getBedbugsSteps()
-      .then(res => res.json())
-      .then(data => {
-        this.setSteps(data)
-      })
   }
   */
 
@@ -121,10 +98,22 @@ export default class App extends Component {
     })
   }
 
-  updateSteps = updatedStep => {
+  deleteApplication = (application_id) => {
+    const newApplications = this.state.applications.filter(application =>
+      application.application_id !== application_id
+    );
     this.setState({
-      steps: updatedStep
-    })
+      applications: newApplications
+    });
+  }
+
+  deleteBug = (bug_id) => {
+    const newBugs = this.state.bugs.filter(bug =>
+      bug.bug_id !== bug_id
+    );
+    this.setState({
+      bugs: newBugs
+    });
   }
 
   render() {
@@ -132,11 +121,11 @@ export default class App extends Component {
       applications: this.state.applications,
       addApplication: this.addApplication,
       updateApplication: this.updateApplication,
+      deleteApplication: this.deleteApplication,
       bugs: this.state.bugs,
       addBug: this.addBug,
       updateBug: this.updateBug,
-      addSteps: this.addSteps,
-      updateSteps: this.updateSteps,
+      deleteBug: this.deleteBug,
     };
 
     let backdrop;
@@ -193,6 +182,7 @@ export default class App extends Component {
                 component={(routeProps) =>
                   <UpdateApplication
                     application={this.state.applications.find(appl => appl.application_id === Number(routeProps.match.params.application_id))}
+                    bugs={this.state.bugs.filter(bug => bug.application_id === Number(routeProps.match.params.application_id))}
                     {...routeProps}
                   />
                 }
@@ -213,7 +203,6 @@ export default class App extends Component {
                 component={(routeProps) =>
                   <AddBug
                     NewBugId={getNewBugId(this.state.bugs)}
-                    NewStepsId={getNewStepsId(this.state.steps)}
                     applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
                     {...routeProps}
                   />
@@ -226,8 +215,6 @@ export default class App extends Component {
                   <UpdateBug
                     bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
                     applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
-                    steps={this.state.steps.filter(step => step.bug_id === Number(routeProps.match.params.bug_id))}
-                    NewStepsId={getNewStepsId(this.state.steps)}
                     {...routeProps}
                   />
                 }

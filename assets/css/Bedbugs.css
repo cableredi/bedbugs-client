@@ -14,23 +14,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.AddApplication__form, .UpdateApplication__form, .AddBug__form, .UpdateBug__form, .registration-form, .login-form {
+.AddApplication__form, .UpdateApplication__form, .AddBug__form, .UpdateBug__form {
   text-align: center;
   margin: 0 auto;
 }
 
-.AddApplication__form input, .UpdateApplication__form input, .AddBug__form input, .UpdateBug__form input, .registration-form input, .login-form input {
+.AddApplication__form input, .UpdateApplication__form input, .AddBug__form input, .UpdateBug__form input {
   font-size: 16px;
 }
 
-.AddApplication__form label, .UpdateApplication__form label, .AddBug__form label, .UpdateBug__form label, .registration-form label, .login-form label {
+.AddApplication__form label, .UpdateApplication__form label, .AddBug__form label, .UpdateBug__form label {
   display: inline-block;
   text-align: right;
   margin-right: 0.5em;
   vertical-align: center;
 }
 
-.AddApplication__form select, .UpdateApplication__form select, .AddBug__form select, .UpdateBug__form select, .registration-form select, .login-form select {
+.AddApplication__form select, .UpdateApplication__form select, .AddBug__form select, .UpdateBug__form select {
   display: inline-block;
   color: #444;
   line-height: 1.1;
@@ -53,15 +53,15 @@ code {
   background-size: .65em auto, 100%;
 }
 
-.AddApplication__form select::-ms-expand, .UpdateApplication__form select::-ms-expand, .AddBug__form select::-ms-expand, .UpdateBug__form select::-ms-expand, .registration-form select::-ms-expand, .login-form select::-ms-expand {
+.AddApplication__form select::-ms-expand, .UpdateApplication__form select::-ms-expand, .AddBug__form select::-ms-expand, .UpdateBug__form select::-ms-expand {
   display: none;
 }
 
-.AddApplication__form select:hover, .UpdateApplication__form select:hover, .AddBug__form select:hover, .UpdateBug__form select:hover, .registration-form select:hover, .login-form select:hover {
+.AddApplication__form select:hover, .UpdateApplication__form select:hover, .AddBug__form select:hover, .UpdateBug__form select:hover {
   border-color: #888;
 }
 
-.AddApplication__form select:focus, .UpdateApplication__form select:focus, .AddBug__form select:focus, .UpdateBug__form select:focus, .registration-form select:focus, .login-form select:focus {
+.AddApplication__form select:focus, .UpdateApplication__form select:focus, .AddBug__form select:focus, .UpdateBug__form select:focus {
   border-color: #aaa;
   -webkit-box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
           box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
@@ -70,39 +70,41 @@ code {
   outline: none;
 }
 
-.AddApplication__form select option, .UpdateApplication__form select option, .AddBug__form select option, .UpdateBug__form select option, .registration-form select option, .login-form select option {
+.AddApplication__form select option, .UpdateApplication__form select option, .AddBug__form select option, .UpdateBug__form select option {
   font-weight: normal;
 }
 
-.AddApplication__form .form__form, .UpdateApplication__form .form__form, .AddBug__form .form__form, .UpdateBug__form .form__form, .registration-form .form__form, .login-form .form__form {
+.AddApplication__form .form__form, .UpdateApplication__form .form__form, .AddBug__form .form__form, .UpdateBug__form .form__form {
   border: 1px solid black;
 }
 
-.AddApplication__form .form__fields, .UpdateApplication__form .form__fields, .AddBug__form .form__fields, .UpdateBug__form .form__fields, .registration-form .form__fields, .login-form .form__fields {
+.AddApplication__form .form__fields, .UpdateApplication__form .form__fields, .AddBug__form .form__fields, .UpdateBug__form .form__fields {
   border: 1px solid black;
   padding: 10px;
 }
 
-.AddApplication__form .form__button-group, .UpdateApplication__form .form__button-group, .AddBug__form .form__button-group, .UpdateBug__form .form__button-group, .registration-form .form__button-group, .login-form .form__button-group {
+.AddApplication__form .form__button-group, .UpdateApplication__form .form__button-group, .AddBug__form .form__button-group, .UpdateBug__form .form__button-group {
   margin-top: 20px;
 }
 
-.AddApplication__form .form__button, .UpdateApplication__form .form__button, .AddBug__form .form__button, .UpdateBug__form .form__button, .registration-form .form__button, .login-form .form__button {
+.AddApplication__form .form__button, .UpdateApplication__form .form__button, .AddBug__form .form__button, .UpdateBug__form .form__button {
   margin-right: 10px;
 }
 
-.AddApplication__form .form__hint, .UpdateApplication__form .form__hint, .AddBug__form .form__hint, .UpdateBug__form .form__hint, .registration-form .form__hint, .login-form .form__hint {
+.AddApplication__form .form__hint, .UpdateApplication__form .form__hint, .AddBug__form .form__hint, .UpdateBug__form .form__hint {
   font-style: italic;
   font-size: .8rem;
 }
 
-.AddApplication__form .form__error, .UpdateApplication__form .form__error, .AddBug__form .form__error, .UpdateBug__form .form__error, .registration-form .form__error, .login-form .form__error,
+.AddApplication__form .form__error, .UpdateApplication__form .form__error, .AddBug__form .form__error, .UpdateBug__form .form__error,
 .AddApplication__form .form__required,
 .UpdateApplication__form .form__required,
 .AddBug__form .form__required,
 .UpdateBug__form .form__required,
-.registration-form .form__required,
-.login-form .form__required {
+.AddApplication__form .form__input-error,
+.UpdateApplication__form .form__input-error,
+.AddBug__form .form__input-error,
+.UpdateBug__form .form__input-error {
   font-style: italic;
   font-size: .8rem;
   color: red;
@@ -112,9 +114,7 @@ code {
 .AddApplication__form .form__required,
 .UpdateApplication__form .form__required,
 .AddBug__form .form__required,
-.UpdateBug__form .form__required,
-.registration-form .form__required,
-.login-form .form__required {
+.UpdateBug__form .form__required {
   vertical-align: super;
 }
 
@@ -441,6 +441,11 @@ ul {
   text-align: center;
 }
 
+.flex-outer li div {
+  display: block;
+  margin-left: 230px;
+}
+
 .flex-outer .form__button-group {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -453,6 +458,11 @@ ul {
   color: black;
   -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
           box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.flex-outer li div {
+  display: block;
+  margin-left: 230px;
 }
 
 .AddApplication__form input[type=text] {
@@ -499,6 +509,11 @@ ul {
   text-align: center;
 }
 
+.flex-outer li div {
+  display: block;
+  margin-left: 230px;
+}
+
 .flex-outer .form__button-group {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -511,6 +526,11 @@ ul {
   color: black;
   -webkit-box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
           box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.flex-outer li div {
+  display: block;
+  margin-left: 230px;
 }
 
 .UpdateApplication__form input[type=text] {
@@ -710,13 +730,5 @@ input[type=text] {
   background-color: #f8f8f8;
   font-size: 16px;
   resize: none;
-}
-
-.registration-form {
-  width: 300px;
-}
-
-.login-form {
-  width: 300px;
 }
 /*# sourceMappingURL=Bedbugs.css.map */
