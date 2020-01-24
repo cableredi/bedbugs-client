@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import BEDBUGS from '../../dummy-data';
+//import BEDBUGS from '../../dummy-data';
 import BedbugsContext from '../../BedbugsContext';
+import config from '../../config';
 
 import Toolbar from '../Nav/Toolbar/Toolbar';
 import SideDrawer from '../Nav/SideDrawer/SideDrawer'
@@ -30,8 +31,8 @@ export default class App extends Component {
     this.state = {
       error: null,
       sideDrawerOpen: false,
-      applications: BEDBUGS.applications,
-      bugs: BEDBUGS.bugs,
+      applications: [],
+      bugs: [],
     }
   }
 
@@ -65,23 +66,42 @@ export default class App extends Component {
     })
   }
 
-  /*
+  /* get applications and bugs from database */
   componentDidMount() {
-    getBedbugsApplications()
-      .then(res => res.json())
-      .then(data => {
-        this.setApplications(data)
+    fetch(config.API_ENDPOINT_APPLICATIONS, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status)
+        }
+        return response.json()
       })
+      .then(this.setApplications)
+      .catch(error => this.setState({ error }))
 
-    getBedbugsBugs()
-      .then(res => res.json())
-      .then(data => {
-        this.setBugs(data)
+    fetch(config.API_ENDPOINT_BUGS, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status)
+        }
+        return response.json()
       })
-
+      .then(this.setBugs)
+      .catch(error => this.setState({ error }))
   }
-  */
 
+  /* Update Applications to state */
   updateApplication = updatedApplication => {
     this.setState({
       applications: this.state.applications.map(appl =>
@@ -90,6 +110,7 @@ export default class App extends Component {
     })
   }
 
+  /* Update Bugs to state */
   updateBug = updatedBug => {
     this.setState({
       bugs: this.state.bugs.map(bug =>
@@ -98,6 +119,7 @@ export default class App extends Component {
     })
   }
 
+  /* Update Application from state */
   deleteApplication = (application_id) => {
     const newApplications = this.state.applications.filter(application =>
       application.application_id !== application_id
@@ -107,6 +129,7 @@ export default class App extends Component {
     });
   }
 
+  /* Update Bug from state */
   deleteBug = (bug_id) => {
     const newBugs = this.state.bugs.filter(bug =>
       bug.bug_id !== bug_id
@@ -150,76 +173,75 @@ export default class App extends Component {
 
         <BedbugsContext.Provider value={contextValue}>
           <Switch>
-
             <Route
               exact path='/'
               component={Landing}
             />
 
-              <Route
-                exact path='/applications'
-                render={(routeProps) =>
-                  <ApplicationsList
-                    applications={this.state.applications}
-                    bugs={this.state.bugs}
-                    {...routeProps}
-                  />
-                }
-              />
+            <Route
+              exact path='/applications'
+              render={(routeProps) =>
+                <ApplicationsList
+                  applications={this.state.applications}
+                  bugs={this.state.bugs}
+                  {...routeProps}
+                />
+              }
+            />
 
-              <Route
-                exact path='/addapplication'
-                component={(routeProps) =>
-                  <AddApplication
-                    NewApplicationId={getNewApplicationId(this.state.applications)}
-                    {...routeProps}
-                  />
-                }
-              />
+            <Route
+              exact path='/addapplication'
+              component={(routeProps) =>
+                <AddApplication
+                  NewApplicationId={getNewApplicationId(this.state.applications)}
+                  {...routeProps}
+                />
+              }
+            />
 
-              <Route
-                exact path='/updateapplication/:application_id'
-                component={(routeProps) =>
-                  <UpdateApplication
-                    application={this.state.applications.find(appl => appl.application_id === Number(routeProps.match.params.application_id))}
-                    bugs={this.state.bugs.filter(bug => bug.application_id === Number(routeProps.match.params.application_id))}
-                    {...routeProps}
-                  />
-                }
-              />
+            <Route
+              exact path='/updateapplication/:application_id'
+              component={(routeProps) =>
+                <UpdateApplication
+                  application={this.state.applications.find(appl => appl.application_id === Number(routeProps.match.params.application_id))}
+                  bugs={this.state.bugs.filter(bug => bug.application_id === Number(routeProps.match.params.application_id))}
+                  {...routeProps}
+                />
+              }
+            />
 
-              <Route
-                exact path='/bugs'
-                render={(routeProps) =>
-                  <BugsList
-                    bugs={this.state.bugs}
-                    {...routeProps}
-                  />
-                }
-              />
+            <Route
+              exact path='/bugs'
+              render={(routeProps) =>
+                <BugsList
+                  bugs={this.state.bugs}
+                  {...routeProps}
+                />
+              }
+            />
 
-              <Route
-                exact path='/addbug'
-                component={(routeProps) =>
-                  <AddBug
-                    NewBugId={getNewBugId(this.state.bugs)}
-                    applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
-                    {...routeProps}
-                  />
-                }
-              />
+            <Route
+              exact path='/addbug'
+              component={(routeProps) =>
+                <AddBug
+                  NewBugId={getNewBugId(this.state.bugs)}
+                  applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
+                  {...routeProps}
+                />
+              }
+            />
 
-              <Route
-                exact path='/updatebug/:bug_id'
-                component={(routeProps) =>
-                  <UpdateBug
-                    bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
-                    applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
-                    {...routeProps}
-                  />
-                }
-              />
-            
+            <Route
+              exact path='/updatebug/:bug_id'
+              component={(routeProps) =>
+                <UpdateBug
+                  bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
+                  applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
+                  {...routeProps}
+                />
+              }
+            />
+
             <Route
               component={NotFoundPage}
             />
