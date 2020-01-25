@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import AddButton from '../../AddButton/AddButton';
+import { NavLink } from 'react-router-dom';
 import BugsSummary from '../BugsSummary/BugsSummary';
 import PropTypes from 'prop-types';
 
@@ -20,15 +19,11 @@ export default function BugsList(props) {
         <ul>
           {bugItems}
         </ul>
-        <div className="button">
-          <AddButton
-            tag={Link}
-            to='../addbug'
-            type='button'
-          >
+        <NavLink to='/addBug'>
+          <div className="button">
             Add Bug
-            </AddButton>
-        </div>
+          </div>
+        </NavLink>
       </div>
     </section>
   )

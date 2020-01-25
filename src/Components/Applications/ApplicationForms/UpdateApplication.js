@@ -11,8 +11,6 @@ const Required = () => (
 );
 
 export default class UpdateApplication extends Component {
-  _isMounted = false;
-
   static contextType = BedbugsContext;
 
   constructor(props) {
@@ -120,8 +118,6 @@ export default class UpdateApplication extends Component {
 
   /* get Database fields */
   componentDidMount() {
-    this._isMounted = true;
-
     this.setState({
       application_id: {
         value: this.props.application.application_id
@@ -155,6 +151,7 @@ export default class UpdateApplication extends Component {
     const { application_id } = this.props.match.params
 
     const updatedApplication = {
+      application_id: this.state.application_id.value,
       application_name: this.state.application_name.value,
       application_url: this.state.application_url.value,
       repository_prod: this.state.repository_prod.value,
@@ -247,10 +244,6 @@ export default class UpdateApplication extends Component {
     }
 
     return { error: false, message: '' }
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
   }
 
   /* render */
@@ -401,10 +394,10 @@ export default class UpdateApplication extends Component {
 
 UpdateApplication.defaultProps = {
   application: {},
-  bugs: {}
+  bugs: []
 }
 
 UpdateApplication.propTypes = {
   application: PropTypes.object.isRequired,
-  bugs: PropTypes.object.isRequired,
+  bugs: PropTypes.array.isRequired,
 }

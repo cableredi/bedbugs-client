@@ -52,13 +52,13 @@
 	padding: 0 0.5rem;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 550px) {
 	.toolbar__navigation-items {
 		display: none;
 	}
 }
 
-@media (min-width: 361px) {
+@media (min-width: 551px) {
 	.toolbar__toggle-button {
 		display: none;
 	}

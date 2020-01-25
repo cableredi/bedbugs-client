@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import BlueBug from '../../Images/blue_bug.svg';
+import RedBug from '../../Images/red_bug.svg';
+import GreenBug from '../../Images/green_bug.svg';
 
 export default function ApplicationsSummary(props) {
   const { applications, bugs } = props;
-
   const isActive = (path, match, location) => !!(match || path === location.pathname);
-
   const getBugs = bugs.filter( (bug) => bug.application_id === applications.application_id);
 
   return (
@@ -15,11 +16,14 @@ export default function ApplicationsSummary(props) {
         to={`/updateapplication/${applications.application_id}`}
         isActive={isActive.bind(this, `application/${applications.application_id}`)}
       >
-        {applications.application_name}:
+        {applications.application_name}
       </NavLink>
       <div className="applications-list__counts">
 
-        <span className="bold">Open bugs: </span> 
+        <span className="bold">
+          <img src={RedBug} alt='Red Open Bug' className="bug__icons" />
+          Open bugs: 
+        </span> 
         <span className="applications-list__counts-number">
         {
           getBugs
@@ -28,7 +32,10 @@ export default function ApplicationsSummary(props) {
         </span>
       </div>
       <div className="applications-list__counts">
-        <span className="bold">In-Progress bugs: </span>
+        <span className="bold">
+          <img src={BlueBug} alt='Blue In-Progress Bug' className="bug__icons" />
+          In-Progress bugs: 
+        </span>
         <span className="applications-list__counts-number">
         {
           getBugs
@@ -37,7 +44,10 @@ export default function ApplicationsSummary(props) {
         </span>
       </div>
       <div className="applications-list__counts">
-        <span className="bold">Closed bugs: </span>
+        <span className="bold">
+          <img src={GreenBug} alt='Green In-Progress Bug' className="bug__icons" />
+          Closed bugs: 
+        </span>
         <span className="applications-list__counts-number">
         {
           getBugs

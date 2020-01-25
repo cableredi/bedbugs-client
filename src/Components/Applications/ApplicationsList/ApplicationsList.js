@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import AddButton from '../../AddButton/AddButton';
+import { NavLink } from 'react-router-dom';
 import ApplicationsSummary from '../ApplicationsSummary/ApplicationsSummary';
 import PropTypes from 'prop-types';
 
@@ -20,15 +19,12 @@ export default function ApplicationsList(props) {
         <ul>
           {applicationItems}
         </ul>
-        <div className="button">
-          <AddButton
-            tag={Link}
-            to='../addApplication'
-            type='button'
-          >
+
+        <NavLink to='/addApplication'>
+          <div className="button">
             Add Application
-            </AddButton>
-        </div>
+          </div>
+        </NavLink>
       </div>
     </section>
   )

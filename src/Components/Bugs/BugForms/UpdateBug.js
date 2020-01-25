@@ -308,6 +308,7 @@ export default class UpdateBug extends Component {
     const { bug_id } = this.props.match.params
 
     const updatedBug = {
+      bug_id: this.state.bug_id.value,
       bug_name: this.state.bug_name.value,
       application_id: this.state.application_id.value,
       ticket_number: this.state.ticket_number.value,

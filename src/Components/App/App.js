@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-//import BEDBUGS from '../../dummy-data';
 import BedbugsContext from '../../BedbugsContext';
 import config from '../../config';
 
@@ -112,7 +111,7 @@ export default class App extends Component {
   }
 
   /* Update Application from state */
-  deleteApplication = (application_id) => {    
+  deleteApplication = (application_id) => {
     const newApplications = this.state.applications.filter(application =>
       application.application_id !== Number(application_id)
     );
