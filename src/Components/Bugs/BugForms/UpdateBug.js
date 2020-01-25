@@ -322,7 +322,6 @@ export default class UpdateBug extends Component {
       developer: this.state.developer.value,
       developer_notes: this.state.developer_notes.value,
     };
-    console.log('in submit', updatedBug)
 
     fetch(config.API_ENDPOINT_BUGS + `/${bug_id}`, {
       method: 'PATCH',
@@ -410,7 +409,6 @@ export default class UpdateBug extends Component {
 
   /* Render page */
   render() {
-    console.log('In UpdateBug')
     let bugButtonDisabled = true;
 
     const BugNameError = this.validateBugName();
