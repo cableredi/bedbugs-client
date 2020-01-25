@@ -2,22 +2,24 @@ import React, { Component } from 'react';
 import BedbugsContext from '../../../BedbugsContext';
 import ValidateError from '../../ValidateError/ValidateError';
 import PropTypes from 'prop-types';
+import config from '../../../config';
 
 const Required = () => (
   <span className="form__required">*</span>
 );
 
 export default class UpdateBug extends Component {
+  _isMounted = false;
+
   static contextType = BedbugsContext;
 
   constructor(props) {
     super(props);
-    this.state = {      
+    this.state = {
       deleteError: {
         value: false,
         message: ''
       },
-
       bug_id: {
         value: '',
         touched: false
@@ -27,17 +29,20 @@ export default class UpdateBug extends Component {
         touched: false
       },
       application_id: {
-        value: ''
+        value: '',
+        touched: false
       },
       ticket_number: {
         value: '',
         touched: false
       },
       priority: {
-        value: ''
+        value: '',
+        touched: false
       },
       status: {
-        value: ''
+        value: '',
+        touched: false
       },
       environment: {
         value: '',
@@ -214,31 +219,84 @@ export default class UpdateBug extends Component {
   }
 
   /* handle form Delete Button */
-  handleDelete = () => {
-    this.context.deleteBug(this.state.bug_id.value);
-    this.props.history.push('/bugs')
+  handleDelete = e => {
+    e.preventDefault();
+
+    const { bug_id } = this.props.match.params
+
+    fetch(config.API_ENDPOINT_BUGS + `/${bug_id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(error => {
+            throw error
+          })
+        }
+        this.props.history.push('/bugs')
+        this.context.deleteBug(bug_id);
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
-  /* Initialize state with props */
   componentDidMount() {
+    this._isMounted = true;
+
     this.setState({
-      bug_id: { value: this.props.bug.bug_id },
-      bug_name: { value: this.props.bug.bug_name },
-      application_id: { value: this.props.bug.application_id },
-      ticket_number: { value: this.props.bug.ticket_number },
-      priority: { value: this.props.bug.priority },
-      status: { value: this.props.bug.status },
-      environment: { value: this.props.bug.environment },
-      notes: { value: this.props.bug.notes },
-      reported_by: { value: this.props.bug.reported_by },
-      reported_on: { value: this.props.bug.reported_on },
-      expected_result: { value: this.props.bug.expected_result },
-      actual_result: { value: this.props.bug.actual_result },
-      steps: { value: this.props.bug.steps},
-      developer: { value: this.props.bug.developer },
-      developer_notes: { value: this.props.bug.developer_notes },
-      last_updated: { value: this.props.bug.last_updated },
-      values: this.props.steps,
+      bug_id: {
+        value: this.props.bug.bug_id
+      },
+      bug_name: {
+        value: this.props.bug.bug_name
+      },
+      application_id: {
+        value: this.props.bug.application_id
+      },
+      ticket_number: {
+        value: this.props.bug.ticket_number
+      },
+      priority: {
+        value: this.props.bug.priority
+      },
+      status: {
+        value: this.props.bug.status
+      },
+      environment: {
+        value: this.props.bug.environment
+      },
+      notes: {
+        value: this.props.bug.notes
+      },
+      reported_by: {
+        value: this.props.bug.reported_by
+      },
+      reported_on: {
+        value: this.props.bug.reported_on
+      },
+      expected_result: {
+        value: this.props.bug.expected_result
+      },
+      actual_result: {
+        value: this.props.bug.actual_result
+      },
+      steps: {
+        value: this.props.bug.steps
+      },
+      developer: {
+        value: this.props.bug.developer
+      },
+      developer_notes: {
+        value: this.props.bug.developer_notes
+      },
+      last_updated: {
+        value: this.props.bug.last_updated
+      },
     })
   }
 
@@ -246,8 +304,10 @@ export default class UpdateBug extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
+    this.setState({ error: null })
+    const { bug_id } = this.props.match.params
+
     const updatedBug = {
-      bug_id: this.state.bug_id.value,
       bug_name: this.state.bug_name.value,
       application_id: this.state.application_id.value,
       ticket_number: this.state.ticket_number.value,
@@ -255,43 +315,34 @@ export default class UpdateBug extends Component {
       status: this.state.status.value,
       environment: this.state.environment.value,
       notes: this.state.notes.value,
-      reported_by: this.state.reported_by.value,
       reported_on: this.state.reported_on.value,
       expected_result: this.state.expected_result.value,
       actual_result: this.state.actual_result.value,
       steps: this.state.steps.value,
       developer: this.state.developer.value,
       developer_notes: this.state.developer_notes.value,
-      last_updated: this.state.last_updated.value,
     };
+    console.log('in submit', updatedBug)
 
-    // place holder to update database
-
-    this.resetFields(updatedBug);
-    this.context.updateBug(updatedBug);
-    this.props.history.push('/bugs');
-  };
-
-  /* Reset form fields */
-  resetFields = (newFields) => {
-    this.setState({
-      bug_id: newFields.bug_id || '',
-      bug_name: newFields.bug_name || '',
-      application_id: newFields.application_id || '',
-      ticket_number: newFields.ticket_number || '',
-      priority: newFields.priority || '',
-      status: newFields.status || '',
-      environment: newFields.environment || '',
-      notes: newFields.notes || '',
-      reported_by: newFields.reported_by || '',
-      reported_on: newFields.reported_on || '',
-      expected_result: newFields.expected_result || '',
-      actual_result: newFields.actual_result || '',
-      steps: newFields.steps || '',
-      developer: newFields.developer || '',
-      developer_notes: newFields.developer_notes || '',
-      last_updated: newFields.last_updated || '',
+    fetch(config.API_ENDPOINT_BUGS + `/${bug_id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updatedBug),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      },
     })
+      .then(res => {
+        if (!res.ok)
+          return res.json().then(error => Promise.reject(error))
+      })
+      .then(() => {
+        this.context.updateBug(updatedBug);
+        this.props.history.push('/bugs');
+      })
+      .catch(error => {
+        console.error(error)
+      })
   };
 
   /* handle form cancel button */
@@ -307,8 +358,6 @@ export default class UpdateBug extends Component {
       return { error: true, message: 'Bug Name is Required' }
     } else if (bugName.length < 3) {
       return { error: true, message: 'Bug Name must be at least 3 characters long' };
-    } else if (this.context.bugs.find( bug => bug.bug_name.toLowerCase() === bugName.toLowerCase())) {
-      return { error: true, message: 'Bug Name already exists for this Application'}
     }
 
     return { error: false, message: '' }
@@ -331,8 +380,6 @@ export default class UpdateBug extends Component {
       return { error: true, message: 'Ticket Number is Required' }
     } else if (ticketNumber.length < 3) {
       return { error: true, message: 'Ticket Number must be at least 3 characters long' };
-    } else if (this.context.bugs.find( bug => bug.ticket_number.toLowerCase() === ticketNumber.toLowerCase())) {
-      return { error: true, message: 'Ticket Number already exists for this Bug'}
     }
 
     return { error: false, message: '' }
@@ -357,8 +404,13 @@ export default class UpdateBug extends Component {
     return { error: false, message: '' }
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   /* Render page */
   render() {
+    console.log('In UpdateBug')
     let bugButtonDisabled = true;
 
     const BugNameError = this.validateBugName();
@@ -371,12 +423,11 @@ export default class UpdateBug extends Component {
       !ApplicationError.error &&
       !TicketNumberError.error &&
       !PriorityError.error &&
-      !StatusError.error) 
-    {
+      !StatusError.error) {
       bugButtonDisabled = false;
     }
 
-    const applicationOptions = this.props.applications.map((application, i) => 
+    const applicationOptions = this.props.applications.map((application, i) =>
       <option
         value={application.application_id}
         key={i}
@@ -398,7 +449,7 @@ export default class UpdateBug extends Component {
             </li>
             <li>
               <input type="hidden" name="bug_id" value={this.state.bug_id} />
-              { this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} /> }
+              {this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} />}
             </li>
 
             <li>
@@ -496,6 +547,7 @@ export default class UpdateBug extends Component {
                 <option value="In-Progress">In-Progress</option>
                 <option value="Closed">Closed</option>
               </select>
+              {this.state.status.touched && <ValidateError message={StatusError.message} />}
             </li>
 
             <li>
@@ -641,7 +693,7 @@ export default class UpdateBug extends Component {
               </button>
               {' '}
               <button
-                onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.handleDelete(e) } }
+                onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.handleDelete(e) }}
               >
                 Delete
               </button>

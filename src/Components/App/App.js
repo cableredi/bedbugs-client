@@ -17,14 +17,6 @@ import AddBug from '../Bugs/BugForms/AddBug';
 import UpdateBug from '../Bugs/BugForms/UpdateBug';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
-function getNewApplicationId(applications) {
-  return Math.max.apply(Math, applications.map(function (appl) { return parseInt(appl.application_id + 1) }))
-}
-
-function getNewBugId(bugs) {
-  return Math.max.apply(Math, bugs.map(function (bug) { return parseInt(bug.bug_id + 1) }))
-}
-
 export default class App extends Component {
   constructor(props) {
     super(props)
@@ -120,9 +112,9 @@ export default class App extends Component {
   }
 
   /* Update Application from state */
-  deleteApplication = (application_id) => {
+  deleteApplication = (application_id) => {    
     const newApplications = this.state.applications.filter(application =>
-      application.application_id !== application_id
+      application.application_id !== Number(application_id)
     );
     this.setState({
       applications: newApplications
@@ -132,7 +124,7 @@ export default class App extends Component {
   /* Update Bug from state */
   deleteBug = (bug_id) => {
     const newBugs = this.state.bugs.filter(bug =>
-      bug.bug_id !== bug_id
+      bug.bug_id !== Number(bug_id)
     );
     this.setState({
       bugs: newBugs
@@ -193,7 +185,6 @@ export default class App extends Component {
               exact path='/addapplication'
               component={(routeProps) =>
                 <AddApplication
-                  NewApplicationId={getNewApplicationId(this.state.applications)}
                   {...routeProps}
                 />
               }
@@ -203,7 +194,7 @@ export default class App extends Component {
               exact path='/updateapplication/:application_id'
               component={(routeProps) =>
                 <UpdateApplication
-                  application={this.state.applications.find(appl => appl.application_id === Number(routeProps.match.params.application_id))}
+                  application={this.state.applications.find(application => application.application_id === Number(routeProps.match.params.application_id))}
                   bugs={this.state.bugs.filter(bug => bug.application_id === Number(routeProps.match.params.application_id))}
                   {...routeProps}
                 />
@@ -224,7 +215,6 @@ export default class App extends Component {
               exact path='/addbug'
               component={(routeProps) =>
                 <AddBug
-                  NewBugId={getNewBugId(this.state.bugs)}
                   applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
                   {...routeProps}
                 />

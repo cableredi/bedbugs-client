@@ -5,6 +5,7 @@ import BugsSummary from '../BugsSummary/BugsSummary';
 import PropTypes from 'prop-types';
 
 export default function BugsList(props) {
+  console.log('In Bugslist')
   const { bugs } = props;
 
   const bugItems = bugs.map( (bug) =>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BedbugsContext from '../../../BedbugsContext';
 import ValidateError from '../../ValidateError/ValidateError';
-import PropTypes from 'prop-types';
+import config from '../../../config';
 const { isWebUri } = require('valid-url');
 
 const Required = () => (
@@ -102,7 +102,6 @@ export default class AddApplication extends Component {
 
     //put fields in object
     const application = {
-      application_id: this.props.NewApplicationId,
       application_name: this.state.application_name.value,
       application_url: this.state.application_url.value,
       repository_prod: this.state.repository_prod.value,
@@ -111,13 +110,26 @@ export default class AddApplication extends Component {
       database_test: this.state.database_test.value,
     };
 
-    // place holder to update database
-
-    //update state
-    this.context.addApplication(application);
-
-    //go back to applications
-    this.props.history.push('/applications');
+    // update database, state, and go back to applications list
+    fetch(config.API_ENDPOINT_APPLICATIONS, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      },
+      body: JSON.stringify(application)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status)
+        }
+        return response.json()
+      })
+      .then((data) => {
+        this.context.addApplication(data);
+        this.props.history.push('/applications');
+      })
+      .catch(error => this.setState({ error }))
   }
 
   handleClickCancel = () => {
@@ -158,8 +170,6 @@ export default class AddApplication extends Component {
       applicationButtonDisabled = false;
     }
 
-    const newApplicationId = this.props.NewApplicationId;
-
     return (
       <section className='section-page'>
         <h1>Add Application</h1>
@@ -168,13 +178,6 @@ export default class AddApplication extends Component {
           onSubmit={this.handleSubmit}
         >
           <ul className="flex-outer">
-            <li>
-              <input 
-                type="hidden" 
-                name="application_id" 
-                value={newApplicationId} 
-              />
-            </li>
 
             <li>
               <label htmlFor="application_name">
@@ -278,12 +281,4 @@ export default class AddApplication extends Component {
       </section>
     )
   }
-}
-
-AddApplication.defaultProps = {
-  NewApplicationId: 0,
-}
-
-AddApplication.propTypes = {
-  NewApplicationId: PropTypes.number.isRequired
 }

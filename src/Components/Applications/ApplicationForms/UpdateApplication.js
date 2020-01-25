@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BedbugsContext from '../../../BedbugsContext';
 import ValidateError from '../../ValidateError/ValidateError';
 import PropTypes from 'prop-types';
+import config from '../../../config';
 
 const { isWebUri } = require('valid-url');
 
@@ -10,6 +11,8 @@ const Required = () => (
 );
 
 export default class UpdateApplication extends Component {
+  _isMounted = false;
+
   static contextType = BedbugsContext;
 
   constructor(props) {
@@ -19,7 +22,7 @@ export default class UpdateApplication extends Component {
         value: false,
         message: ''
       },
-      
+
       application_id: {
         value: '',
         touched: false
@@ -56,6 +59,7 @@ export default class UpdateApplication extends Component {
     this.setState({
       application_id: {
         value: application_id,
+        touched: true
       }
     })
   }
@@ -114,25 +118,43 @@ export default class UpdateApplication extends Component {
     })
   }
 
-  /* update Database */
+  /* get Database fields */
   componentDidMount() {
+    this._isMounted = true;
+
     this.setState({
-      application_id: { value: this.props.application.application_id },
-      application_url: { value: this.props.application.application_url },
-      application_name: { value: this.props.application.application_name },
-      repository_prod: { value: this.props.application.repository_prod },
-      repository_test: { value: this.props.application.repository_test },
-      database_prod: { value: this.props.application.database_prod },
-      database_test: { value: this.props.application.database_test },
+      application_id: {
+        value: this.props.application.application_id
+      },
+      application_name: {
+        value: this.props.application.application_name
+      },
+      application_url: {
+        value: this.props.application.application_url
+      },
+      repository_prod: {
+        value: this.props.application.repository_prod
+      },
+      repository_test: {
+        value: this.props.application.repository_test
+      },
+      database_prod: {
+        value: this.props.application.database_prod
+      },
+      database_test: {
+        value: this.props.application.database_test
+      },
     })
+
   }
 
   /* Handle Submit */
   handleSubmit = e => {
     e.preventDefault();
+    this.setState({ error: null })
+    const { application_id } = this.props.match.params
 
-    const newApplication = {
-      application_id: this.state.application_id.value,
+    const updatedApplication = {
       application_name: this.state.application_name.value,
       application_url: this.state.application_url.value,
       repository_prod: this.state.repository_prod.value,
@@ -141,23 +163,27 @@ export default class UpdateApplication extends Component {
       database_test: this.state.database_test.value,
     };
 
-    this.context.updateApplication(newApplication);
-    this.resetFields(newApplication);
-    this.props.history.push('/applications');
-  };
-
-  /* Reset form fields */
-  resetFields = (newFields) => {
-    this.setState({
-      application_id: newFields.application_id || '',
-      application_name: newFields.application_name || '',
-      application_url: newFields.application_url || '',
-      repository_prod: newFields.repository_prod || '',
-      repository_test: newFields.repository_test || '',
-      database_prod: newFields.database_prod || '',
-      database_test: newFields.database_test || '',
+    fetch(config.API_ENDPOINT_APPLICATIONS + `/${application_id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updatedApplication),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      },
     })
-  };
+      .then(res => {
+        if (!res.ok)
+          return res.json().then(error => Promise.reject(error))
+      })
+      .then(() => {
+        this.context.updateApplication(updatedApplication);
+        this.props.history.push('/applications');
+      })
+      .catch(error => {
+        console.error(error)
+        this.setState({ error })
+      })
+  }
 
   /* handle form Cancel button */
   handleClickCancel = () => {
@@ -177,8 +203,25 @@ export default class UpdateApplication extends Component {
       return
     }
 
-    this.context.deleteApplication(this.state.application_id.value);
-    this.props.history.push('/applications')
+    fetch(config.API_ENDPOINT_APPLICATIONS + `/${this.state.application_id.value}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(error => {
+            throw error
+          })
+        }
+        this.props.history.push('/applications')
+        this.context.deleteApplication(this.state.application_id.value);
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   /* Validate form required fields */
@@ -206,6 +249,10 @@ export default class UpdateApplication extends Component {
     return { error: false, message: '' }
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   /* render */
   render() {
     let applicationButtonDisabled = true;
@@ -228,7 +275,7 @@ export default class UpdateApplication extends Component {
           <ul className="flex-outer">
             <li>
               <input type="hidden" name="application_id" value={this.state.application_id.value} />
-              { this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} /> }
+              {this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} />}
             </li>
 
             <li>
@@ -324,8 +371,8 @@ export default class UpdateApplication extends Component {
             </li>
 
             <li className="form__button-group">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={this.handleClickCancel}
               >
                 Cancel
@@ -354,8 +401,10 @@ export default class UpdateApplication extends Component {
 
 UpdateApplication.defaultProps = {
   application: {},
+  bugs: {}
 }
 
 UpdateApplication.propTypes = {
   application: PropTypes.object.isRequired,
+  bugs: PropTypes.object.isRequired,
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import BedbugsContext from '../../../BedbugsContext';
 import ValidateError from '../../ValidateError/ValidateError';
 import PropTypes from 'prop-types';
+import config from '../../../config';
 
 const Required = () => (
   <span className='form__required'>*</span>
@@ -181,12 +182,11 @@ export default class AddBug extends Component {
     })
   }
 
+  /* Add Bug to Database, update state, return to list of bugs */
   handleSubmit = e => {
     e.preventDefault();
 
-    //put fields in object
     const bug = {
-      bug_id: this.props.NewBugId,
       bug_name: this.state.bug_name.value,
       application_id: this.state.application_id.value,
       ticket_number: this.state.ticket_number.value,
@@ -195,27 +195,39 @@ export default class AddBug extends Component {
       environment: this.state.environment.value,
       notes: this.state.notes.value,
       reported_by: this.state.reported_by.value,
-      reported_on: new Date(),
       expected_result: this.state.expected_result.value,
       actual_result: this.state.actual_result.value,
       steps: this.state.steps.value,
       developer: this.state.developer.value,
-      last_updated: new Date(),
     };
 
-    // place holder to update database
-
-    //update state
-    this.context.addBug(bug);
-
-    //go back to applications
-    this.props.history.push('/bugs');
+    fetch(config.API_ENDPOINT_BUGS, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${config.API_KEY}`
+      },
+      body: JSON.stringify(bug)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status)
+        }
+        return response.json()
+      })
+      .then((data) => {
+        this.context.addBug(data);
+        this.props.history.push('/bugs');
+      })
+      .catch(error => this.setState({ error }))
   }
 
+  /* Handle Cancel Button, return to list of bugs */
   handleClickCancel = () => {
     this.props.history.push('/bugs')
   };
 
+  /* Validate Name, must be more than 3 characters and name not already used in application */
   validateBugName() {
     const bugName = this.state.bug_name.value.trim();
 
@@ -230,6 +242,7 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
+  /* validate Application, required */
   validateApplication() {
     const applicationId = this.state.application_id.value;
 
@@ -240,6 +253,7 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
+  /* Validate Ticket Number, greater than 3 characters and not already used by application */
   validateTicketNumber() {
     const ticketNumber = this.state.ticket_number.value.trim();
 
@@ -254,6 +268,7 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
+  /* Validate Priority, required */
   validatePriority() {
     const priority = this.state.priority.value.trim();
 
@@ -264,6 +279,7 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
+  /* Validate Status, required */
   validateStatus() {
     const status = this.state.status.value.trim();
 
@@ -298,6 +314,7 @@ export default class AddBug extends Component {
         {application.application_name}
       </option>
     );
+    applicationOptions.sort();
 
     return (
       <section className='section-page'>
@@ -524,11 +541,9 @@ export default class AddBug extends Component {
 }
 
 AddBug.defaultProps = {
-  NewBugId: '',
   applications: [],
 }
 
 AddBug.propTypes = {
-  NewBugId: PropTypes.number.isRequired,
   applications: PropTypes.array.isRequired
 }
