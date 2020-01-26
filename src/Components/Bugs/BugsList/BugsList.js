@@ -21,7 +21,7 @@ export default function BugsList(props) {
       <div className='bug-directory'>
         ( 
         <span className='bold'>
-          {'  '}Open
+          {'  '}Open:
           <img src={RedBug} alt='Red Open Bug' className='bug__icons-small' />
         </span>
         <span className='bold'>

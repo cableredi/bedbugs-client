@@ -199,8 +199,8 @@ export default class UpdateApplication extends Component {
 
     if (applicationName.length === 0) {
       return { error: true, message: 'Application Name is Required' }
-    } else if (applicationName.length < 3 || applicationName.length > 20) {
-      return { error: true, message: 'Application Name must be between 3 and 20 characters' };
+    } else if (applicationName.length < 3 || applicationName.length > 40) {
+      return { error: true, message: 'Application Name must be between 3 and 40 characters' };
     }
 
     return { error: false, message: '' }
@@ -257,6 +257,7 @@ export default class UpdateApplication extends Component {
                 id="application_name"
                 placeholder="Application Name"
                 value={this.state.application_name.value}
+                maxLength="40"
                 onChange={e => this.updateApplicationName(e.target.value)}
                 required
               />

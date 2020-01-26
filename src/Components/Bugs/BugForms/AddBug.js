@@ -233,8 +233,8 @@ export default class AddBug extends Component {
 
     if (bugName.length === 0) {
       return { error: true, message: 'Bug Name is Required' }
-    } else if (bugName.length < 3 || bugName.length > 20) {
-      return { error: true, message: 'Bug Name must be between 3 and 20 characters' };
+    } else if (bugName.length < 3 || bugName.length > 40) {
+      return { error: true, message: 'Bug Name must be between 3 and 40 characters' };
     } else if (this.context.bugs.find( bug => bug.bug_name.toLowerCase() === bugName.toLowerCase())) {
       return { error: true, message: 'Bug Name already exists for this Application'}
     }
@@ -259,8 +259,8 @@ export default class AddBug extends Component {
 
     if (ticketNumber.length === 0) {
       return { error: true, message: 'Ticket Number is Required' }
-    } else if (ticketNumber.length < 3 || ticketNumber.length > 10) {
-      return { error: true, message: 'Ticket Number must be between 3 and 10 characters long' };
+    } else if (ticketNumber.length < 3 || ticketNumber.length > 20) {
+      return { error: true, message: 'Ticket Number must be between 3 and 20 characters long' };
     } else if (this.context.bugs.find( bug => bug.ticket_number.toLowerCase() === ticketNumber.toLowerCase())) {
       return { error: true, message: 'Ticket Number already exists for this Bug'}
     }
@@ -354,6 +354,7 @@ export default class AddBug extends Component {
                 name="bug_name"
                 id="bug_name"
                 placeholder="Bug Name"
+                maxLength="40"
                 onChange={e => this.updateBugName(e.target.value)}
                 required
               />
@@ -389,6 +390,7 @@ export default class AddBug extends Component {
                 name="ticket_number"
                 id="ticket_number"
                 placeholder="Ticket Number"
+                maxLength="20"
                 onChange={e => this.updateTicketNumber(e.target.value)}
                 required
               />

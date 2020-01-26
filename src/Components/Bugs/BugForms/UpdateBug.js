@@ -301,8 +301,8 @@ export default class UpdateBug extends Component {
 
     if (bugName.length === 0) {
       return { error: true, message: 'Bug Name is Required' }
-    } else if (bugName.length < 3 || bugName.length > 20) {
-      return { error: true, message: 'Bug Name must be between 3 and 20 characters' };
+    } else if (bugName.length < 3 || bugName.length > 40) {
+      return { error: true, message: 'Bug Name must be between 3 and 40 characters' };
     }
 
     return { error: false, message: '' }
@@ -323,8 +323,8 @@ export default class UpdateBug extends Component {
 
     if (ticketNumber.length === 0) {
       return { error: true, message: 'Ticket Number is Required' }
-    } else if (ticketNumber.length < 3 || ticketNumber.length > 10) {
-      return { error: true, message: 'Ticket Number must be between 3 and 10 characters long' };
+    } else if (ticketNumber.length < 3 || ticketNumber.length > 20) {
+      return { error: true, message: 'Ticket Number must be between 3 and 20 characters long' };
     }
 
     return { error: false, message: '' }
@@ -413,6 +413,7 @@ export default class UpdateBug extends Component {
                 name="bug_name"
                 id="bug_name"
                 placeholder="Bug Name"
+                maxLength="40"
                 value={this.state.bug_name.value || ''}
                 onChange={e => this.updateBugName(e.target.value)}
                 required
@@ -450,6 +451,7 @@ export default class UpdateBug extends Component {
                 name="ticket_number"
                 id="ticket_number"
                 placeholder="Ticket Number"
+                maxLength="20"
                 value={this.state.ticket_number.value || ''}
                 onChange={e => this.updateTicketNumber(e.target.value)}
                 required

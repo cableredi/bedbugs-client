@@ -30,3 +30,17 @@
   flex: 1 0 120px;
   max-width: 300px;
 }
+
+@media (max-width: 700px) {
+  .Application__form {
+    margin: 0 30px;
+  }
+
+  .Application__form label {
+    text-align: center;
+  }
+
+  input {
+    margin: 0 auto;
+  }
+}
