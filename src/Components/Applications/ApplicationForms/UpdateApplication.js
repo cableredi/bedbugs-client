@@ -22,31 +22,31 @@ export default class UpdateApplication extends Component {
       },
 
       application_id: {
-        value: '',
+        value: this.props.application.application_id || '',
         touched: false
       },
       application_name: {
-        value: '',
+        value: this.props.application.application_name || '',
         touched: false
       },
       application_url: {
-        value: '',
+        value: this.props.application.application_url || '',
         touched: false
       },
       repository_prod: {
-        value: '',
+        value: this.props.application.repository_prod || '',
         touched: false
       },
       repository_test: {
-        value: '',
+        value: this.props.application.repository_test || '',
         touched: false
       },
       database_prod: {
-        value: '',
+        value: this.props.application.database_prod || '',
         touched: false
       },
       database_test: {
-        value: '',
+        value: this.props.application.database_test || '',
         touched: false
       },
     }
@@ -114,34 +114,6 @@ export default class UpdateApplication extends Component {
         touched: true
       }
     })
-  }
-
-  /* get Database fields */
-  componentDidMount() {
-    this.setState({
-      application_id: {
-        value: this.props.application.application_id
-      },
-      application_name: {
-        value: this.props.application.application_name
-      },
-      application_url: {
-        value: this.props.application.application_url
-      },
-      repository_prod: {
-        value: this.props.application.repository_prod
-      },
-      repository_test: {
-        value: this.props.application.repository_test
-      },
-      database_prod: {
-        value: this.props.application.database_prod
-      },
-      database_test: {
-        value: this.props.application.database_test
-      },
-    })
-
   }
 
   /* Handle Submit */
@@ -262,9 +234,11 @@ export default class UpdateApplication extends Component {
         <h1>Update Application</h1>
 
         <form
-          className="AddApplication__form"
+          className="Application__form"
           onSubmit={this.handleSubmit}
         >
+          <div className="required">* Required Fields</div>
+          
           <ul className="flex-outer">
             <li>
               <input type="hidden" name="application_id" value={this.state.application_id.value} />
@@ -370,14 +344,12 @@ export default class UpdateApplication extends Component {
               >
                 Cancel
               </button>
-              {' '}
               <button
                 type="submit"
                 disabled={applicationButtonDisabled}
               >
                 Save
               </button>
-              {' '}
               <button
                 type="button"
                 onClick={this.handleDelete}

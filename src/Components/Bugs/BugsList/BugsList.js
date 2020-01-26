@@ -35,7 +35,7 @@ export default function BugsList(props) {
         )
       </div>
       <div className="bugs">
-        <div className="bugs__list">
+        <div className="bugs-list">
           {bugItems}
         </div>
         <NavLink to='/addBug'>

@@ -18,6 +18,7 @@ export default function ApplicationsSummary(props) {
       >
         {applications.application_name}
       </NavLink>
+
       <div className="applications-list__counts">
 
         <span className="bold">
@@ -31,6 +32,7 @@ export default function ApplicationsSummary(props) {
         }
         </span>
       </div>
+
       <div className="applications-list__counts">
         <span className="bold">
           <img src={BlueBug} alt='Blue In-Progress Bug' className="bug__icons" />
@@ -43,6 +45,7 @@ export default function ApplicationsSummary(props) {
         }
         </span>
       </div>
+      
       <div className="applications-list__counts">
         <span className="bold">
           <img src={GreenBug} alt='Green In-Progress Bug' className="bug__icons" />

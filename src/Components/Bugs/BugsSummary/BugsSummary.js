@@ -9,13 +9,12 @@ function getBugIcon(status) {
   switch(status) {
     case 'Open':
       return <img src={RedBug} alt='Red Open Bug' className='bug__icons' />;
-      break;
     case 'In-Progress':
       return <img src={BlueBug} alt='Blue Open Bug' className='bug__icons' />;
-      break;
     case 'Closed':
       return <img src={GreenBug} alt='Green Open Bug' className='bug__icons' />;
-      break;
+    default:
+      return <img src={RedBug} alt='Red Open Bug' className='bug__icons' />;
   }
 }
 

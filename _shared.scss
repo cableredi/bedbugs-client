@@ -64,11 +64,7 @@
   }
 
   .form__button-group {
-    margin-top: 20px;
-  }
-
-  .form__button {
-    margin-right: 10px;
+    margin: 20px auto;
   }
 
   .form__hint {
@@ -87,22 +83,30 @@
   .form__required {
     vertical-align: super;
   }
+
+  .required {
+    font-style: italic;
+    color: red;
+  }
   
 }
 
 %buttons-shared {
-  .button {
-    margin: 20px auto;
+  .button,
+  .form__button-group button {
+    margin: 10px auto;
     background-color: $background;
-    width: 200px;
+    width: 180px;
     padding: 10px 15px;
     border-radius: 5px;
     box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
-    text-align: center;
+    text-transform: uppercase;
   }
   
   .button:hover,
-  .button:focus {
+  .button:focus,
+  .form__button-group button:hover,
+  .form__button-group button:focus {
     background-color: $buttonHoverColor;
     color: $textColor;
     box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);

@@ -19,67 +19,67 @@ export default class UpdateBug extends Component {
         message: ''
       },
       bug_id: {
-        value: '',
+        value: this.props.bug.bug_id || '',
         touched: false
       },
       bug_name: {
-        value: '',
+        value: this.props.bug.bug_name || '',
         touched: false
       },
       application_id: {
-        value: '',
+        value: this.props.bug.application_id || '',
         touched: false
       },
       ticket_number: {
-        value: '',
+        value: this.props.bug.ticket_number || '',
         touched: false
       },
       priority: {
-        value: '',
+        value: this.props.bug.priority || '',
         touched: false
       },
       status: {
-        value: '',
+        value: this.props.bug.status || '',
         touched: false
       },
       environment: {
-        value: '',
+        value: this.props.bug.environment || '',
         touched: false
       },
       notes: {
-        value: '',
+        value: this.props.bug.notes || '',
         touched: false
       },
       reported_by: {
-        value: '',
+        value: this.props.bug.reported_by || '',
         touched: false
       },
       reported_on: {
-        value: '',
+        value: this.props.bug.reported_on || '',
         touched: false
       },
       expected_result: {
-        value: '',
+        value: this.props.bug.expected_result || '',
         touched: false
       },
       actual_result: {
-        value: '',
+        value: this.props.bug.actual_result || '',
         touched: false
       },
       steps: {
-        value: '',
+        value: this.props.bug.steps || '',
         touched: false
       },
       developer: {
-        value: '',
+        value: this.props.bug.developer || '',
         touched: false
       },
       developer_notes: {
-        value: '',
+        value: this.props.bug.developer_notes || '',
         touched: false
       },
       last_updated: {
-        value: '',
+        value: this.props.bug.last_updated || '',
         touched: false
       },
     }
@@ -243,59 +243,6 @@ export default class UpdateBug extends Component {
       })
   }
 
-  componentDidMount() {
-    this.setState({
-      bug_id: {
-        value: this.props.bug.bug_id
-      },
-      bug_name: {
-        value: this.props.bug.bug_name
-      },
-      application_id: {
-        value: this.props.bug.application_id
-      },
-      ticket_number: {
-        value: this.props.bug.ticket_number
-      },
-      priority: {
-        value: this.props.bug.priority
-      },
-      status: {
-        value: this.props.bug.status
-      },
-      environment: {
-        value: this.props.bug.environment
-      },
-      notes: {
-        value: this.props.bug.notes
-      },
-      reported_by: {
-        value: this.props.bug.reported_by
-      },
-      reported_on: {
-        value: this.props.bug.reported_on
-      },
-      expected_result: {
-        value: this.props.bug.expected_result
-      },
-      actual_result: {
-        value: this.props.bug.actual_result
-      },
-      steps: {
-        value: this.props.bug.steps
-      },
-      developer: {
-        value: this.props.bug.developer
-      },
-      developer_notes: {
-        value: this.props.bug.developer_notes
-      },
-      last_updated: {
-        value: this.props.bug.last_updated
-      },
-    })
-  }
-
   /* handle submit */
   handleSubmit = e => {
     e.preventDefault();
@@ -319,7 +266,7 @@ export default class UpdateBug extends Component {
       steps: this.state.steps.value,
       developer: this.state.developer.value,
       developer_notes: this.state.developer_notes.value,
-      last_updated: this.state.last_updated.value,
+      last_updated: new Date(),
     };
 
     fetch(config.API_ENDPOINT_BUGS + `/${bug_id}`, {
@@ -445,13 +392,12 @@ export default class UpdateBug extends Component {
       <section className='section-page'>
         <h1>Update Bug</h1>
         <form
-          className="UpdateBug__form"
+          className="Bug__form"
           onSubmit={this.handleSubmit}
         >
+          <div className="required">* Required Fields</div>
+          
           <ul className="flex-outer">
-            <li className='form__input-error' role='alert'>
-              <div>* Required Fields</div>
-            </li>
             <li>
               <input type="hidden" name="bug_id" value={this.state.bug_id} />
               {this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} />}
@@ -613,7 +559,7 @@ export default class UpdateBug extends Component {
                 name="reported_on"
                 id="reported_on"
                 value={new Date(this.state.reported_on.value).toLocaleDateString() || ''}
-                onChange={e => this.updateReportedOn(e.target.value)}
+                readOnly
               />
             </li>
 
@@ -689,7 +635,7 @@ export default class UpdateBug extends Component {
                 id="last_updated"
                 placeholder="Last Updated"
                 value={new Date(this.state.last_updated.value).toLocaleDateString()}
-                onChange={e => this.updateLastUpdated.value(e.target.value)}
+                onChange={e => this.updateLastUpdated(e.target.value)}
                 readOnly
               />
             </li>

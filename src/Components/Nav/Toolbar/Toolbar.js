@@ -13,7 +13,7 @@ const toolbar = props => (
       </div>
 
       <div className="toolbar__logo">
-        <NavLink to = '/summary'>
+        <NavLink to = '/'>
           <img src={BedbugsLogo} alt="Bedbugs logo" />
         </NavLink>
       </div>

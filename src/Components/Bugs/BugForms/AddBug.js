@@ -334,13 +334,12 @@ export default class AddBug extends Component {
         <h1>Add Bug</h1>
 
         <form
-          className="AddBug__form"
+          className="Bug__form"
           onSubmit={this.handleSubmit}
         >
+          <div className="required">* Required Fields</div>
+          
           <ul className="flex-outer">
-            <li className='form__input-error' role='alert'>
-              <div>* Required Fields</div>
-            </li>
             <li>
               <input type="hidden" name="bug_id" value={newBugId} />
             </li>

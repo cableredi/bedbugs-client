@@ -174,9 +174,11 @@ export default class AddApplication extends Component {
       <section className='section-page'>
         <h1>Add Application</h1>
         <form
-          className="AddApplication__form"
+          className="Application__form"
           onSubmit={this.handleSubmit}
         >
+          <div className="required">* Required Fields</div>
+          
           <ul className="flex-outer">
 
             <li>
@@ -268,7 +270,6 @@ export default class AddApplication extends Component {
               <button type="button" onClick={this.handleClickCancel}>
                 Cancel
               </button>
-              {' '}
               <button
                 type="submit"
                 disabled={applicationButtonDisabled}

@@ -11,7 +11,8 @@
 .bugs-list__bug {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: 25% 14% 16% 14% 14% 14%;
+  align-items: center;
+  justify-content: center;
 
   border: 1px solid black;
   border-radius: 5px;
@@ -19,30 +20,6 @@
   padding: 10px 40px;
   background: $backgroundItems;
   box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
-}
-
-.bugs-list__bug-name {
-  grid-column: 1;
-}
-
-.bugs-list__ticket-number {
-  grid-column: 2;
-}
-
-.bugs-list__application {
-  grid-column: 3;
-}
-
-.bugs-list__priority {
-  grid-column: 4;
-}
-
-.bugs-list__status {
-  grid-column: 5;
-}
-
-.bugs-list__reported-on {
-  grid-column: 6;
 }
 
 .bug-directory {
@@ -56,4 +33,26 @@
   vertical-align: middle;
   margin-left: 5px;
   margin-right: 8px;
+}
+
+@media (max-width: 500px) {
+  .bugs-list__bug {
+    grid-template-columns: 100%;
+  }
+}
+
+@media (min-width: 500px) {
+  .bugs-list__bug {
+    grid-template-columns: auto auto auto auto;
+  }
+  
+  .bugs-list__applicationName {
+    grid-row: 1 / span 2;
+  }
+}
+
+@media (min-width: 800px) {
+  .bugs-list__bug {
+    grid-template-columns: 25% 14% 16% 14% 14% 14%;
+  }
 }
