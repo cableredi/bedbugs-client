@@ -1,41 +1,59 @@
 .bugs {
   @extend %buttons-shared;
+  @extend %bugs-shared;
 }
 
-.bugs ul {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: left;
-  align-items: center;
+.bugs-list {
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.bugs li {
-  display: flex;
-  flex-direction: row;
+.bugs-list__bug {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 25% 14% 16% 14% 14% 14%;
+
   border: 1px solid black;
   border-radius: 5px;
   margin: 10px;
   padding: 10px 40px;
-  max-width: 800px;
   background: $backgroundItems;
   box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
-.bugs-list__details-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  margin-bottom: 10px;
+.bugs-list__bug-name {
+  grid-column: 1;
 }
 
-.bugs-list__details-row div {
-  margin: 0 10px;
+.bugs-list__ticket-number {
+  grid-column: 2;
 }
 
-.bugs-list__name {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-right: 20px;
-  color: $linkColor;
+.bugs-list__application {
+  grid-column: 3;
+}
+
+.bugs-list__priority {
+  grid-column: 4;
+}
+
+.bugs-list__status {
+  grid-column: 5;
+}
+
+.bugs-list__reported-on {
+  grid-column: 6;
+}
+
+.bug-directory {
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.bug__icons-small {
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-right: 8px;
 }

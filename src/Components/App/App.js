@@ -204,6 +204,7 @@ export default class App extends Component {
               exact path='/bugs'
               render={(routeProps) =>
                 <BugsList
+                  applications={this.state.applications}
                   bugs={this.state.bugs}
                   {...routeProps}
                 />

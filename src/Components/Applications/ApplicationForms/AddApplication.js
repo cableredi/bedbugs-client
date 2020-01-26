@@ -141,8 +141,8 @@ export default class AddApplication extends Component {
 
     if (applicationName.length === 0) {
       return { error: true, message: 'Application Name is Required' }
-    } else if (applicationName.length < 3) {
-      return { error: true, message: 'Application Name must be at least 3 characters long' };
+    } else if (applicationName.length < 3 || applicationName.length > 20) {
+      return { error: true, message: 'Application Name must be between 3 and 20 characters' };
     }
 
     return { error: false, message: '' }

@@ -9,8 +9,6 @@ const Required = () => (
 );
 
 export default class UpdateBug extends Component {
-  _isMounted = false;
-
   static contextType = BedbugsContext;
 
   constructor(props) {
@@ -151,7 +149,7 @@ export default class UpdateBug extends Component {
     })
   }
 
-  updateReportedby(reported_by) {
+  updateReportedBy(reported_by) {
     this.setState({
       reported_by: {
         value: reported_by,
@@ -246,8 +244,6 @@ export default class UpdateBug extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
-
     this.setState({
       bug_id: {
         value: this.props.bug.bug_id
@@ -316,12 +312,14 @@ export default class UpdateBug extends Component {
       status: this.state.status.value,
       environment: this.state.environment.value,
       notes: this.state.notes.value,
+      reported_by: this.state.reported_by.value,
       reported_on: this.state.reported_on.value,
       expected_result: this.state.expected_result.value,
       actual_result: this.state.actual_result.value,
       steps: this.state.steps.value,
       developer: this.state.developer.value,
       developer_notes: this.state.developer_notes.value,
+      last_updated: this.state.last_updated.value,
     };
 
     fetch(config.API_ENDPOINT_BUGS + `/${bug_id}`, {
@@ -356,8 +354,8 @@ export default class UpdateBug extends Component {
 
     if (bugName.length === 0) {
       return { error: true, message: 'Bug Name is Required' }
-    } else if (bugName.length < 3) {
-      return { error: true, message: 'Bug Name must be at least 3 characters long' };
+    } else if (bugName.length < 3 || bugName.length > 20) {
+      return { error: true, message: 'Bug Name must be between 3 and 20 characters' };
     }
 
     return { error: false, message: '' }
@@ -378,8 +376,8 @@ export default class UpdateBug extends Component {
 
     if (ticketNumber.length === 0) {
       return { error: true, message: 'Ticket Number is Required' }
-    } else if (ticketNumber.length < 3) {
-      return { error: true, message: 'Ticket Number must be at least 3 characters long' };
+    } else if (ticketNumber.length < 3 || ticketNumber.length > 10) {
+      return { error: true, message: 'Ticket Number must be between 3 and 10 characters long' };
     }
 
     return { error: false, message: '' }
@@ -404,8 +402,14 @@ export default class UpdateBug extends Component {
     return { error: false, message: '' }
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
+  validateEnvironment() {
+    const environment = this.state.environment.value.trim();
+
+    if (environment.length === 0) {
+      return { error: true, message: 'Environment is Required' }
+    }
+
+    return { error: false, message: '' }
   }
 
   /* Render page */
@@ -417,13 +421,15 @@ export default class UpdateBug extends Component {
     const TicketNumberError = this.validateTicketNumber();
     const PriorityError = this.validatePriority();
     const StatusError = this.validateStatus();
+    const EnvironmentError = this.validateEnvironment();
 
     if (!BugNameError.error &&
       !ApplicationError.error &&
       !TicketNumberError.error &&
       !PriorityError.error &&
-      !StatusError.error) {
-      bugButtonDisabled = false;
+      !StatusError.error &&
+      !EnvironmentError.error) {
+        bugButtonDisabled = false;
     }
 
     const applicationOptions = this.props.applications.map((application, i) =>
@@ -552,15 +558,24 @@ export default class UpdateBug extends Component {
             <li>
               <label htmlFor="environment">
                 Environment:
+               <Required />
               </label>
-              <input
-                type="text"
-                name="environment"
-                id="environment"
-                placeholder="Environment"
+              <select
+                id='environment'
+                name='environment'
+                className='formSelect'
+                aria-label="Select a Environment"
+                aria-required="true"
                 value={this.state.environment.value || ''}
                 onChange={e => this.updateEnvironment(e.target.value)}
-              />
+              >
+                <option value="">Environment... </option>
+                <option value="Test">Test</option>
+                <option value="QA">QA</option>
+                <option value="Pre-Production">Pre-Production</option>
+                <option value="Production">Production</option>
+              </select>
+              {this.state.environment.touched && <ValidateError message={EnvironmentError.message} />}
             </li>
 
             <li className="UpdateBug__form-textarea">
@@ -585,7 +600,7 @@ export default class UpdateBug extends Component {
                 id="reported_by"
                 placeholder="Reported By"
                 value={this.state.reported_by.value || ''}
-                onChange={e => this.updateReportedby(e.target.value)}
+                onChange={e => this.updateReportedBy(e.target.value)}
               />
             </li>
 

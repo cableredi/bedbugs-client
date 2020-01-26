@@ -108,3 +108,11 @@
     box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
   }
 }
+
+%bugs-shared {
+  .bug__icons {
+    height: 40px;
+    width: 40px;
+    vertical-align: middle;
+  }
+}

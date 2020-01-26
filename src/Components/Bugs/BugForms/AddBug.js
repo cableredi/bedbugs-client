@@ -233,8 +233,8 @@ export default class AddBug extends Component {
 
     if (bugName.length === 0) {
       return { error: true, message: 'Bug Name is Required' }
-    } else if (bugName.length < 3) {
-      return { error: true, message: 'Bug Name must be at least 3 characters long' };
+    } else if (bugName.length < 3 || bugName.length > 20) {
+      return { error: true, message: 'Bug Name must be between 3 and 20 characters' };
     } else if (this.context.bugs.find( bug => bug.bug_name.toLowerCase() === bugName.toLowerCase())) {
       return { error: true, message: 'Bug Name already exists for this Application'}
     }
@@ -259,8 +259,8 @@ export default class AddBug extends Component {
 
     if (ticketNumber.length === 0) {
       return { error: true, message: 'Ticket Number is Required' }
-    } else if (ticketNumber.length < 3) {
-      return { error: true, message: 'Ticket Number must be at least 3 characters long' };
+    } else if (ticketNumber.length < 3 || ticketNumber.length > 10) {
+      return { error: true, message: 'Ticket Number must be between 3 and 10 characters long' };
     } else if (this.context.bugs.find( bug => bug.ticket_number.toLowerCase() === ticketNumber.toLowerCase())) {
       return { error: true, message: 'Ticket Number already exists for this Bug'}
     }
@@ -290,6 +290,17 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
+  /* Validate Environment, required */
+  validateEnvironment() {
+    const environment = this.state.environment.value.trim();
+
+    if (environment.length === 0) {
+      return { error: true, message: 'Environment is Required' }
+    }
+
+    return { error: false, message: '' }
+  }
+
   render() {
     let bugButtonDisabled = true;
 
@@ -298,13 +309,15 @@ export default class AddBug extends Component {
     const TicketNumberError = this.validateTicketNumber();
     const PriorityError = this.validatePriority();
     const StatusError = this.validateStatus();
+    const EnvironmentError = this.validateEnvironment();
 
     if (!BugNameError.error &&
       !ApplicationError.error &&
       !TicketNumberError.error &&
       !PriorityError.error &&
-      !StatusError.error) {
-      bugButtonDisabled = false;
+      !StatusError.error &&
+      !EnvironmentError.error) {
+        bugButtonDisabled = false;
     }
 
     const newBugId = this.props.NewBugId;
@@ -428,14 +441,24 @@ export default class AddBug extends Component {
             <li>
               <label htmlFor="environment">
                 Environment:
+               <Required />
               </label>
-              <input
-                type="text"
-                name="environment"
-                id="environment"
-                placeholder="Environment"
+              <select
+                id='environment'
+                name='environment'
+                className='formSelect'
+                aria-label="Select a Environment"
+                aria-required="true"
+                value={this.state.environment.value || ''}
                 onChange={e => this.updateEnvironment(e.target.value)}
-              />
+              >
+                <option value="">Environment... </option>
+                <option value="Test">Test</option>
+                <option value="QA">QA</option>
+                <option value="Pre-Production">Pre-Production</option>
+                <option value="Production">Production</option>
+              </select>
+              {this.state.environment.touched && <ValidateError message={EnvironmentError.message} />}
             </li>
 
             <li className="AddBug__form-textarea">
