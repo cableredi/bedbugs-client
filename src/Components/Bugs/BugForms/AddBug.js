@@ -69,7 +69,9 @@ export default class AddBug extends Component {
     }
   }
 
+  /*********************/
   /* Update Form State */
+  /*********************/
   updateBugName(bug_name) {
     this.setState({
       bug_name: {
@@ -182,7 +184,9 @@ export default class AddBug extends Component {
     })
   }
 
+  /*************************************************************/
   /* Add Bug to Database, update state, return to list of bugs */
+  /*************************************************************/
   handleSubmit = e => {
     e.preventDefault();
 
@@ -222,12 +226,16 @@ export default class AddBug extends Component {
       .catch(error => this.setState({ error }))
   }
 
-  /* Handle Cancel Button, return to list of bugs */
+  /************************/
+  /* Handle Cancel Button */
+  /************************/
   handleClickCancel = () => {
     this.props.history.push('/bugs')
   };
 
-  /* Validate Name, must be more than 3 characters and name not already used in application */
+  /****************************/
+  /* Validate Required Fields */
+  /****************************/
   validateBugName() {
     const bugName = this.state.bug_name.value.trim();
 
@@ -242,7 +250,6 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
-  /* validate Application, required */
   validateApplication() {
     const applicationId = this.state.application_id.value;
 
@@ -253,7 +260,6 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
-  /* Validate Ticket Number, greater than 3 characters and not already used by application */
   validateTicketNumber() {
     const ticketNumber = this.state.ticket_number.value.trim();
 
@@ -268,7 +274,6 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
-  /* Validate Priority, required */
   validatePriority() {
     const priority = this.state.priority.value.trim();
 
@@ -279,7 +284,6 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
-  /* Validate Status, required */
   validateStatus() {
     const status = this.state.status.value.trim();
 
@@ -290,7 +294,6 @@ export default class AddBug extends Component {
     return { error: false, message: '' }
   }
 
-  /* Validate Environment, required */
   validateEnvironment() {
     const environment = this.state.environment.value.trim();
 

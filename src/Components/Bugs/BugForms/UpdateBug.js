@@ -3,8 +3,8 @@ import BedbugsContext from '../../../BedbugsContext';
 import ValidateError from '../../ValidateError/ValidateError';
 import PropTypes from 'prop-types';
 import config from '../../../config';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const Required = () => (
   <span className="form__required">*</span>
@@ -87,7 +87,9 @@ export default class UpdateBug extends Component {
     }
   }
 
+  /*********************/
   /* Update Form State */
+  /*********************/
   updateBugName(bug_name) {
     this.setState({
       bug_name: {
@@ -218,7 +220,9 @@ export default class UpdateBug extends Component {
     })
   }
 
-  /* handle form Delete Button */
+  /************************/
+  /* Handle Delete Button */
+  /************************/
   handleDelete = e => {
     e.preventDefault();
 
@@ -245,7 +249,9 @@ export default class UpdateBug extends Component {
       })
   }
 
-  /* handle submit */
+  /****************************************************************/
+  /* Update Bug to Database, update state, return to list of bugs */
+  /****************************************************************/
   handleSubmit = e => {
     e.preventDefault();
 
@@ -292,12 +298,16 @@ export default class UpdateBug extends Component {
       })
   };
 
-  /* handle form cancel button */
+  /************************/
+  /* Handle Cancel button */
+  /************************/
   handleClickCancel = () => {
     this.props.history.push('/bugs')
   };
 
-  /* Form validation */
+  /************************/
+  /* Validate Form Fields */
+  /************************/
   validateBugName() {
     const bugName = this.state.bug_name.value.trim();
 
@@ -361,7 +371,9 @@ export default class UpdateBug extends Component {
     return { error: false, message: '' }
   }
 
+  /******************/
   /* Confirm Delete */
+  /******************/
   confirmDelete = (e) => {
     confirmAlert({
       title: 'Are you sure...',
@@ -379,8 +391,6 @@ export default class UpdateBug extends Component {
     });
   };
 
-
-  /* Render page */
   render() {
     let bugButtonDisabled = true;
 

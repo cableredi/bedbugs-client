@@ -75,20 +75,21 @@
   .required,
   .form__error,
   .form__required,
-  .form__input-error {
+  .form__input-error,
+  .form__input-error-large {
     font-style: italic;
     font-size: .8rem;
     color: red;
   }
 
-  .form__input-error {
+  .form__input-error,
+  .form__input-error-large {
     margin: 0 auto;
   }
 
   .form__required {
     vertical-align: super;
   }
-  
 }
 
 %buttons-shared {
@@ -110,7 +111,9 @@
     background-color: $buttonHoverColor;
     color: $buttonTextHoverColor;
     box-shadow: 1px 0px 5px rgba(0, 0, 0, 0.5);
-    font-weight: 700;
+    font-weight: 600;
+    transition: 0.3s;
+    border-radius: 10px;
   }
 }
 

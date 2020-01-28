@@ -27,6 +27,9 @@ export default class App extends Component {
     }
   }
 
+  /*********************/
+  /*  State functions  */
+  /*********************/
   setApplications = applications => {
     this.setState({
       applications,
@@ -57,7 +60,9 @@ export default class App extends Component {
     })
   }
 
+  /*******************************************/
   /* get applications and bugs from database */
+  /*******************************************/
   componentDidMount() {
     fetch(config.API_ENDPOINT_APPLICATIONS, {
       method: 'GET',
@@ -92,7 +97,9 @@ export default class App extends Component {
       .catch(error => this.setState({ error }))
   }
 
+  /********************************/
   /* Update Applications to state */
+  /********************************/
   updateApplication = updatedApplication => {
     this.setState({
       applications: this.state.applications.map(appl =>
@@ -101,7 +108,9 @@ export default class App extends Component {
     })
   }
 
+  /************************/
   /* Update Bugs to state */
+  /************************/
   updateBug = updatedBug => {
     this.setState({
       bugs: this.state.bugs.map(bug =>
@@ -110,7 +119,9 @@ export default class App extends Component {
     })
   }
 
+  /*********************************/
   /* Update Application from state */
+  /*********************************/
   deleteApplication = (application_id) => {
     const newApplications = this.state.applications.filter(application =>
       application.application_id !== Number(application_id)
@@ -120,7 +131,9 @@ export default class App extends Component {
     });
   }
 
+  /*************************/
   /* Update Bug from state */
+  /*************************/
   deleteBug = (bug_id) => {
     const newBugs = this.state.bugs.filter(bug =>
       bug.bug_id !== Number(bug_id)
@@ -164,11 +177,13 @@ export default class App extends Component {
 
         <BedbugsContext.Provider value={contextValue}>
           <Switch>
+            {/* Landing Page */}
             <Route
               exact path='/'
               component={Landing}
             />
 
+            {/* Applications Summary */}
             <Route
               exact path='/applications'
               render={(routeProps) =>
@@ -180,6 +195,7 @@ export default class App extends Component {
               }
             />
 
+            {/* Add an Application */}
             <Route
               exact path='/addapplication'
               component={(routeProps) =>
@@ -189,6 +205,7 @@ export default class App extends Component {
               }
             />
 
+            {/* Update an Application */}
             <Route
               exact path='/updateapplication/:application_id'
               component={(routeProps) =>
@@ -200,6 +217,7 @@ export default class App extends Component {
               }
             />
 
+            {/* Bugs Summary */}
             <Route
               exact path='/bugs'
               render={(routeProps) =>
@@ -211,6 +229,7 @@ export default class App extends Component {
               }
             />
 
+            {/* Add a Bug */}
             <Route
               exact path='/addbug'
               component={(routeProps) =>
@@ -221,6 +240,7 @@ export default class App extends Component {
               }
             />
 
+            {/* Update a Bug */}
             <Route
               exact path='/updatebug/:bug_id'
               component={(routeProps) =>
@@ -232,6 +252,7 @@ export default class App extends Component {
               }
             />
 
+            {/* Not Found Page */}
             <Route
               component={NotFoundPage}
             />

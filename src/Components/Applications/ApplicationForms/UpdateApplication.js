@@ -4,6 +4,9 @@ import ValidateError from '../../ValidateError/ValidateError';
 import PropTypes from 'prop-types';
 import config from '../../../config';
 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 const { isWebUri } = require('valid-url');
 
 const Required = () => (
@@ -52,7 +55,9 @@ export default class UpdateApplication extends Component {
     }
   }
 
+  /*********************/
   /* Update Form State */
+  /*********************/
   updateApplicationId(application_id) {
     this.setState({
       application_id: {
@@ -116,7 +121,9 @@ export default class UpdateApplication extends Component {
     })
   }
 
-  /* Handle Submit */
+  /************************************************************************************/
+  /*   Update Application to Database, update state, return to list of applications   */
+  /************************************************************************************/
   handleSubmit = e => {
     e.preventDefault();
     this.setState({ error: null })
@@ -154,20 +161,28 @@ export default class UpdateApplication extends Component {
       })
   }
 
-  /* handle form Cancel button */
+  /*****************************/
+  /* Handle form Cancel button */
+  /*****************************/
   handleClickCancel = () => {
     this.props.history.push('/applications')
   };
 
-  /* handle form Delete Button */
+  /*****************************/
+  /* Handle form Delete Button */
+  /*****************************/
   handleDelete = () => {
     const openBugs = this.props.bugs.find(bug => bug.status === 'Open' || bug.status === 'In-Progress');
     if (openBugs) {
-      this.setState({
-        deleteError: {
-          value: true,
-          message: 'Unable to Delete, there are active Bugs associated with this Application.'
-        }
+      confirmAlert({
+        title: 'Unable to Delete',
+        message: 'There are active bugs associated with this application.',
+        buttons: [
+          {
+            label: 'OK',
+            onClick: () => ''
+          }
+        ]
       })
       return
     }
@@ -193,7 +208,9 @@ export default class UpdateApplication extends Component {
       })
   }
 
+  /*********************************/
   /* Validate form required fields */
+  /*********************************/
   validateApplicationName() {
     const applicationName = this.state.application_name.value.trim();
 
@@ -218,7 +235,9 @@ export default class UpdateApplication extends Component {
     return { error: false, message: '' }
   }
 
-  /* render */
+  /*********************/
+  /*      render       */
+  /*********************/
   render() {
     let applicationButtonDisabled = true;
 
@@ -242,7 +261,7 @@ export default class UpdateApplication extends Component {
           <ul className="flex-outer">
             <li>
               <input type="hidden" name="application_id" value={this.state.application_id.value} />
-              {this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} />}
+              {this.state.deleteError.value && <ValidateError message={this.state.deleteError.message} class='form__input-error-large' />}
             </li>
 
             <li>

@@ -41,7 +41,9 @@ export default class AddApplication extends Component {
     }
   }
 
+  /*********************/
   /* Update Form State */
+  /*********************/
   updateApplicationName(application_name) {
     this.setState({
       application_name: {
@@ -96,7 +98,9 @@ export default class AddApplication extends Component {
     })
   }
 
-  /* update Database on Submit */
+  /*****************************************************************************/
+  /* Add Application to Database, update state, return to list of applications */
+  /*****************************************************************************/
   handleSubmit = e => {
     e.preventDefault();
 
@@ -132,10 +136,16 @@ export default class AddApplication extends Component {
       .catch(error => this.setState({ error }))
   }
 
+  /*****************/
+  /* Handle Cancel */
+  /*****************/
   handleClickCancel = () => {
     this.props.history.push('/applications')
   };
 
+  /************************/
+  /* Validate Form Fields */
+  /************************/
   validateApplicationName() {
     const applicationName = this.state.application_name.value.trim();
 
