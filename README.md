@@ -1,13 +1,4 @@
-(setq markdown-xhtml-header-content
-<style type='text/css'>
-  img[src*='thumbnail'] { 
-    width: 40px;
-    height: 40px; 
-  }
-</style>
-)
-
-# bedbugs ![bedbugs](./src/Components/Images/blue_bug.svg#thumbnail)
+# bedbugs ![bedbugs](./src/Components/Images/blue_bug_thumbnail.svg)
 
 ## What can bedbugs do for you?
 Have you ever been new to a project and dont know where to start?
