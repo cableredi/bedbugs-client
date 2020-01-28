@@ -1,9 +1,11 @@
+(setq markdown-xhtml-header-content
 <style type='text/css'>
   img[src*='thumbnail'] { 
     width: 40px;
     height: 40px; 
   }
 </style>
+)
 
 # bedbugs ![bedbugs](./src/Components/Images/blue_bug.svg#thumbnail)
 
