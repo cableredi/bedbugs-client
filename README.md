@@ -18,9 +18,11 @@ If so, bedbugs is for you!!!
 ![Landing Page](./src/Components/Images/LandingPage.PNG)
 
 #### Applications Summary: [bedbugs.now.sh/applications](https://bedbugs.now.sh/applications)
+##### Get a List of the Applications and how many Bugs are either Open, In-Progress, or Closed.
 ![Applications Summary](./src/Components/Images/ApplicationsPage.PNG)
 
 #### Bugs Summary:  [bedbugs.now.sh/bugs](https://bedbugs.now.sh/bugs)
+##### Get a List of all the Bugs and their Ticket Number, Application, Priority, Status, and Who Reported the Bug
 ![Bugs Summary](./src/Components/Images/BugsPage.PNG)
 
 
