@@ -358,8 +358,8 @@ export default class AddBug extends Component {
                 onChange={e => this.updateBugName(e.target.value)}
                 required
               />
-              {this.state.bug_name.touched && <ValidateError message={BugNameError.message} />}
             </li>
+            <li>{this.state.bug_name.touched && <ValidateError message={BugNameError.message} />}</li>
 
             <li>
               <label htmlFor="application_id">
@@ -377,8 +377,8 @@ export default class AddBug extends Component {
                 <option value=''>Application... </option>
                 {applicationOptions}
               </select>
-              {this.state.application_id.touched && <ValidateError message={ApplicationError.message} />}
             </li>
+            <li>{this.state.application_id.touched && <ValidateError message={ApplicationError.message} />}</li>
 
             <li>
               <label htmlFor="ticket_number">
@@ -394,8 +394,8 @@ export default class AddBug extends Component {
                 onChange={e => this.updateTicketNumber(e.target.value)}
                 required
               />
-              {this.state.ticket_number.touched && <ValidateError message={TicketNumberError.message} />}
             </li>
+            <li>{this.state.ticket_number.touched && <ValidateError message={TicketNumberError.message} />}</li>
 
             <li>
               <label htmlFor="priority">
@@ -415,8 +415,8 @@ export default class AddBug extends Component {
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
               </select>
-              {this.state.priority.touched && <ValidateError message={PriorityError.message} />}
             </li>
+            <li>{this.state.priority.touched && <ValidateError message={PriorityError.message} />}</li>
 
             <li>
               <label htmlFor="status">
@@ -436,8 +436,8 @@ export default class AddBug extends Component {
                 <option value="In-Progress">In-Progress</option>
                 <option value="Closed">Closed</option>
               </select>
-              {this.state.status.touched && <ValidateError message={StatusError.message} />}
             </li>
+            <li>{this.state.status.touched && <ValidateError message={StatusError.message} />}</li>
 
             <li>
               <label htmlFor="environment">
@@ -459,8 +459,8 @@ export default class AddBug extends Component {
                 <option value="Pre-Production">Pre-Production</option>
                 <option value="Production">Production</option>
               </select>
-              {this.state.environment.touched && <ValidateError message={EnvironmentError.message} />}
             </li>
+            <li>{this.state.environment.touched && <ValidateError message={EnvironmentError.message} />}</li>
 
             <li className="AddBug__form-textarea">
               <label htmlFor="notes">

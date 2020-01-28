@@ -166,7 +166,7 @@ export default class UpdateApplication extends Component {
       this.setState({
         deleteError: {
           value: true,
-          message: 'Unable to delete, there are active Bugs'
+          message: 'Unable to Delete, there are active Bugs associated with this Application.'
         }
       })
       return
@@ -261,8 +261,8 @@ export default class UpdateApplication extends Component {
                 onChange={e => this.updateApplicationName(e.target.value)}
                 required
               />
-              {this.state.application_name.touched && <ValidateError message={ApplicationNameError.message} />}
             </li>
+            <li>{this.state.application_name.touched && <ValidateError message={ApplicationNameError.message} />}</li>
 
             <li>
               <label htmlFor="application_url">
@@ -279,8 +279,8 @@ export default class UpdateApplication extends Component {
                 onChange={e => this.updateApplicationURL(e.target.value)}
                 required
               />
-              {this.state.application_url.touched && <ValidateError message={ApplicationURLError.message} />}
             </li>
+            <li>{this.state.application_url.touched && <ValidateError message={ApplicationURLError.message} />}</li>
 
             <li>
               <label htmlFor="repository_prod">

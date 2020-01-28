@@ -3,6 +3,8 @@ import BedbugsContext from '../../../BedbugsContext';
 import ValidateError from '../../ValidateError/ValidateError';
 import PropTypes from 'prop-types';
 import config from '../../../config';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const Required = () => (
   <span className="form__required">*</span>
@@ -359,6 +361,25 @@ export default class UpdateBug extends Component {
     return { error: false, message: '' }
   }
 
+  /* Confirm Delete */
+  confirmDelete = (e) => {
+    confirmAlert({
+      title: 'Are you sure...',
+      message: '...You wish to delete this bug?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => this.handleDelete(e)
+        },
+        {
+          label: 'No',
+          onClick: () => ''
+        }
+      ]
+    });
+  };
+
+
   /* Render page */
   render() {
     let bugButtonDisabled = true;
@@ -376,7 +397,7 @@ export default class UpdateBug extends Component {
       !PriorityError.error &&
       !StatusError.error &&
       !EnvironmentError.error) {
-        bugButtonDisabled = false;
+      bugButtonDisabled = false;
     }
 
     const applicationOptions = this.props.applications.map((application, i) =>
@@ -388,6 +409,7 @@ export default class UpdateBug extends Component {
       </option>
     );
 
+
     return (
       <section className='section-page'>
         <h1>Update Bug</h1>
@@ -396,7 +418,7 @@ export default class UpdateBug extends Component {
           onSubmit={this.handleSubmit}
         >
           <div className="required">* Required Fields</div>
-          
+
           <ul className="flex-outer">
             <li>
               <input type="hidden" name="bug_id" value={this.state.bug_id} />
@@ -418,8 +440,8 @@ export default class UpdateBug extends Component {
                 onChange={e => this.updateBugName(e.target.value)}
                 required
               />
-              {this.state.bug_name.touched && <ValidateError message={BugNameError.message} />}
             </li>
+            <li>{this.state.bug_name.touched && <ValidateError message={BugNameError.message} />}</li>
 
             <li>
               <label htmlFor="application_id">
@@ -438,8 +460,8 @@ export default class UpdateBug extends Component {
                 <option value=''>Application... </option>
                 {applicationOptions}
               </select>
-              {this.state.application_id.touched && <ValidateError message={ApplicationError.message} />}
             </li>
+            <li>{this.state.application_id.touched && <ValidateError message={ApplicationError.message} />}</li>
 
             <li>
               <label htmlFor="ticket_number">
@@ -456,8 +478,8 @@ export default class UpdateBug extends Component {
                 onChange={e => this.updateTicketNumber(e.target.value)}
                 required
               />
-              {this.state.ticket_number.touched && <ValidateError message={TicketNumberError.message} />}
             </li>
+            <li>{this.state.ticket_number.touched && <ValidateError message={TicketNumberError.message} />}</li>
 
             <li>
               <label htmlFor="priority">
@@ -478,8 +500,8 @@ export default class UpdateBug extends Component {
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
               </select>
-              {this.state.priority.touched && <ValidateError message={PriorityError.message} />}
             </li>
+            <li>{this.state.priority.touched && <ValidateError message={PriorityError.message} />}</li>
 
             <li>
               <label htmlFor="status">
@@ -500,8 +522,8 @@ export default class UpdateBug extends Component {
                 <option value="In-Progress">In-Progress</option>
                 <option value="Closed">Closed</option>
               </select>
-              {this.state.status.touched && <ValidateError message={StatusError.message} />}
             </li>
+            <li>{this.state.status.touched && <ValidateError message={StatusError.message} />}</li>
 
             <li>
               <label htmlFor="environment">
@@ -523,8 +545,8 @@ export default class UpdateBug extends Component {
                 <option value="Pre-Production">Pre-Production</option>
                 <option value="Production">Production</option>
               </select>
-              {this.state.environment.touched && <ValidateError message={EnvironmentError.message} />}
             </li>
+            <li>{this.state.environment.touched && <ValidateError message={EnvironmentError.message} />}</li>
 
             <li className="UpdateBug__form-textarea">
               <label htmlFor="notes">
@@ -654,11 +676,11 @@ export default class UpdateBug extends Component {
                 Save
               </button>
               {' '}
-              <button
-                onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) this.handleDelete(e) }}
+              <button 
+                onClick={ e => this.confirmDelete(e) }
               >
                 Delete
-              </button>
+              </button>  
             </li>
           </ul>
         </form>

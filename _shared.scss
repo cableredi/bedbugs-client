@@ -72,6 +72,7 @@
     font-size: .8rem;
   }
 
+  .required,
   .form__error,
   .form__required,
   .form__input-error {
@@ -80,13 +81,12 @@
     color: red;
   }
 
-  .form__required {
-    vertical-align: super;
+  .form__input-error {
+    margin: 0 auto;
   }
 
-  .required {
-    font-style: italic;
-    color: red;
+  .form__required {
+    vertical-align: super;
   }
   
 }
