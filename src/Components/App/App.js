@@ -54,11 +54,18 @@ export default class App extends Component {
     })
   }
 
+  /*******************************/
+  /* Sidebar nd backdrop toggles */
+  /*******************************/
   drawerToggleClickHandler = () => {
     this.setState(prevState => {
       return { sideDrawerOpen: !prevState.sideDrawerOpen }
     })
   }
+
+  backdropClickHandler = () => {
+    this.setState({sideDrawerOpen: false});
+  };
 
   /*******************************************/
   /* get applications and bugs from database */
@@ -183,75 +190,75 @@ export default class App extends Component {
               component={Landing}
             />
 
-            {/* Applications Summary */}
-            <Route
-              exact path='/applications'
-              render={(routeProps) =>
-                <ApplicationsList
-                  applications={this.state.applications}
-                  bugs={this.state.bugs}
-                  {...routeProps}
-                />
-              }
-            />
+              {/* Applications Summary */}
+              <Route
+                exact path='/applications'
+                render={(routeProps) =>
+                  <ApplicationsList
+                    applications={this.state.applications}
+                    bugs={this.state.bugs}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            {/* Add an Application */}
-            <Route
-              exact path='/addapplication'
-              component={(routeProps) =>
-                <AddApplication
-                  {...routeProps}
-                />
-              }
-            />
+              {/* Add an Application */}
+              <Route
+                exact path='/addapplication'
+                component={(routeProps) =>
+                  <AddApplication
+                    {...routeProps}
+                  />
+                }
+              />
 
-            {/* Update an Application */}
-            <Route
-              exact path='/updateapplication/:application_id'
-              component={(routeProps) =>
-                <UpdateApplication
-                  application={this.state.applications.find(application => application.application_id === Number(routeProps.match.params.application_id))}
-                  bugs={this.state.bugs.filter(bug => bug.application_id === Number(routeProps.match.params.application_id))}
-                  {...routeProps}
-                />
-              }
-            />
+              {/* Update an Application */}
+              <Route
+                exact path='/updateapplication/:application_id'
+                component={(routeProps) =>
+                  <UpdateApplication
+                    application={this.state.applications.find(application => application.application_id === Number(routeProps.match.params.application_id))}
+                    bugs={this.state.bugs.filter(bug => bug.application_id === Number(routeProps.match.params.application_id))}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            {/* Bugs Summary */}
-            <Route
-              exact path='/bugs'
-              render={(routeProps) =>
-                <BugsList
-                  applications={this.state.applications}
-                  bugs={this.state.bugs}
-                  {...routeProps}
-                />
-              }
-            />
+              {/* Bugs Summary */}
+              <Route
+                exact path='/bugs'
+                render={(routeProps) =>
+                  <BugsList
+                    applications={this.state.applications}
+                    bugs={this.state.bugs}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            {/* Add a Bug */}
-            <Route
-              exact path='/addbug'
-              component={(routeProps) =>
-                <AddBug
-                  applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
-                  {...routeProps}
-                />
-              }
-            />
+              {/* Add a Bug */}
+              <Route
+                exact path='/addbug'
+                component={(routeProps) =>
+                  <AddBug
+                    applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
+                    {...routeProps}
+                  />
+                }
+              />
 
-            {/* Update a Bug */}
-            <Route
-              exact path='/updatebug/:bug_id'
-              component={(routeProps) =>
-                <UpdateBug
-                  bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
-                  applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
-                  {...routeProps}
-                />
-              }
-            />
-
+              {/* Update a Bug */}
+              <Route
+                exact path='/updatebug/:bug_id'
+                component={(routeProps) =>
+                  <UpdateBug
+                    bug={this.state.bugs.find(bug => bug.bug_id === Number(routeProps.match.params.bug_id))}
+                    applications={this.state.applications.map(appl => ({ application_id: appl.application_id, application_name: appl.application_name }))}
+                    {...routeProps}
+                  />
+                }
+              />
+            
             {/* Not Found Page */}
             <Route
               component={NotFoundPage}
