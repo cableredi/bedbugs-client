@@ -12,7 +12,6 @@ If so, bedbugs is for you!!!
 ## Check it out!
 [https://bedbugs.now.sh](https://bedbugs.now.sh)
 
-
 ## Screenshots
 #### Landing Page: [bedbugs.now.sh](https://bedbugs.now.sh)
 ![Landing Page](./src/Components/Images/LandingPage.PNG)
@@ -28,6 +27,34 @@ Need to update your application?  Click on the Application Name and begin updati
 Need to update your bug?  Add some developer notes?  Click on the Bug Name and begin updating.
 
 ![Bugs Summary](./src/Components/Images/BugsPage.PNG)
+
+
+## bedbugs API
+
+The API allows you to GET, PATCH, DELETE, and POST an application and bug.
+
+### Endpoints
+**/api/applications**
+
+Get an object array of the Applications in the database
+
+**/api/applications/:application_id**
+
+Get a specifc Application object
+
+**/api/bugs**
+
+Get an object array of the Bugs in the database
+
+**/api/bugs/:bug_id**
+
+Get a specific Bug object
+
+## Source Code
+bedbugs Client: [https://github.com/cableredi/bedbugs-client](https://github.com/cableredi/bedbugs-client)
+
+bedbugs API: [https://github.com/cableredi/bedbugs-api](https://github.com/cableredi/bedbugs-api)
+
 
 
 ## Technology Used
