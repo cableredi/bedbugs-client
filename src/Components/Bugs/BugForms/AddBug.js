@@ -3,6 +3,7 @@ import BedbugsContext from '../../../BedbugsContext';
 import ValidateError from '../../ValidateError/ValidateError';
 import PropTypes from 'prop-types';
 import config from '../../../config';
+import TokenService from '../../../services/token-service';
 
 const Required = () => (
   <span className='form__required'>*</span>
@@ -209,7 +210,7 @@ export default class AddBug extends Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.API_KEY}`
+        'Authorization': `bearer ${TokenService.getAuthToken()}`
       },
       body: JSON.stringify(bug)
     })

@@ -3,6 +3,7 @@ import BedbugsContext from '../../../BedbugsContext';
 import ValidateError from '../../ValidateError/ValidateError';
 import PropTypes from 'prop-types';
 import config from '../../../config';
+import TokenService from '../../../services/token-service';
 
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -144,7 +145,7 @@ export default class UpdateApplication extends Component {
       body: JSON.stringify(updatedApplication),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.API_KEY}`
+        'Authorization': `bearer ${TokenService.getAuthToken()}`
       },
     })
       .then(res => {
@@ -191,7 +192,7 @@ export default class UpdateApplication extends Component {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.API_KEY}`
+        'Authorization': `bearer ${TokenService.getAuthToken()}`
       }
     })
       .then(response => {

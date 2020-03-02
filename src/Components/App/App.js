@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import BedbugsContext from '../../BedbugsContext';
-import config from '../../config';
 
 import Toolbar from '../Nav/Toolbar/Toolbar';
 import SideDrawer from '../Nav/SideDrawer/SideDrawer'
@@ -15,6 +14,14 @@ import BugsList from '../Bugs/BugsList/BugsList';
 import AddBug from '../Bugs/BugForms/AddBug';
 import UpdateBug from '../Bugs/BugForms/UpdateBug';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import LoginPage from '../../routes/LoginPage/LoginPage';
+import RegistrationPage from '../../routes/RegistrationPage/RegistrationPage';
+import ApplicationsApiService from '../../services/applications-api-service';
+import BugsApiService from '../../services/bugs-api-service';
+import TokenService from '../../services/token-service';
+import IdleService from '../../services/idle-service';
+import { PrivateRoute } from '../Helpers/PrivateRoute';
+import PublicOnlyRoute from '../Helpers/PublicOnlyRoute';
 
 export default class App extends Component {
   constructor(props) {
@@ -55,7 +62,7 @@ export default class App extends Component {
   }
 
   /*******************************/
-  /* Sidebar nd backdrop toggles */
+  /* Sidebar and backdrop toggles */
   /*******************************/
   drawerToggleClickHandler = () => {
     this.setState(prevState => {
@@ -67,41 +74,56 @@ export default class App extends Component {
     this.setState({ sideDrawerOpen: false });
   };
 
-  /*******************************************/
-  /* get applications and bugs from database */
-  /*******************************************/
+  /**************************************************/
+  /* get applications and bugs from db if logged in */
+  /**************************************************/
   componentDidMount() {
-    fetch(config.API_ENDPOINT_APPLICATIONS, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.API_KEY}`
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.status)
-        }
-        return response.json()
-      })
-      .then(this.setApplications)
-      .catch(error => this.setState({ error }))
+    if (TokenService.hasAuthToken()) {
+      //Get all applications and bugs from DB and update state
+      const applicationsRequest = ApplicationsApiService.getAll();
+      const bugsRequest = BugsApiService.getAll();
+  
+      Promise.all([applicationsRequest, bugsRequest])
+        .then((values) => {
+          this.setApplications(values[0])
+          this.setBugs(values[1])
+        })
+        .catch(error => this.setState({ error }))
+    }
+  }
 
-    fetch(config.API_ENDPOINT_BUGS, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.API_KEY}`
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.status)
-        }
-        return response.json()
-      })
-      .then(this.setBugs)
-      .catch(error => this.setState({ error }))
+  /*******************************/
+  /* ComponentWillUnmount        */
+  /*******************************/
+  componentWillUnmount() {
+    /*
+      when the app unmounts,
+      stop the event listeners that auto logout (clear the token from storage)
+    */
+    IdleService.unRegisterIdleResets()
+    /*
+      and remove the refresh endpoint request
+    */
+    TokenService.clearCallbackBeforeExpiry()
+  }
+
+  /*************************/
+  /* Logout if Idle        */
+  /*************************/
+  logoutFromIdle = () => {
+    /* remove the token from localStorage */
+    TokenService.clearAuthToken()
+    /* remove any queued calls to the refresh endpoint */
+    TokenService.clearCallbackBeforeExpiry()
+    /* remove the timeouts that auto logout when idle */
+    IdleService.unRegisterIdleResets()
+    /* clear out state */
+    this.resetState({});
+    /*
+      react won't know the token has been removed from local storage,
+      so we need to tell React to rerender
+    */
+    this.forceUpdate()
   }
 
   /********************************/
@@ -153,10 +175,12 @@ export default class App extends Component {
   render() {
     const contextValue = {
       applications: this.state.applications,
+      setApplications: this.setApplications,
       addApplication: this.addApplication,
       updateApplication: this.updateApplication,
       deleteApplication: this.deleteApplication,
       bugs: this.state.bugs,
+      setBugs: this.setBugs,
       addBug: this.addBug,
       updateBug: this.updateBug,
       deleteBug: this.deleteBug,
@@ -191,10 +215,20 @@ export default class App extends Component {
               component={Landing}
             />
 
+            <PublicOnlyRoute
+              path={'/login'}
+              component={LoginPage}
+            />
+
+            <PublicOnlyRoute
+              path={'/registration'}
+              component={RegistrationPage}
+            />
+
             {/* Applications Summary */}
-            <Route
+            <PrivateRoute
               exact path='/applications'
-              render={(routeProps) =>
+              component={(routeProps) =>
                 <ApplicationsList
                   applications={this.state.applications}
                   bugs={this.state.bugs}
@@ -204,7 +238,7 @@ export default class App extends Component {
             />
 
             {/* Add an Application */}
-            <Route
+            <PrivateRoute
               exact path='/addapplication'
               component={(routeProps) =>
                 <AddApplication
@@ -214,7 +248,7 @@ export default class App extends Component {
             />
 
             {/* Update an Application */}
-            <Route
+            <PrivateRoute
               exact path='/updateapplication/:application_id'
               component={(routeProps) =>
                 <UpdateApplication
@@ -226,9 +260,9 @@ export default class App extends Component {
             />
 
             {/* Bugs Summary */}
-            <Route
+            <PrivateRoute
               exact path='/bugs'
-              render={(routeProps) =>
+              component={(routeProps) =>
                 <BugsList
                   applications={this.state.applications}
                   bugs={this.state.bugs}
@@ -238,7 +272,7 @@ export default class App extends Component {
             />
 
             {/* Add a Bug */}
-            <Route
+            <PrivateRoute
               exact path='/addbug'
               component={(routeProps) =>
                 <AddBug
@@ -249,7 +283,7 @@ export default class App extends Component {
             />
 
             {/* Update a Bug */}
-            <Route
+            <PrivateRoute
               exact path='/updatebug/:bug_id'
               component={(routeProps) =>
                 <UpdateBug

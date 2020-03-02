@@ -1,21 +1,79 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom';
+import TokenService from '../../../services/token-service';
+import IdleService from '../../../services/idle-service';
+import BedbugsContext from '../../../BedbugsContext';
 
-const sideDrawer = props => {
-  let drawerClasses = 'side-drawer';
+export default class SideDrawer extends Component {
+  static contextType = BedbugsContext;
 
-  if (props.show) {
-    drawerClasses = 'side-drawer open';
+  handleLogoutClick = () => {
+    TokenService.clearAuthToken();
+
+    /* when logging out, clear the callbacks to the refresh api and idle auto logout */
+    TokenService.clearCallbackBeforeExpiry();
+    IdleService.unRegisterIdleResets();
+  }
+
+  renderLogoutLink() {
+    return (
+      <>
+        <li>
+          <NavLink to='/applications'>
+            Applications
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/bugs'>
+            Bugs
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to='/'
+            onClick={this.handleLogoutClick}
+          >
+            Logout
+          </NavLink>
+        </li>
+      </>
+    )
   };
 
-  return (
-    <nav className={drawerClasses}>
-      <ul>
-        <li><a href='/'>Home</a></li>
-        <li><a href='/applications'>Applications</a></li>
-        <li><a href='/bugs'>Bugs</a></li>
-      </ul>
-    </nav>
-  );
-};
+  renderLoginLink() {
+    return (
+      <>
+        <li>
+          <NavLink to='/login'>
+            Login
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to='/registration'>
+            Register
+          </NavLink>
+        </li>
+      </>
+    )
+  };
 
-export default sideDrawer;
+  render() {
+    let drawerClasses = 'side-drawer';
+
+    if (this.props.show) {
+      drawerClasses = 'side-drawer open';
+    };
+
+    return (
+      <nav className={drawerClasses}>
+        <ul>
+          {
+            TokenService.hasAuthToken()
+              ? this.renderLogoutLink()
+              : this.renderLoginLink()
+          }
+        </ul>
+      </nav>
+    );
+  }
+};

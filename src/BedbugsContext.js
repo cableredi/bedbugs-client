@@ -2,12 +2,13 @@ import React from 'react';
 
 const BedbugsContext = React.createContext({
   applications: [],
+  setApplications: () => {},
   addApplication: () => {},
   updateApplication: () => {},
   bugs: [],
+  setBugs: () => {},
   addBug: () => {},
   updateBug: () => {},
-  steps: [],
   addSteps: () => {},
   updateSteps: () => {},
 });
